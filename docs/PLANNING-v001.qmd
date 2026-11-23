@@ -290,10 +290,18 @@ A later `yrProject.sh update` with yrProject's book tools can replace these copi
 
 ## Facts to verify {#sec-verify}
 
-- Colab's versions: verified from Google's published list on 2026-11-23 (D7). Check them again before each part
-  is published, and change `requirements.txt` when Colab changes.
+- Colab's versions: verified from Google's published list on 2026-11-23 (D7). Check them again before the book is
+  used in a new course, and change `requirements.txt` when Colab changes.
+- Verified on the published site, 2026-11-23: Jupyter Book v1's `launch_buttons: colab_url` works with
+  `path_to_book: jb`, and the rocket button gives the same Colab link as the badge.
+- Still open, in GitHub issue #2 (the instructor's review): that `pd.read_csv("https://raw.githubusercontent.com/…")`
+  works in students' Thonny on Mac (SSL certificates), and how Thonny's package manager and its Python behave
+  (the chapter *Colab, Thonny and other IDEs*).
 - The licenses of McKinney's and VanderPlas's online books (probably CC BY-NC-ND) and of Downey's *Elements of Data
-  Science* (probably CC BY-NC-SA 4.0).
-- That `pd.read_csv("https://raw.githubusercontent.com/…")` works in students' Thonny on Mac (SSL certificates).
-- That Jupyter Book v1's `launch_buttons: colab_url` works with `path_to_book: jb`, and gives the same link as the
-  badge.
+  Science* (probably CC BY-NC-SA 4.0). The book only links to them (D9).
+
+## Open work {#sec-open}
+
+The GitHub issues of `y-rosenthal/yr-pre-ml` (the `yrIssues` skill): #1 plug the book into subjexts (Step 4),
+#2 the instructor's review in Colab and Thonny, #3 adopt yrProject's shared book tools and register the book
+(Step 0).
