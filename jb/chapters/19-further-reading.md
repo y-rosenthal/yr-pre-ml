@@ -15,7 +15,8 @@ next step.
 - **The pandas "Getting started" tutorials**:
   <https://pandas.pydata.org/docs/getting_started/intro_tutorials/index.html>. Ten short lessons, each about one
   question ("How do I select a subset of a `DataFrame`?", "How to calculate summary statistics"), with pictures of
-  the tables. Good for reviewing one topic at a time; they are written for the current version of pandas.
+  the tables. Good for reviewing one topic at a time; they are written for the current version of pandas
+  (pandas 3: a text column shows the dtype `str` there, and `object` in Colab).
 
 ## Books
 

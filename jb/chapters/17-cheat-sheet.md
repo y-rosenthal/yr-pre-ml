@@ -2,8 +2,10 @@
 
 The NumPy and pandas forms that this book teaches, on one page. Each table gives the forms of one chapter, with
 the chapter's number and title, and what each form means in one line. In the tables, `a` stands for a NumPy array,
-`s` for a pandas Series, `df` for a DataFrame and `mask` for a Boolean mask. The examples use the book's data files
-(see the appendix *The datasets*). When something fails, see the appendix *Common errors and how to fix them*.
+`s` for a pandas Series, `df` for a DataFrame, `mask` for a Boolean mask and `totals` for a grouped result, such as
+`sales.groupby("store")["revenue"].sum()`. `rename`, `drop`, `dropna`, `fillna`, `reset_index`, `sort_values` and
+`get_dummies` return a new table (or a new column): assign the result. The examples use the book's data files (see
+the appendix *The datasets*). When something fails, see the appendix *Common errors and how to fix them*.
 
 > **In Thonny:** a notebook shows the value of the last line of a cell; a script shows only what you print. Write
 > `print(df.head())` where Colab needs only `df.head()`.
@@ -72,7 +74,7 @@ Chapter 7, *Series and DataFrames*.
 |---|---|
 | `import pandas as pd` | Load pandas, with the short name `pd` |
 | `pd.Series([120, 95], index=["S1", "S2"], name="sales")` | One column of values with labels (the index) |
-| `s.to_numpy()` (or `s.values`), `s.index` | The values as an array; the labels |
+| `s.to_numpy()` (`s.values` in older code), `s.index` | The values as an array; the labels |
 | `s["S2"]` | The value with the label `S2` |
 | `pd.DataFrame({"city": [...], "sales": [...]})` | A table from a dictionary of lists, one list for each column |
 | `df["sales"]` | One column, as a Series |
@@ -132,12 +134,12 @@ Chapter 11, *New columns and sorting*.
 | `sales["revenue"] = sales["revenue"].round(2)` | Round each value to 2 decimals |
 | `sales["month"] = sales["date"].str[:7]` | The first 7 characters of each text value |
 | `sales["size"] = "small"`, then `sales.loc[sales["units"] >= 8, "size"] = "large"` | A column from a condition |
-| `df.rename(columns={"units": "quantity"})` | Rename columns |
-| `df.drop(columns=["discount"])` | Remove columns |
+| `df = df.rename(columns={"units": "quantity"})` | Rename columns |
+| `df = df.drop(columns=["discount"])` | Remove columns |
 | `sales.sort_values("revenue", ascending=False)` | Sort the rows, the largest first |
 | `sales.sort_values(["store", "revenue"])` | Sort by store, then by revenue within each store |
 | `sales.sort_values("revenue", ascending=False).head()` | The top 5 |
-| `df.reset_index(drop=True)` | Number the rows 0, 1, 2, ... again |
+| `df = df.reset_index(drop=True)` | Number the rows 0, 1, 2, ... again |
 | `sales.nlargest(5, "revenue")` | The 5 rows with the largest revenue |
 
 ## pandas: grouping and charts
@@ -156,6 +158,7 @@ Chapter 12, *Grouping and summarizing*.
 | `totals.reset_index()` | A grouped result back as a DataFrame |
 | `import matplotlib.pyplot as plt` | Load matplotlib, for charts |
 | `totals.plot(kind="bar")` | A bar chart of a Series |
+| `monthly.plot(kind="line", marker="o")` | A line chart, with a dot for each value (`monthly` is the revenue of each month) |
 | `plt.title("...")`, `plt.xlabel("...")`, `plt.ylabel("...")`, `plt.show()` | A title and axis labels; show the chart (always last) |
 
 ## pandas: preparing data for machine learning
@@ -166,10 +169,10 @@ Chapter 13, *Preparing data for machine learning*.
 |---|---|
 | `df.isna().sum()` | The number of missing values in each column |
 | `df[df.isna().any(axis=1)]` | The rows with at least one missing value |
-| `df = df.dropna()`, `df.dropna(subset=["age"])` | Drop the rows with a missing value (anywhere; in `age`) |
+| `df = df.dropna()`, `df = df.dropna(subset=["age"])` | Drop the rows with a missing value (anywhere; in `age`) |
 | `df["age"] = df["age"].fillna(df["age"].median())` | Fill the missing numbers with the median |
 | `df["city"] = df["city"].fillna("Unknown")` | Fill the missing text with `"Unknown"` |
-| `pd.get_dummies(df, columns=["region"], dtype=int)` | One 0/1 column for each value of a text column |
+| `df = pd.get_dummies(df, columns=["region"], dtype=int)` | One 0/1 column for each value of a text column |
 | `X = df.drop(columns="annual_spend")` | The predictors: every column but the target |
 | `y = df["annual_spend"]` | The target: one column |
 | `X.isna().sum().sum() == 0` | `True` when `X` has no missing value |

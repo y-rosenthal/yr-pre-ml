@@ -241,7 +241,10 @@ files in the yrS4 repository: **do them only with the instructor's OK**, or let 
 
 ## Step 5: write the content {#sec-step5}
 
-Done 2026-11-23 for all the pages (the instructor asked to finish and publish the whole book). Items 3 and 4 below,
+Done 2026-11-23 for all the pages (the instructor asked to finish and publish the whole book). Chapters 00 to 02
+were written first, as models; helper agents wrote the others from one brief (the outline above and the
+`notebook-conventions` skill), and two independent reviews of the executed pages led to fixes (wrong claims, for
+example that every scikit-learn model refuses missing values; references; Colab's exact messages). Items 3 and 4 below,
 the instructor's review in the local build or on the website and the test in Colab and in Thonny on Windows and
 Mac, are still to do; the instructor's changes can come as subjexts note packets.
 

@@ -18,7 +18,9 @@ in its `--help`; the rules it checks are in the `notebook-conventions` skill.
 ```
 
 - Give notebook paths to check only those: `tools/run_as_script.py jb/chapters/10-filtering-rows.ipynb -v`
-  (`-v` prints what each script printed, which is what the website shows).
+  (`-v` prints what each script printed: the `print()` form, which Thonny shows. Colab and the website show the
+  notebook form of the last expression, for example `np.int64(9012)` for `9012`: look at the built page, or at the
+  executed notebook in `jb/_build/jupyter_execute/chapters/`).
 - `.venv-newest` is the environment with the newest numpy, pandas, scikit-learn and matplotlib. Make it once,
   and again when new versions come out:
   `/usr/bin/python3 -m venv .venv-newest && .venv-newest/bin/pip install --no-cache-dir --upgrade numpy pandas scikit-learn matplotlib`.
