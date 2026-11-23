@@ -72,12 +72,19 @@ file is now in `oldfiles/`, which git does not track. This document replaces it:
 | D9 | **License:** CC BY-NC-SA 4.0, like yrThinkPython. Do **not** adapt text from books under a NoDerivatives license (McKinney's and VanderPlas's online books are probably CC BY-NC-ND: verify). Downey's *Elements of Data Science* (probably CC BY-NC-SA) and the NumPy and pandas docs (BSD) may be adapted with attribution | Decided |
 | D10 | **Notebook names:** `jb/chapters/NN-short-name.ipynb` (for example `02-numpy-arrays.ipynb`). **Never rename a notebook after it is published:** the Colab links and the subjexts marks use the page address. No `-v001` suffix, because a new suffix is a new address | Decided |
 | D11 | **The tools (skills, checkers, workflow):** yrProject's shared book tools are not ready (2026-11-23: its `templates/v0.10.0/` is in progress). Start without them, and be ready to adopt them soon: copy and adapt only what this book needs, and list each copy in @sec-copies, so that a later `yrProject.sh update` can replace it | Decided 2026-11-23 |
-| D12 | **Local build environment:** `.venv` in this folder (git ignores it; Dropbox syncs it: a few hundred MB is acceptable), made with pip from the system Python 3.12 and `requirements.txt`. The GitHub Action uses Python 3.13, as Colab does. Use `pip install --no-cache-dir`, so that pip writes nothing outside this folder | Decided 2026-11-23 |
+| D12 | **Local build environment:** `.venv` in this folder (git ignores it; Dropbox syncs it: a few hundred MB is acceptable), made with pip from the system Python 3.12 and `requirements.txt`. The GitHub Action uses Python 3.13, as Colab does. Use `pip install --no-cache-dir`, so that pip writes nothing outside this folder. `.venv-newest` (also ignored) has the newest numpy, pandas, scikit-learn and matplotlib, for the second Thonny check (D7) | Decided 2026-11-23 |
 
 ## The book's content {#sec-content}
 
 One part for each topic. Each part has one to three notebooks (pages), so a student can read one page in about
-15 to 25 minutes. The "Lecture" column is the course's order. It is only here, never in the book (D4).
+15 to 25 minutes. The "Lecture" column is the course's order. It is only here, never in the book (D4). The pages
+(`jb/chapters/`, in `jb/_toc.yml`): 00 Colab, Thonny and other IDEs; 01 A first machine-learning example; 02 What
+does a model learn?; 03 From lists to NumPy arrays; 04 Indexing, slicing and arithmetic; 05 Comparisons and Boolean
+masks; 06 Two-dimensional arrays; 07 Series and DataFrames; 08 Reading and describing data; 09 Selecting with loc
+and iloc; 10 Filtering rows; 11 New columns and sorting; 12 Grouping and summarizing; 13 Preparing data for machine
+learning; 14 Guided project: delivery times; 15 Independent project: advertising and sales; 16 Common errors and how
+to fix them; 17 Cheat sheet; 18 The datasets; 19 Further reading. The two projects share the part "Putting it
+together".
 
 | Part | Lecture | Pages | What students can do after it |
 |---|---|---|---|
@@ -102,55 +109,32 @@ the workflow; they do not teach model building.
 
 ### The datasets {#sec-datasets}
 
-`data/make_data.py` (with `--help`) writes every CSV with a fixed seed. Commit the CSVs too. Proposed files (the
-chat that writes the content may change them):
+`data/make_data.py` (with `--help`) writes every CSV with a fixed seed; the CSVs are committed too. The page
+`jb/chapters/18-datasets.md` describes every column. The files:
 
 | File | Rows | Used in | Content |
 |---|---|---|---|
-| `customers.csv` | about 500 | the first ML example; preparing data | age, region (text), months as customer, visits per month, average basket, a few `NaN`; target: annual spend |
-| `sales.csv` | about 2,000 | the pandas parts | date, store, region, product category, units, unit price, discount; good for `groupby` |
-| `project1.csv` (name by topic) | about 500 | Putting it together I | a new business problem, guided; some `NaN` and text columns |
-| `project2.csv` (name by topic) | about 500 | Putting it together II | another business problem, independent |
+| `customers.csv` | 500 | the first ML example; preparing data | age, region (text), months as customer, visits per month, average basket, a few `NaN`; target: annual spend |
+| `sales.csv` | 2,000 | the pandas parts | date, store, region, product category, units, unit price, discount; good for `groupby` |
+| `deliveries.csv` | 500 | the guided project | food deliveries: distance, items, time of day, weather, driver experience; target: minutes; `NaN` in a number and a text column |
+| `marketing.csv` | 520 | the independent project | weekly sales by region with TV and online advertising, price, promotion; target: units sold; `NaN` in a number and a text column |
 
 Keep printed tables to six columns or fewer, so they do not wrap in Thonny's Shell.
 
 ## Writing rules for the notebooks {#sec-writing}
 
-Put these rules in `AGENTS.md` and in the book's notebook-conventions skill (Step 3).
+The rules are in one place: the `notebook-conventions` skill (`.claude/skills/notebook-conventions/SKILL.md`). In
+short: business students who know basic Python; the tone of *Think Python*; one idea per section; no timing (D4);
+Colab-first code that also runs in Thonny with only `print()` added; data only from `DATA_URL`; no stored outputs;
+practice questions (Easy, Medium, Hard, Challenge) with collapsed answers; code that works in pandas 2 and 3.
 
-- **Audience:** business students who finished basic Python in *Think Python*. No statistics beyond an average.
-  Explain each new idea with a small example before the general rule. One new idea per section.
-- **Style:** the *Think Python* tone: short paragraphs, "we", concrete business examples.
-- **No timing:** no dates, semesters, course sections or lecture numbers (D4).
-- **Colab-first, but portable.** Write normal Colab cells: a bare expression on the last line to show a value is
-  fine. Use nothing that only works in Colab or Jupyter, so the only change for Thonny is "wrap the last line in
-  `print()`":
-  - no `%` or `!` magics (no `!pip install`: Colab already has numpy, pandas, scikit-learn and matplotlib);
-  - no `google.colab` imports, no `files.upload()`, no `display()`;
-  - data comes from the raw URL (D8), never from a local or Drive path;
-  - each notebook starts with its imports (`import numpy as np`, `import pandas as pd`) and a `DATA_URL`
-    constant; every cell runs after the cells above it, in order;
-  - a checker enforces these rules (@sec-step3).
-- **The first cell** of every notebook: the title (`# …`, the page title), then the "Open in Colab" badge that
-  links to this notebook on `main`:
-  `[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/NN-short-name.ipynb)`.
-- **Each page has:** learning goals at the top; sections with small examples; "Try it" boxes; "Common mistake"
-  boxes; a short summary; **practice questions** at the end (Easy, Medium, Hard, optional Challenge), each answer
-  in a collapsed MyST dropdown:
+Two decisions of 2026-11-23, tested in a build (the skill has the formats):
 
-  ````markdown
-  :::{admonition} Answer
-  :class: dropdown
-  The answer, with a short explanation.
-  :::
-  ````
-
-  The subjexts tutor does not see these answers (`hide_from_tutor: [".dropdown.admonition"]`, Step 4). A script
-  runs the code of every answer to check it.
-- **A cell that shows an error on purpose** gets the cell tag `raises-exception`. Otherwise the build stops at it
-  (`jb/_config.yml`, `execute`).
-- **No stored outputs** in the committed notebooks. The build runs them (D6), and students run them in Colab.
-- **Never copy text** from the NoDerivatives books (D9). Write new text; link to them.
+- **Answers are HTML `<details class="yr-answer">` blocks, not MyST dropdowns.** Colab shows a MyST directive
+  (`:::{admonition}`) as raw text, so students would see every answer at once. `<details>` stays closed on the
+  website and in Colab.
+- **Boxes ("Try it", "Common mistake", "In Thonny", "Note") are markdown block quotes.** MyST admonitions show as raw
+  text in Colab, and HTML admonitions do not format markdown in Colab.
 
 ## Step 0: the shared book tools (yrProject) {#sec-step0}
 
@@ -180,6 +164,15 @@ Done 2026-11-23:
    setup-labels` and `bash .claude/skills/yrRenewals/scripts/yrRenewals.sh setup-labels`.
 
 ## Step 3: the book's infrastructure {#sec-step3}
+
+Done 2026-11-23. The checkers are `tools/check_notebooks.py` (lint, portability, answers format, no timing, table
+of contents, `--help`), `tools/run_as_script.py` (the Thonny check and the answers check; run with `.venv` and
+with `.venv-newest`), `data/make_data.py --check` (data) and the build itself (execution, `-W`). The workflow runs
+them all before it publishes, and runs the Thonny check with the newest versions in a separate job. Two more
+tools: `tools/localdata/sitecustomize.py` makes the data URLs read `data/` during checks and builds, and
+`tools/nbtext.py` converts a chapter between a notebook and a plain-text draft. The skills: `notebook-conventions`,
+`check-notebooks`, `build-book`, `add-page`, `deploy-book` (none copied from yrThinkPython; written for this book).
+The original list:
 
 1. **Layout:**
 
@@ -235,7 +228,7 @@ files in the yrS4 repository: **do them only with the instructor's OK**, or let 
 
 2. Check `packages/pre-ml.yml` against `packages/thinkpython.yml`: `generator: jupyter-book`;
    `license: CC-BY-NC-SA-4.0`; `source.repo: y-rosenthal/yr-pre-ml`; `source.local`; `source.toc: jb/_toc.yml`;
-   `overlay.hide_from_tutor: [".dropdown.admonition"]`; no `page_version_suffix`; `ai.tutor: true`. Commit that
+   `overlay.hide_from_tutor: ["details.yr-answer"]` (the answers, @sec-writing); no `page_version_suffix`; `ai.tutor: true`. Commit that
    one file in yrS4 by path.
 3. **(instructor runs)** `node cli/bin/yrS4.mjs packages push pre-ml`.
 4. **Sections.** The course sections must list the package, or students see only the instructor's own labels.
@@ -247,6 +240,10 @@ files in the yrS4 repository: **do them only with the instructor's OK**, or let 
    repository.
 
 ## Step 5: write the content {#sec-step5}
+
+Done 2026-11-23 for all the pages (the instructor asked to finish and publish the whole book). Items 3 and 4 below,
+the instructor's review in the local build or on the website and the test in Colab and in Thonny on Windows and
+Mac, are still to do; the instructor's changes can come as subjexts note packets.
 
 Order: the "Colab, Thonny and other IDEs" chapter and "Why NumPy and pandas?" first (with `customers.csv`), then
 one part at a time. For each part:

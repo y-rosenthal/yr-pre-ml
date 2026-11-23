@@ -6,4 +6,51 @@ parts:
 - caption: Table of contents by label
   chapters:
   - file: subjexts-labels
-# The parts of the book follow here, one part for each topic (Step 5 of the plan adds them).
+# One part for each topic, with topic names only: no lecture numbers or dates (docs/PLANNING-v001.qmd, D4).
+# Jupyter Book numbers the chapters of the numbered parts 1, 2, 3, ... across the parts, which matches the NN of
+# the file names. Never rename a published page.
+- caption: Using this book
+  chapters:
+  - file: chapters/00-colab-thonny-ides
+- caption: Why NumPy and pandas?
+  numbered: true
+  chapters:
+  - file: chapters/01-first-ml-example
+  - file: chapters/02-what-a-model-learns
+- caption: NumPy arrays
+  numbered: true
+  chapters:
+  - file: chapters/03-lists-and-arrays
+  - file: chapters/04-indexing-and-arithmetic
+- caption: Working with arrays
+  numbered: true
+  chapters:
+  - file: chapters/05-boolean-masks
+  - file: chapters/06-two-dimensional-arrays
+- caption: "pandas: first steps"
+  numbered: true
+  chapters:
+  - file: chapters/07-series-and-dataframes
+  - file: chapters/08-reading-and-describing-data
+- caption: "pandas: selecting and changing data"
+  numbered: true
+  chapters:
+  - file: chapters/09-loc-and-iloc
+  - file: chapters/10-filtering-rows
+  - file: chapters/11-new-columns-and-sorting
+- caption: "pandas: summarizing and preparing data"
+  numbered: true
+  chapters:
+  - file: chapters/12-grouping-and-summarizing
+  - file: chapters/13-preparing-data-for-ml
+- caption: Putting it together
+  numbered: true
+  chapters:
+  - file: chapters/14-guided-project
+  - file: chapters/15-independent-project
+- caption: Appendices
+  chapters:
+  - file: chapters/16-common-errors
+  - file: chapters/17-cheat-sheet
+  - file: chapters/18-datasets
+  - file: chapters/19-further-reading

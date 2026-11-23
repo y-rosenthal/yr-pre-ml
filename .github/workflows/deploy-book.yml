@@ -1,6 +1,11 @@
-# Build the book (Jupyter Book v1, in jb/) and publish it to GitHub Pages: the gh-pages branch, which GitHub Pages
-# serves at https://y-rosenthal.github.io/yr-pre-ml/. The build runs every notebook.
+# Check the book, build it (Jupyter Book v1, in jb/) and publish it to GitHub Pages: the gh-pages branch, which
+# GitHub Pages serves at https://y-rosenthal.github.io/yr-pre-ml/.
 # Runs on every push to main, and by hand from the Actions tab (workflow_dispatch).
+#   build-and-deploy: the checks with Colab's versions (requirements.txt), then the build, then the publish.
+#                     A failed check or a build warning stops it: nothing is published.
+#   newest-versions:  the Thonny and answers check with the newest numpy, pandas, scikit-learn and matplotlib
+#                     (students who install the newest versions). It does not stop the publish; a failure shows
+#                     what to fix.
 # Adapted from yrThinkPython's deploy-book.yml (docs/PLANNING-v001.qmd, "Files copied from other repositories").
 name: deploy-book
 
@@ -29,11 +34,35 @@ jobs:
       - name: Install the packages of the book and the tools that build it
         run: pip install -r requirements.txt ghp-import
 
-      - name: Build the HTML book (runs every notebook)
-        run: jb build jb
+      - name: Static checks of the notebooks, the table of contents and the scripts
+        run: python tools/check_notebooks.py
+
+      - name: The data files are what data/make_data.py writes
+        run: python data/make_data.py --check
+
+      - name: Run every chapter as a script, as Thonny does, and run the code of every answer
+        run: python tools/run_as_script.py
+
+      - name: Build the HTML book (runs every notebook; a warning fails the build)
+        run: bash tools/build_book.sh
 
       - name: Publish to the gh-pages branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           ghp-import -n -p -f -m "Deploy book from ${GITHUB_SHA::7}" jb/_build/html
+
+  newest-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install the newest versions of the packages that the chapters use
+        run: pip install --upgrade numpy pandas scikit-learn matplotlib
+
+      - name: Run every chapter as a script, and every answer, with the newest versions
+        run: python tools/run_as_script.py

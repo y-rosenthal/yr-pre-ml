@@ -1,8 +1,9 @@
 # The Jupyter Book build output
 jb/_build/
 
-# The Python environment that builds the book (made from requirements.txt)
+# The Python environments: .venv builds the book (requirements.txt); .venv-newest has the newest package versions
 .venv/
+.venv-newest/
 
 # Older files that are kept, not deleted yet (the owner's convention); git does not track them
 oldfiles/
