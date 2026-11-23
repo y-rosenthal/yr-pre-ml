@@ -1,0 +1,12 @@
+# The Jupyter Book build output
+jb/_build/
+
+# The Python environment that builds the book (made from requirements.txt)
+.venv/
+
+# Older files that are kept, not deleted yet (the owner's convention); git does not track them
+oldfiles/
+
+# Caches
+__pycache__/
+.ipynb_checkpoints/

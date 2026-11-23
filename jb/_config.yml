@@ -1,0 +1,63 @@
+# The settings of the book (Jupyter Book v1: jupyter-book<2). Started from yrThinkPython's jb/_config.yml.
+title: "What is Machine Learning?"
+author: Y. Rosenthal
+copyright: "2026"            # without this line, Jupyter Book's footer says 2023
+only_build_toc_files: true   # a notebook that is not in _toc.yml is not built
+
+execute:
+  # The build runs every notebook from the top: the committed notebooks have no outputs.
+  # A cell that raises an error stops the build, unless the cell has the tag raises-exception.
+  execute_notebooks: force
+  timeout: 300
+
+repository:
+  url: https://github.com/y-rosenthal/yr-pre-ml
+  path_to_book: jb
+  branch: main
+
+launch_buttons:
+  # The rocket button at the top of each notebook page opens that notebook in Google Colab.
+  colab_url: "https://colab.research.google.com"
+
+html:
+  baseurl: https://y-rosenthal.github.io/yr-pre-ml/
+  use_repository_button: true
+  extra_footer: |
+    <div style="text-align: left;">
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+        <img alt="Creative Commons License" style="border-width:0"
+             src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+      </a>
+      <br />
+      This work is licensed under a
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+        Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+      </a>.
+    </div>
+
+parse:
+  myst_enable_extensions:  # https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html
+    - amsmath
+    - colon_fence
+    - deflist
+    - dollarmath
+    - fieldlist
+    - html_admonition
+    - html_image
+    - linkify
+    - replacements
+    - smartquotes
+    - strikethrough
+    - substitution
+    - tasklist
+
+sphinx:
+  # Merge the settings below into the ones that Jupyter Book sets, instead of replacing them.
+  recursive_update: true
+  config:
+    html_baseurl: https://y-rosenthal.github.io/yr-pre-ml/
+    # subjexts (yrS4) teaching overlay: labels, margin lines and the panel on every page of the book.
+    # The script comes from https://subjexts.github.io/, holds no key, fails silently, and does nothing
+    # if the package is disabled on the platform. Comment the two lines out to remove it.
+    html_js_files:
+      - ["https://subjexts.github.io/overlay/v1/yrS4.js", {"data-package": "y-rosenthal/pre-ml", "defer": "defer"}]

@@ -1,0 +1,12 @@
+# The Python packages of the book.
+# The packages that the chapters use have the versions that Google Colab has, so that the book shows what
+# students see in Colab. Source: https://github.com/googlecolab/backend-info (pip-freeze.txt and os-info.txt,
+# 2026-11-20: Python 3.13). When Colab changes a version, change it here and build the book again.
+numpy==2.4.6
+pandas==2.2.3
+scikit-learn==1.6.1
+matplotlib==3.10.0
+
+# The tools that build the book.
+jupyter-book<2
+ipykernel
