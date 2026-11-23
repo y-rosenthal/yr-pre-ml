@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 3,
+  "createdAt": "2026-11-23T17:21:39Z",
+  "projectType": null,
+  "history": [
+    {
+      "date": "2026-11-23",
+      "command": "update",
+      "version": "v0.9.3",
+      "parts": [
+        "docs",
+        "rules",
+        "subjexts",
+        "yrIssues",
+        "yrRenewals"
+      ]
+    }
+  ],
+  "version": "v0.9.3",
+  "parts": [
+    "docs",
+    "rules",
+    "subjexts",
+    "yrIssues",
+    "yrRenewals"
+  ],
+  "skippedParts": [],
+  "values": {
+    "PROJECT_NAME": "yr-pre-ml",
+    "PROJECT_TITLE": "yr-pre-ml",
+    "PROJECT_DESCRIPTION": "TODO: one sentence that says what this project is for.",
+    "PROJECT_TYPE": "work",
+    "CREATED_DATE": "2026-11-23",
+    "SUBJEXTS_PACKAGE": "y-rosenthal/pre-ml",
+    "TEMPLATE_VERSION": "v0.9.3"
+  },
+  "files": {
+    ".claude/skills/subjexts/SKILL.md": "68b52d89abf46838bd8e9acc3536c30605ee51f3b5871a46adf2980fe94b0314",
+    ".claude/skills/subjexts/scripts/yrS4-skill.sh": "a77a2e4bd9829905bef8e2ec50c7eda5e24dea1e976317d3a0a03dc1aa5d076f",
+    ".claude/skills/yrIssues/SKILL.md": "e918abca6affdbf7100fa0cd50481d5dd2261e6e61a1fcd77497640e97ab1bd1",
+    ".claude/skills/yrIssues/scripts/yrIssues.sh": "f81be755dc8796d0597531352e020a0d8a7173989e6781f34174f7c59549ba2f",
+    ".claude/skills/yrNewDoc/SKILL.md": "d20b0ae185c14ce323889cae36e4cd7d8f4508f498ab2690cdf4558afe015f1e",
+    ".claude/skills/yrNewDoc/yrNewDoc.py": "1ae460316c7a4a5576bcffec213aaa8a780d2aa68826cd88e5785bc6bba19e2d",
+    ".claude/skills/yrProject/SKILL.md": "e40a461c93fdd014ae184bcb2ff7fe76484f74fe83e81ce8c6d1d536529cd9ba",
+    ".claude/skills/yrProject/scripts/yrProject-notice.sh": "c3b424563bcbfca79dc3e0ce1c8700be2f9c4605d174cd4b49761c371cb28561",
+    ".claude/skills/yrRenewals/SKILL.md": "4470948947b3d2c16b77594d94d94c6d0772c66dbbd4b6c461cc2103edb22ffc",
+    ".claude/skills/yrRenewals/scripts/yrRenewals.sh": "ee7f3d711d61e8179056779a19945a2272385d9da34ebd5fbcbd35cb8fcec2d7",
+    ".claude/skills/yrUpdateDocsSkillsRulesEtc/SKILL.md": "01774a7a43d3af63c9f938c5de45c9e77fe8e5be4dfb39d3c0cdd8a36a1921a4",
+    ".claude/skills/yrUpdateDocsSkillsRulesEtc/scripts/yrUpdateDocsSkillsRulesEtc.sh": "de801147a2432bdf96feaeb1789082be94e2868567a46b4f6d573d6c5398598e",
+    ".github/workflows/yrRenewals.yml": "15fe58b81210529ec8003182f224f6b50e54511b65db531eac53aabdfbb0eef5",
+    "README.md": "a5b128b92fca242d87d0a0153377ef35e2a860233ef1512c87c9c78fc8cb739b",
+    "_yrIssues/config.sh": "96bb2b68c8ff789a384a020a34e40e23d55a18317fb1e08a4769be9ef7a9ccc2",
+    "_yrRenewals/renewals.yml": "08c4d4ec5cd31bd57cb0500029127310179823731f1916b8e48750c83d66d57f",
+    "docs/.gitignore": "9bf406e2bb95b9dc29ea547ab140f507e074b2ef6e6fb1705e9caf0b230b1a47",
+    "docs/DOC-GUIDE-v001.qmd": "440321cb54d8475fac1a73d19f4d46f6c38636d511ea1ca4416786770c211a4e",
+    "docs/PROJECT-SETUP.qmd": "43f2f69f10e1105e16514eeb882c4d10601b1eb187e99fb81660db41a579f5f0",
+    "docs/QUARTO-GUIDE-v001.qmd": "de25b51a0ae02dcd3ad5f802df8504f02cd73debfc803babb8408af6d860693a",
+    "docs/SPEC-v0.1.0.qmd": "0cd36cd533799522900468d479273f3d8423c275a153905d790841cfaa4c1dcf",
+    "docs/_quarto.yml": "891852fdd4abc92bb8d49c75802e4c4093617a582618604b6205ea47c8d51b4d",
+    "docs/index.qmd": "a4769c9bda9f42fd2afd904aea330eb0cf0faec2c299a3ec968f8501cdbe993e",
+    "jb/subjexts-labels.md": "28a56cf93c0ad1fb6484e962b3145801facfb2d518e9d54a4e74dad3093624ee"
+  },
+  "blocks": {
+    ".gitignore: yrProject": "4fb76b2986b40571488f90377c78daf55e4d4790153a43087cdf4630e9469ab3",
+    "AGENTS.md: setup": "b58829578d9a6bb78f044919eb24851dcd2c75102fc01c7ced5ce536d4d08325",
+    "AGENTS.md: shared rules": "e9d4ed88c32e995b416f95b51359639171df231be6ef14dfae80fba052c6eb52",
+    "README.md: setup": "33e93513ea87b6a006824f774073677154fc53d315ecc2743ffe1e98d3f33d25"
+  },
+  "updatedAt": "2026-11-23T17:21:39Z",
+  "tool": {
+    "name": "yrProject",
+    "version": "0.9.3",
+    "templatesCommit": "839026f"
+  },
+  "about": "Written by yrProject v0.9.3 (https://github.com/y-rosenthal/yrProject), the record of this project's yrProject setup. Do not edit: \"yrProject.sh update\" writes it again."
+}

@@ -1,0 +1,28 @@
+# Added by yrProject v0.9.3 (https://github.com/y-rosenthal/yrProject): the templates and the
+# tool that give a project one base for AI-assisted work (rules for AI agents, skills, hooks, GitHub issues for
+# work to do later, project docs). A starting point: this project owns it. Edit it as you like; "yrProject.sh
+# update" does not change it.
+# This repository uses yrProject. What yrProject is, which files come from it and which belong to this repository:
+# .yrProject/README.md. The yrProject version and the installed parts, with bash and git only:
+#   bash .claude/skills/yrProject/scripts/yrProject-notice.sh facts
+#
+# The things that expire or renew: API keys, access tokens, domains, certificates, subscriptions, periodic
+# checks. The yrRenewals workflow (.github/workflows/yrRenewals.yml) reads this file every day on GitHub and
+# opens a reminder issue (label "renewal") 60, 30, 7 and 1 days before each date, and when it is overdue;
+# GitHub emails the people who watch the repository. Closing the issue is the acknowledgement. Push this file
+# after a change: the workflow reads the pushed copy. Ask the agent ("add a renewal: ..."), or edit it by hand;
+# "bash .claude/skills/yrRenewals/scripts/yrRenewals.sh list" shows the items and the days left.
+#
+# The format (a small subset of YAML: one value per line, in double quotes if you like):
+#   - id: NAME            a short name, unique in this file (letters, digits, hyphens)
+#     what: TEXT          what expires or renews, and what stops working (the issue's title starts with the
+#                         text before the first " (")
+#     date: YYYY-MM-DD    the date; for a repeating item, any occurrence
+#     repeat: monthly     optional: monthly or yearly (the date rolls forward by itself)
+#     action: TEXT        what to do: where to go, what to paste where, what command to run
+# Never put a key, a token or a password here: say where it is kept.
+items:
+#  - id: example-api-key
+#    what: Example API key "my service" expires (the service stops answering)
+#    date: 2027-01-31
+#    action: Make a new key at example.com/settings/keys, paste it into .env as EXAMPLE_API_KEY.

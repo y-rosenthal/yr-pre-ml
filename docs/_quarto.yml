@@ -1,0 +1,33 @@
+# Added by yrProject v0.9.3 (https://github.com/y-rosenthal/yrProject): the templates and the
+# tool that give a project one base for AI-assisted work (rules for AI agents, skills, hooks, GitHub issues for
+# work to do later, project docs). A starting point: this project owns it. Edit it as you like; "yrProject.sh
+# update" does not change it.
+# This repository uses yrProject. What yrProject is, which files come from it and which belong to this repository:
+# .yrProject/README.md. The yrProject version and the installed parts, with bash and git only:
+#   bash .claude/skills/yrProject/scripts/yrProject-notice.sh facts
+# The project-docs book: SPECs, guides and plans.
+# Preview: quarto preview docs      Render: quarto render docs      (from the project folder)
+# docs/QUARTO-GUIDE-v001.qmd explains the books. List the newest version of a document first.
+
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "yr-pre-ml: project docs"
+  chapters:
+    - index.qmd
+    - PROJECT-SETUP.qmd
+    - part: "Specification"
+      chapters:
+        - SPEC-v0.1.0.qmd
+    - part: "Guides"
+      chapters:
+        - DOC-GUIDE-v001.qmd
+        - QUARTO-GUIDE-v001.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
