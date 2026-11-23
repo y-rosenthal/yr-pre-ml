@@ -53,7 +53,9 @@ rules here, outside the yrProject blocks. The shared rules below come from yrPro
 ## The book's content
 
 - No dates, semesters, course sections or lecture numbers in the book. Parts have topic names.
-- The writing rules for the notebooks are in `docs/PLANNING-v001.qmd`, "Writing rules for the notebooks".
+- **The rules of the chapters are in the `notebook-conventions` skill** (`.claude/skills/notebook-conventions/SKILL.md`):
+  the audience, the style, the structure of a chapter, the answer and box formats, the Colab-first code that also
+  runs in Thonny, pandas 2 and 3. Read it before you write or change a chapter.
 - No exam questions in this public repository: they go to the private `yrQuestionBank` repository.
 - The package versions are Colab's, pinned in `requirements.txt` (`docs/PLANNING-v001.qmd`, D7).
 
@@ -62,7 +64,11 @@ rules here, outside the yrProject blocks. The shared rules below come from yrPro
 - The build environment is `.venv` in this folder (git ignores it), made from the system Python 3.12. On the
   instructor's computer, `python3` is linuxbrew's Python 3.14, which pandas 2.2.3 does not support, so give the
   full path: `/usr/bin/python3 -m venv .venv && .venv/bin/pip install --no-cache-dir -r requirements.txt`.
-- Build the book: `.venv/bin/jb build jb`. Open `jb/_build/html/index.html`. The build runs every notebook.
+- `.venv-newest` (git ignores it) has the newest numpy, pandas, scikit-learn and matplotlib, for the second run of
+  the Thonny check (`check-notebooks` skill).
+- Before a commit, run the checks (`check-notebooks` skill) and build the book (`build-book` skill:
+  `tools/build_book.sh`). All must print `OK`, and the build must have no warning. Publishing is the
+  `deploy-book` skill.
 
 <!-- begin shared rules: yrProject v0.9.3, from templates/v0.9.3/AGENTS-shared-rules.md in yrProject; "yrProject.sh update" replaces this block, unless it was changed by hand -->
 
