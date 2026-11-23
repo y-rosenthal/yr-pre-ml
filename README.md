@@ -16,6 +16,17 @@ the same code in Thonny and in other Python editors.
 | `jb/_config.yml`, `jb/_toc.yml`, `jb/intro.md` | The Jupyter Book (v1) |
 | `jb/chapters/NN-short-name.ipynb` | The chapters, one notebook each, with no stored outputs |
 | `requirements.txt` | The Python packages: Colab's versions of the packages that the chapters use, and the tools that build the book |
+| `.github/workflows/deploy-book.yml` | Builds the book and publishes it to GitHub Pages on every push to `main` |
+| `docs/` | The project documents (a Quarto book: `quarto preview docs`). The plan for the book: `docs/PLANNING-v001.qmd` |
+
+## Build the book on your computer
+
+Use Python 3.11, 3.12 or 3.13 (Colab has 3.13; pandas 2.2.3 does not support 3.14).
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install --no-cache-dir -r requirements.txt   # once
+.venv/bin/jb build jb                                                                # then open jb/_build/html/index.html
+```
 
 <!-- begin yrProject setup: written by yrProject.sh; "yrProject.sh update" replaces this block -->
 **This repository uses yrProject** (yrProject v0.9.3; parts: rules, yrIssues, yrRenewals, docs, subjexts). yrProject is the templates and the tool that give a project one base for AI-assisted work (rules for AI agents, skills, hooks, GitHub issues for work to do later, project docs).

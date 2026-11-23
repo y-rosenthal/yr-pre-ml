@@ -1,0 +1,39 @@
+# Build the book (Jupyter Book v1, in jb/) and publish it to GitHub Pages: the gh-pages branch, which GitHub Pages
+# serves at https://y-rosenthal.github.io/yr-pre-ml/. The build runs every notebook.
+# Runs on every push to main, and by hand from the Actions tab (workflow_dispatch).
+# Adapted from yrThinkPython's deploy-book.yml (docs/PLANNING-v001.qmd, "Files copied from other repositories").
+name: deploy-book
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-book
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"   # the Python of Google Colab (requirements.txt)
+
+      - name: Install the packages of the book and the tools that build it
+        run: pip install -r requirements.txt ghp-import
+
+      - name: Build the HTML book (runs every notebook)
+        run: jb build jb
+
+      - name: Publish to the gh-pages branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          ghp-import -n -p -f -m "Deploy book from ${GITHUB_SHA::7}" jb/_build/html

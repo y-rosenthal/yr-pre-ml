@@ -25,6 +25,9 @@ book:
       chapters:
         - DOC-GUIDE-v001.qmd
         - QUARTO-GUIDE-v001.qmd
+    - part: "Work"
+      chapters:
+        - PLANNING-v001.qmd
 
 format:
   html:

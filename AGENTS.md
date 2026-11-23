@@ -23,7 +23,46 @@ a comment that names yrProject and its version, and says whether the file belong
 - "Project" alone does not mean the yrProject setup. Unless the user says yrProject or it is obvious, ask.
 <!-- end yrProject setup -->
 
-Project rules go here. The shared rules below come from yrProject.
+These rules are for every collaborator and every coding agent. `CLAUDE.md` imports this file. Put new project
+rules here, outside the yrProject blocks. The shared rules below come from yrProject.
+
+## This repository
+
+- The source of the book *What is Machine Learning?* (subtitle: *Prerequisite material for getting started*): a
+  Jupyter Book v1 in `jb/` with Colab-first notebooks, for the instructor's (Prof. Rosenthal's) business-school
+  Python course. It teaches NumPy and pandas before machine learning.
+- **The plan, the decisions and the steps are in `docs/PLANNING-v001.qmd`.** Read it before you work on the book.
+- The repository is public: `y-rosenthal/yr-pre-ml`. Every push to `main` builds the book and publishes it to
+  <https://y-rosenthal.github.io/yr-pre-ml/> (`.github/workflows/deploy-book.yml`).
+- The book is the subjexts package `y-rosenthal/pre-ml`. Labels live on subjexts, not in this repository.
+
+## How to work
+
+- Work on a topic branch. Merge into `main` and push only when the instructor says so: the push publishes the
+  book.
+- Add files to git by path, never `git add -A`.
+- Never rename a notebook after it is published: the Colab links and the subjexts marks use its address.
+- Write only inside this repository. Other repositories (yrThinkPython, yrS4, yrProject, aiasdSrc) are read-only.
+  While yrProject's book-tools work is in progress, do not touch yrProject's repository: run `yrProject.sh update`
+  with `--no-register` (`docs/PLANNING-v001.qmd`, "Step 0").
+- No dependency on yrThinkPython. A file copied from it is this book's own file, and the list "Files copied from
+  other repositories" in `docs/PLANNING-v001.qmd` names it. Nothing here runs yrThinkPython's files or uses its
+  environments.
+- Older files that are kept, not deleted yet, go into `oldfiles/`. Git does not track that folder.
+
+## The book's content
+
+- No dates, semesters, course sections or lecture numbers in the book. Parts have topic names.
+- The writing rules for the notebooks are in `docs/PLANNING-v001.qmd`, "Writing rules for the notebooks".
+- No exam questions in this public repository: they go to the private `yrQuestionBank` repository.
+- The package versions are Colab's, pinned in `requirements.txt` (`docs/PLANNING-v001.qmd`, D7).
+
+## Build
+
+- The build environment is `.venv` in this folder (git ignores it), made from the system Python 3.12. On the
+  instructor's computer, `python3` is linuxbrew's Python 3.14, which pandas 2.2.3 does not support, so give the
+  full path: `/usr/bin/python3 -m venv .venv && .venv/bin/pip install --no-cache-dir -r requirements.txt`.
+- Build the book: `.venv/bin/jb build jb`. Open `jb/_build/html/index.html`. The build runs every notebook.
 
 <!-- begin shared rules: yrProject v0.9.3, from templates/v0.9.3/AGENTS-shared-rules.md in yrProject; "yrProject.sh update" replaces this block, unless it was changed by hand -->
 
