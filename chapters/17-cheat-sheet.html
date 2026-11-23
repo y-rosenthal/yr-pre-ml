@@ -1,0 +1,1088 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cheat sheet &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/17-cheat-sheet';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/17-cheat-sheet.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The datasets" href="18-datasets.html" />
+    <link rel="prev" title="Common errors and how to fix them" href="16-common-errors.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/17-cheat-sheet.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cheat sheet</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-creating-arrays">NumPy: creating arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-indexing-slicing-and-arithmetic">NumPy: indexing, slicing and arithmetic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-masks-and-summaries">NumPy: masks and summaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-two-dimensional-arrays">NumPy: two-dimensional arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-and-dataframes">pandas: Series and DataFrames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-reading-and-describing-data">pandas: reading and describing data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-selecting-with-loc-and-iloc">pandas: selecting with loc and iloc</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-filtering-rows">pandas: filtering rows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-new-columns-and-sorting">pandas: new columns and sorting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-grouping-and-charts">pandas: grouping and charts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-preparing-data-for-machine-learning">pandas: preparing data for machine learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-code">The model code</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cheat-sheet">
+<h1>Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Link to this heading">#</a></h1>
+<p>The NumPy and pandas forms that this book teaches, on one page. Each table gives the forms of one chapter, with
+the chapter’s number and title, and what each form means in one line. In the tables, <code class="docutils literal notranslate"><span class="pre">a</span></code> stands for a NumPy array,
+<code class="docutils literal notranslate"><span class="pre">s</span></code> for a pandas Series, <code class="docutils literal notranslate"><span class="pre">df</span></code> for a DataFrame, <code class="docutils literal notranslate"><span class="pre">mask</span></code> for a Boolean mask and <code class="docutils literal notranslate"><span class="pre">totals</span></code> for a grouped result, such as
+<code class="docutils literal notranslate"><span class="pre">sales.groupby(&quot;store&quot;)[&quot;revenue&quot;].sum()</span></code>. <code class="docutils literal notranslate"><span class="pre">rename</span></code>, <code class="docutils literal notranslate"><span class="pre">drop</span></code>, <code class="docutils literal notranslate"><span class="pre">dropna</span></code>, <code class="docutils literal notranslate"><span class="pre">fillna</span></code>, <code class="docutils literal notranslate"><span class="pre">reset_index</span></code>, <code class="docutils literal notranslate"><span class="pre">sort_values</span></code> and
+<code class="docutils literal notranslate"><span class="pre">get_dummies</span></code> return a new table (or a new column): assign the result. The examples use the book’s data files (see
+the appendix <em>The datasets</em>). When something fails, see the appendix <em>Common errors and how to fix them</em>.</p>
+<blockquote>
+<div><p><strong>In Thonny:</strong> a notebook shows the value of the last line of a cell; a script shows only what you print. Write
+<code class="docutils literal notranslate"><span class="pre">print(df.head())</span></code> where Colab needs only <code class="docutils literal notranslate"><span class="pre">df.head()</span></code>.</p>
+</div></blockquote>
+<section id="numpy-creating-arrays">
+<h2>NumPy: creating arrays<a class="headerlink" href="#numpy-creating-arrays" title="Link to this heading">#</a></h2>
+<p>Chapter 3, <em>From lists to NumPy arrays</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">numpy</span> <span class="pre">as</span> <span class="pre">np</span></code></p></td>
+<td><p>Load NumPy, with the short name <code class="docutils literal notranslate"><span class="pre">np</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">np.array([19.99,</span> <span class="pre">5.49,</span> <span class="pre">3.00])</span></code></p></td>
+<td><p>An array from a list; it holds values of one type</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">np.arange(5)</span></code>, <code class="docutils literal notranslate"><span class="pre">np.arange(1,</span> <span class="pre">13)</span></code></p></td>
+<td><p>The whole numbers from the start up to the stop, <strong>without</strong> the stop</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">type(a)</span></code>, <code class="docutils literal notranslate"><span class="pre">len(a)</span></code>, <code class="docutils literal notranslate"><span class="pre">a.size</span></code></p></td>
+<td><p>The type of the object; the number of values</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.dtype</span></code></p></td>
+<td><p>The type of the values: <code class="docutils literal notranslate"><span class="pre">int64</span></code>, <code class="docutils literal notranslate"><span class="pre">float64</span></code>, <code class="docutils literal notranslate"><span class="pre">bool</span></code>, …</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.tolist()</span></code></p></td>
+<td><p>The values as a Python list</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">*</span> <span class="pre">1.08</span></code></p></td>
+<td><p>Each value times 1.08 (no loop)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">*</span> <span class="pre">2</span></code></p></td>
+<td><p>Add element by element; double each value (for lists: join; repeat)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="numpy-indexing-slicing-and-arithmetic">
+<h2>NumPy: indexing, slicing and arithmetic<a class="headerlink" href="#numpy-indexing-slicing-and-arithmetic" title="Link to this heading">#</a></h2>
+<p>Chapter 4, <em>Indexing, slicing and arithmetic</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a[0]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[-1]</span></code></p></td>
+<td><p>The first value; the last value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a[1:4]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[:3]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[::2]</span></code></p></td>
+<td><p>Positions 1 to 3 (the end is not included); the first 3; every second value</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a[0]</span> <span class="pre">=</span> <span class="pre">25</span></code></p></td>
+<td><p>Change a value (a float put into an int array is cut)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">part</span> <span class="pre">=</span> <span class="pre">a[1:4].copy()</span></code></p></td>
+<td><p>A slice is a view of the original; <code class="docutils literal notranslate"><span class="pre">.copy()</span></code> makes it separate</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">units</span> <span class="pre">*</span> <span class="pre">prices</span></code></p></td>
+<td><p>Element by element, for two arrays of the same length</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">np.round(a,</span> <span class="pre">2)</span></code>, <code class="docutils literal notranslate"><span class="pre">np.sqrt(a)</span></code>, <code class="docutils literal notranslate"><span class="pre">np.abs(a)</span></code></p></td>
+<td><p>Round to 2 decimals; square root; absolute value, for each value</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="numpy-masks-and-summaries">
+<h2>NumPy: masks and summaries<a class="headerlink" href="#numpy-masks-and-summaries" title="Link to this heading">#</a></h2>
+<p>Chapter 5, <em>Comparisons and Boolean masks</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">&gt;</span> <span class="pre">50</span></code></p></td>
+<td><p>A mask: an array of <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code> (dtype <code class="docutils literal notranslate"><span class="pre">bool</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">prices[prices</span> <span class="pre">&gt;</span> <span class="pre">50]</span></code></p></td>
+<td><p>The values where the mask is <code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(a</span> <span class="pre">&gt;</span> <span class="pre">1)</span> <span class="pre">&amp;</span> <span class="pre">(a</span> <span class="pre">&lt;</span> <span class="pre">5)</span></code>, <code class="docutils literal notranslate"><span class="pre">(a</span> <span class="pre">&lt;</span> <span class="pre">1)</span> <span class="pre">|</span> <span class="pre">(a</span> <span class="pre">&gt;</span> <span class="pre">5)</span></code>, <code class="docutils literal notranslate"><span class="pre">~mask</span></code></p></td>
+<td><p>And, or, not; the parentheses are needed (not <code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code>, <code class="docutils literal notranslate"><span class="pre">not</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.sum()</span></code>, <code class="docutils literal notranslate"><span class="pre">a.mean()</span></code>, <code class="docutils literal notranslate"><span class="pre">a.min()</span></code>, <code class="docutils literal notranslate"><span class="pre">a.max()</span></code>, <code class="docutils literal notranslate"><span class="pre">np.median(a)</span></code></p></td>
+<td><p>The total, average, smallest, largest and middle value</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.argmax()</span></code></p></td>
+<td><p>The position of the largest value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mask.sum()</span></code>, <code class="docutils literal notranslate"><span class="pre">mask.mean()</span></code></p></td>
+<td><p>How many values are <code class="docutils literal notranslate"><span class="pre">True</span></code>; the share that is <code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="numpy-two-dimensional-arrays">
+<h2>NumPy: two-dimensional arrays<a class="headerlink" href="#numpy-two-dimensional-arrays" title="Link to this heading">#</a></h2>
+<p>Chapter 6, <em>Two-dimensional arrays</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">np.array([[5,</span> <span class="pre">7,</span> <span class="pre">6],</span> <span class="pre">[3,</span> <span class="pre">4,</span> <span class="pre">8]])</span></code></p></td>
+<td><p>A table of numbers: a list of rows</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.shape</span></code>, <code class="docutils literal notranslate"><span class="pre">a.ndim</span></code></p></td>
+<td><p>(rows, columns); the number of dimensions</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a[1,</span> <span class="pre">2]</span></code></p></td>
+<td><p>The value in row 1, column 2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a[1]</span></code> or <code class="docutils literal notranslate"><span class="pre">a[1,</span> <span class="pre">:]</span></code>; <code class="docutils literal notranslate"><span class="pre">a[:,</span> <span class="pre">2]</span></code></p></td>
+<td><p>A whole row; a whole column</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a[0:2,</span> <span class="pre">1:4]</span></code></p></td>
+<td><p>Rows 0 and 1, columns 1 to 3</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.sum(axis=0)</span></code></p></td>
+<td><p>One result for each column (“down the rows”)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.sum(axis=1)</span></code></p></td>
+<td><p>One result for each row; <code class="docutils literal notranslate"><span class="pre">mean</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> take <code class="docutils literal notranslate"><span class="pre">axis</span></code> too</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df.to_numpy()</span></code></p></td>
+<td><p>The NumPy array inside a DataFrame or Series</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="pandas-series-and-dataframes">
+<h2>pandas: Series and DataFrames<a class="headerlink" href="#pandas-series-and-dataframes" title="Link to this heading">#</a></h2>
+<p>Chapter 7, <em>Series and DataFrames</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pandas</span> <span class="pre">as</span> <span class="pre">pd</span></code></p></td>
+<td><p>Load pandas, with the short name <code class="docutils literal notranslate"><span class="pre">pd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pd.Series([120,</span> <span class="pre">95],</span> <span class="pre">index=[&quot;S1&quot;,</span> <span class="pre">&quot;S2&quot;],</span> <span class="pre">name=&quot;sales&quot;)</span></code></p></td>
+<td><p>One column of values with labels (the index)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">s.to_numpy()</span></code> (<code class="docutils literal notranslate"><span class="pre">s.values</span></code> in older code), <code class="docutils literal notranslate"><span class="pre">s.index</span></code></p></td>
+<td><p>The values as an array; the labels</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">s[&quot;S2&quot;]</span></code></p></td>
+<td><p>The value with the label <code class="docutils literal notranslate"><span class="pre">S2</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pd.DataFrame({&quot;city&quot;:</span> <span class="pre">[...],</span> <span class="pre">&quot;sales&quot;:</span> <span class="pre">[...]})</span></code></p></td>
+<td><p>A table from a dictionary of lists, one list for each column</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df[&quot;sales&quot;]</span></code></p></td>
+<td><p>One column, as a Series</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df[[&quot;city&quot;,</span> <span class="pre">&quot;sales&quot;]]</span></code></p></td>
+<td><p>Several columns, as a DataFrame (double brackets)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df.columns</span></code>, <code class="docutils literal notranslate"><span class="pre">df.index</span></code>, <code class="docutils literal notranslate"><span class="pre">df.shape</span></code>, <code class="docutils literal notranslate"><span class="pre">len(df)</span></code></p></td>
+<td><p>The column names; the row labels; (rows, columns); the number of rows</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df.dtypes</span></code></p></td>
+<td><p>The type of each column (text is <code class="docutils literal notranslate"><span class="pre">object</span></code>, or <code class="docutils literal notranslate"><span class="pre">str</span></code> in pandas 3)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="pandas-reading-and-describing-data">
+<h2>pandas: reading and describing data<a class="headerlink" href="#pandas-reading-and-describing-data" title="Link to this heading">#</a></h2>
+<p>Chapter 8, <em>Reading and describing data</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DATA_URL</span> <span class="pre">=</span> <span class="pre">&quot;https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/&quot;</span></code></p></td>
+<td><p>The address of the book’s data folder</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales</span> <span class="pre">=</span> <span class="pre">pd.read_csv(DATA_URL</span> <span class="pre">+</span> <span class="pre">&quot;sales.csv&quot;)</span></code></p></td>
+<td><p>Read a CSV file into a DataFrame</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df.head()</span></code>, <code class="docutils literal notranslate"><span class="pre">df.head(10)</span></code>, <code class="docutils literal notranslate"><span class="pre">df.tail()</span></code></p></td>
+<td><p>The first 5 rows; the first 10; the last 5</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df.info()</span></code></p></td>
+<td><p>Rows, columns, non-null counts and dtypes (it prints itself)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df.describe()</span></code></p></td>
+<td><p>Count, mean, std, min, quartiles and max of the number columns</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df[&quot;region&quot;].unique()</span></code>, <code class="docutils literal notranslate"><span class="pre">df[&quot;region&quot;].nunique()</span></code></p></td>
+<td><p>The different values of a column; how many there are</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="pandas-selecting-with-loc-and-iloc">
+<h2>pandas: selecting with loc and iloc<a class="headerlink" href="#pandas-selecting-with-loc-and-iloc" title="Link to this heading">#</a></h2>
+<p>Chapter 9, <em>Selecting with loc and iloc</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.set_index(&quot;store&quot;)</span></code></p></td>
+<td><p>Use a column as the row labels</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df.loc[&quot;S3&quot;]</span></code>, <code class="docutils literal notranslate"><span class="pre">df.loc[&quot;S3&quot;,</span> <span class="pre">&quot;employees&quot;]</span></code></p></td>
+<td><p>A row by its label; one value by row and column labels</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df.loc[[&quot;S1&quot;,</span> <span class="pre">&quot;S4&quot;],</span> <span class="pre">[&quot;city&quot;,</span> <span class="pre">&quot;sales&quot;]]</span></code></p></td>
+<td><p>Some rows and some columns, by labels</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df.loc[&quot;S2&quot;:&quot;S4&quot;]</span></code></p></td>
+<td><p>Rows by labels, <strong>including</strong> the end</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df.iloc[0]</span></code>, <code class="docutils literal notranslate"><span class="pre">df.iloc[0,</span> <span class="pre">2]</span></code></p></td>
+<td><p>A row by its position; one value by positions</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df.iloc[1:3]</span></code>, <code class="docutils literal notranslate"><span class="pre">df.iloc[:,</span> <span class="pre">0:2]</span></code></p></td>
+<td><p>Rows by positions, <strong>without</strong> the end; the first two columns</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df.loc[&quot;S3&quot;,</span> <span class="pre">&quot;employees&quot;]</span> <span class="pre">=</span> <span class="pre">25</span></code></p></td>
+<td><p>Change one value</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="pandas-filtering-rows">
+<h2>pandas: filtering rows<a class="headerlink" href="#pandas-filtering-rows" title="Link to this heading">#</a></h2>
+<p>Chapter 10, <em>Filtering rows</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;units&quot;]</span> <span class="pre">&gt;</span> <span class="pre">10</span></code></p></td>
+<td><p>A Boolean Series: a mask with one <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code> for each row</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales[sales[&quot;units&quot;]</span> <span class="pre">&gt;</span> <span class="pre">10]</span></code></p></td>
+<td><p>The rows where the mask is <code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mask.sum()</span></code>, <code class="docutils literal notranslate"><span class="pre">len(sales[mask])</span></code></p></td>
+<td><p>How many rows match</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">(sales[&quot;units&quot;]</span> <span class="pre">&gt;</span> <span class="pre">10)</span> <span class="pre">&amp;</span> <span class="pre">(sales[&quot;region&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;North&quot;)</span></code></p></td>
+<td><p>Both conditions; <code class="docutils literal notranslate"><span class="pre">|</span></code> for either, <code class="docutils literal notranslate"><span class="pre">~</span></code> for not</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;store&quot;].isin([&quot;S1&quot;,</span> <span class="pre">&quot;S2&quot;])</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> where the value is one of the list</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales.loc[mask,</span> <span class="pre">[&quot;date&quot;,</span> <span class="pre">&quot;store&quot;,</span> <span class="pre">&quot;units&quot;]]</span></code></p></td>
+<td><p>The matching rows, and only these columns</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales2</span> <span class="pre">=</span> <span class="pre">sales.copy()</span></code></p></td>
+<td><p>A separate copy to change</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales2.loc[mask,</span> <span class="pre">&quot;discount&quot;]</span> <span class="pre">=</span> <span class="pre">0.5</span></code></p></td>
+<td><p>Change a column in the matching rows (never <code class="docutils literal notranslate"><span class="pre">sales2[mask][&quot;discount&quot;]</span> <span class="pre">=</span> <span class="pre">0.5</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="pandas-new-columns-and-sorting">
+<h2>pandas: new columns and sorting<a class="headerlink" href="#pandas-new-columns-and-sorting" title="Link to this heading">#</a></h2>
+<p>Chapter 11, <em>New columns and sorting</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;revenue&quot;]</span> <span class="pre">=</span> <span class="pre">sales[&quot;units&quot;]</span> <span class="pre">*</span> <span class="pre">sales[&quot;price&quot;]</span> <span class="pre">*</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">sales[&quot;discount&quot;])</span></code></p></td>
+<td><p>A new column from other columns</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;revenue&quot;]</span> <span class="pre">=</span> <span class="pre">sales[&quot;revenue&quot;].round(2)</span></code></p></td>
+<td><p>Round each value to 2 decimals</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;month&quot;]</span> <span class="pre">=</span> <span class="pre">sales[&quot;date&quot;].str[:7]</span></code></p></td>
+<td><p>The first 7 characters of each text value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;size&quot;]</span> <span class="pre">=</span> <span class="pre">&quot;small&quot;</span></code>, then <code class="docutils literal notranslate"><span class="pre">sales.loc[sales[&quot;units&quot;]</span> <span class="pre">&gt;=</span> <span class="pre">8,</span> <span class="pre">&quot;size&quot;]</span> <span class="pre">=</span> <span class="pre">&quot;large&quot;</span></code></p></td>
+<td><p>A column from a condition</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.rename(columns={&quot;units&quot;:</span> <span class="pre">&quot;quantity&quot;})</span></code></p></td>
+<td><p>Rename columns</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.drop(columns=[&quot;discount&quot;])</span></code></p></td>
+<td><p>Remove columns</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales.sort_values(&quot;revenue&quot;,</span> <span class="pre">ascending=False)</span></code></p></td>
+<td><p>Sort the rows, the largest first</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales.sort_values([&quot;store&quot;,</span> <span class="pre">&quot;revenue&quot;])</span></code></p></td>
+<td><p>Sort by store, then by revenue within each store</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales.sort_values(&quot;revenue&quot;,</span> <span class="pre">ascending=False).head()</span></code></p></td>
+<td><p>The top 5</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.reset_index(drop=True)</span></code></p></td>
+<td><p>Number the rows 0, 1, 2, … again</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales.nlargest(5,</span> <span class="pre">&quot;revenue&quot;)</span></code></p></td>
+<td><p>The 5 rows with the largest revenue</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="pandas-grouping-and-charts">
+<h2>pandas: grouping and charts<a class="headerlink" href="#pandas-grouping-and-charts" title="Link to this heading">#</a></h2>
+<p>Chapter 12, <em>Grouping and summarizing</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;store&quot;].value_counts()</span></code></p></td>
+<td><p>How many rows have each value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;store&quot;].value_counts(normalize=True)</span></code></p></td>
+<td><p>The share of rows with each value</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales.groupby(&quot;store&quot;)[&quot;revenue&quot;].sum()</span></code></p></td>
+<td><p>The total revenue of each store; also <code class="docutils literal notranslate"><span class="pre">.mean()</span></code>, <code class="docutils literal notranslate"><span class="pre">.count()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales.groupby(&quot;store&quot;).size()</span></code></p></td>
+<td><p>The number of rows in each group</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">totals.sort_values(ascending=False)</span></code></p></td>
+<td><p>Sort a grouped result</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sales.groupby([&quot;region&quot;,</span> <span class="pre">&quot;category&quot;])[&quot;revenue&quot;].sum()</span></code></p></td>
+<td><p>One result for each pair of values</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sales.groupby(&quot;store&quot;)[&quot;revenue&quot;].agg([&quot;sum&quot;,</span> <span class="pre">&quot;mean&quot;,</span> <span class="pre">&quot;count&quot;])</span></code></p></td>
+<td><p>Several summaries at once</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">totals.reset_index()</span></code></p></td>
+<td><p>A grouped result back as a DataFrame</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">matplotlib.pyplot</span> <span class="pre">as</span> <span class="pre">plt</span></code></p></td>
+<td><p>Load matplotlib, for charts</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">totals.plot(kind=&quot;bar&quot;)</span></code></p></td>
+<td><p>A bar chart of a Series</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">monthly.plot(kind=&quot;line&quot;,</span> <span class="pre">marker=&quot;o&quot;)</span></code></p></td>
+<td><p>A line chart, with a dot for each value (<code class="docutils literal notranslate"><span class="pre">monthly</span></code> is the revenue of each month)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plt.title(&quot;...&quot;)</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.xlabel(&quot;...&quot;)</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.ylabel(&quot;...&quot;)</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code></p></td>
+<td><p>A title and axis labels; show the chart (always last)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="pandas-preparing-data-for-machine-learning">
+<h2>pandas: preparing data for machine learning<a class="headerlink" href="#pandas-preparing-data-for-machine-learning" title="Link to this heading">#</a></h2>
+<p>Chapter 13, <em>Preparing data for machine learning</em>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df.isna().sum()</span></code></p></td>
+<td><p>The number of missing values in each column</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df[df.isna().any(axis=1)]</span></code></p></td>
+<td><p>The rows with at least one missing value</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.dropna()</span></code>, <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.dropna(subset=[&quot;age&quot;])</span></code></p></td>
+<td><p>Drop the rows with a missing value (anywhere; in <code class="docutils literal notranslate"><span class="pre">age</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df[&quot;age&quot;]</span> <span class="pre">=</span> <span class="pre">df[&quot;age&quot;].fillna(df[&quot;age&quot;].median())</span></code></p></td>
+<td><p>Fill the missing numbers with the median</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df[&quot;city&quot;]</span> <span class="pre">=</span> <span class="pre">df[&quot;city&quot;].fillna(&quot;Unknown&quot;)</span></code></p></td>
+<td><p>Fill the missing text with <code class="docutils literal notranslate"><span class="pre">&quot;Unknown&quot;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">pd.get_dummies(df,</span> <span class="pre">columns=[&quot;region&quot;],</span> <span class="pre">dtype=int)</span></code></p></td>
+<td><p>One 0/1 column for each value of a text column</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">=</span> <span class="pre">df.drop(columns=&quot;annual_spend&quot;)</span></code></p></td>
+<td><p>The predictors: every column but the target</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">df[&quot;annual_spend&quot;]</span></code></p></td>
+<td><p>The target: one column</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">X.isna().sum().sum()</span> <span class="pre">==</span> <span class="pre">0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> when <code class="docutils literal notranslate"><span class="pre">X</span></code> has no missing value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">X.dtypes</span></code>, <code class="docutils literal notranslate"><span class="pre">X.shape</span></code>, <code class="docutils literal notranslate"><span class="pre">y.shape</span></code></p></td>
+<td><p>All number columns? The same number of rows in <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>?</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">X.to_numpy()</span></code></p></td>
+<td><p>The 2-D NumPy array inside <code class="docutils literal notranslate"><span class="pre">X</span></code> (as in chapter 6)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="the-model-code">
+<h2>The model code<a class="headerlink" href="#the-model-code" title="Link to this heading">#</a></h2>
+<p>Chapter 1, <em>A first machine-learning example</em>, and the projects of chapters 14 and 15. <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be ready:
+numbers only, no missing values.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">models</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">"linear regression"</span><span class="p">,</span> <span class="n">LinearRegression</span><span class="p">()),</span>
+          <span class="p">(</span><span class="s2">"decision tree"</span><span class="p">,</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)),</span>
+          <span class="p">(</span><span class="s2">"random forest"</span><span class="p">,</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))]</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Form</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">train_test_split(X,</span> <span class="pre">y,</span> <span class="pre">test_size=0.25,</span> <span class="pre">random_state=42)</span></code></p></td>
+<td><p>75% of the rows to learn from, 25% to test on, the same split each time</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">model.fit(X_train,</span> <span class="pre">y_train)</span></code></p></td>
+<td><p>The model learns from the training set</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">model.predict(X_test)</span></code></p></td>
+<td><p>One prediction for each test row</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mean_absolute_error(y_test,</span> <span class="pre">predictions)</span></code></p></td>
+<td><p>The MAE: the average size of the errors, in the units of the target</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">model.intercept_</span></code>, <code class="docutils literal notranslate"><span class="pre">model.coef_</span></code></p></td>
+<td><p>The <code class="docutils literal notranslate"><span class="pre">a</span></code> and the <code class="docutils literal notranslate"><span class="pre">b</span></code> values that <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> learned (chapter 2, <em>What does a model learn?</em>)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="16-common-errors.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Common errors and how to fix them</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="18-datasets.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The datasets</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-creating-arrays">NumPy: creating arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-indexing-slicing-and-arithmetic">NumPy: indexing, slicing and arithmetic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-masks-and-summaries">NumPy: masks and summaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-two-dimensional-arrays">NumPy: two-dimensional arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-and-dataframes">pandas: Series and DataFrames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-reading-and-describing-data">pandas: reading and describing data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-selecting-with-loc-and-iloc">pandas: selecting with loc and iloc</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-filtering-rows">pandas: filtering rows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-new-columns-and-sorting">pandas: new columns and sorting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-grouping-and-charts">pandas: grouping and charts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-preparing-data-for-machine-learning">pandas: preparing data for machine learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-code">The model code</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

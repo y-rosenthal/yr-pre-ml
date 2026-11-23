@@ -1,0 +1,1341 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4. Indexing, slicing and arithmetic &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04-indexing-and-arithmetic';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/04-indexing-and-arithmetic.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Comparisons and Boolean masks" href="05-boolean-masks.html" />
+    <link rel="prev" title="3. From lists to NumPy arrays" href="03-lists-and-arrays.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/04-indexing-and-arithmetic.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/04-indexing-and-arithmetic.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Indexing, slicing and arithmetic</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shops-data">4.1. The shop’s data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-element-indexing">4.2. One element: indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-elements-slicing">4.3. Several elements: slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-an-element">4.4. Changing an element</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-slice-is-a-view">4.5. A slice is a view</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-between-two-arrays">4.6. Arithmetic between two arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-with-a-number">4.7. Arithmetic with a number</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-of-different-lengths">4.8. Arrays of different lengths</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-functions-for-whole-arrays">4.9. NumPy functions for whole arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">4.10. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">4.11. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">4.12. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">4.12.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">4.12.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-medium">4.12.3. Question 3 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">4.12.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">4.12.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">4.12.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">4.12.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">4.12.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="indexing-slicing-and-arithmetic">
+<h1><span class="section-number">4. </span>Indexing, slicing and arithmetic<a class="headerlink" href="#indexing-slicing-and-arithmetic" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/04-indexing-and-arithmetic.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>In the previous chapter, we made arrays and did arithmetic on all their values at once. In this chapter, we pick
+out one value or a part of an array, change values, and compute with two arrays together: for example, the revenue
+of each product from its price and its units sold. We also meet a few NumPy functions that work on every element.</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>get one element of an array with an index (<code class="docutils literal notranslate"><span class="pre">a[0]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[-1]</span></code>), and several elements with a slice (<code class="docutils literal notranslate"><span class="pre">a[1:4]</span></code>,
+<code class="docutils literal notranslate"><span class="pre">a[::2]</span></code>);</p></li>
+<li><p>change an element, and avoid two surprises: decimals that disappear in an integer array, and a slice that
+changes the original array;</p></li>
+<li><p>do arithmetic between two arrays of the same length, and between an array and a number;</p></li>
+<li><p>read the error that two arrays of different lengths give;</p></li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">np.round</span></code>, <code class="docutils literal notranslate"><span class="pre">np.abs</span></code> and <code class="docutils literal notranslate"><span class="pre">np.sqrt</span></code> on a whole array.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As in the previous chapter, the first cell imports NumPy with the short name <code class="docutils literal notranslate"><span class="pre">np</span></code>. Run it once, before the other
+cells.</p>
+<section id="the-shops-data">
+<h2><span class="section-number">4.1. </span>The shop’s data<a class="headerlink" href="#the-shops-data" title="Link to this heading">#</a></h2>
+<p>A small shop sells six products. We keep their prices in one array, and the units sold last week in another. The
+two arrays are in the same order, so the same position means the same product in both:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Position</p></th>
+<th class="head"><p>Product</p></th>
+<th class="head"><p>Price ($)</p></th>
+<th class="head"><p>Units sold</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>coffee beans</p></td>
+<td><p>12.00</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>tea</p></td>
+<td><p>4.50</p></td>
+<td><p>25</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>chocolate</p></td>
+<td><p>7.25</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>coffee grinder</p></td>
+<td><p>30.00</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>cookies</p></td>
+<td><p>2.75</p></td>
+<td><p>40</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>mug</p></td>
+<td><p>15.50</p></td>
+<td><p>6</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">12.00</span><span class="p">,</span> <span class="mf">4.50</span><span class="p">,</span> <span class="mf">7.25</span><span class="p">,</span> <span class="mf">30.00</span><span class="p">,</span> <span class="mf">2.75</span><span class="p">,</span> <span class="mf">15.50</span><span class="p">])</span>
+<span class="n">units</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">prices</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([12.  ,  4.5 ,  7.25, 30.  ,  2.75, 15.5 ])
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>In Thonny:</strong> wrap the last line in <code class="docutils literal notranslate"><span class="pre">print()</span></code>: <code class="docutils literal notranslate"><span class="pre">print(prices)</span></code>. Thonny then shows the values without the word
+<code class="docutils literal notranslate"><span class="pre">array</span></code> and without commas: <code class="docutils literal notranslate"><span class="pre">[12.</span>&#160;&#160;&#160; <span class="pre">4.5</span>&#160;&#160; <span class="pre">7.25</span> <span class="pre">30.</span>&#160;&#160;&#160; <span class="pre">2.75</span> <span class="pre">15.5</span> <span class="pre">]</span></code>.</p>
+</div></blockquote>
+<p>Colab shows the six prices. Notice that the positions in the table start at 0, not at 1: arrays count positions
+the same way as Python lists.</p>
+</section>
+<section id="one-element-indexing">
+<h2><span class="section-number">4.2. </span>One element: indexing<a class="headerlink" href="#one-element-indexing" title="Link to this heading">#</a></h2>
+<p>To get one element, write its position in square brackets after the array’s name. The position is called the
+<strong>index</strong>. The coffee beans are at position 0:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(12.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Colab shows <code class="docutils literal notranslate"><span class="pre">np.float64(12.0)</span></code>. This is the number 12.0, stored as a NumPy <code class="docutils literal notranslate"><span class="pre">float64</span></code> (the dtype of the array, from
+the previous chapter). In Thonny, <code class="docutils literal notranslate"><span class="pre">print(prices[0])</span></code> shows just <code class="docutils literal notranslate"><span class="pre">12.0</span></code>. We can use it like any other number. For
+example, here is the revenue of the coffee grinder, at position 3:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">units</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(60.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>30.00 × 2 = 60.0 dollars. A <strong>negative index</strong> counts from the end: <code class="docutils literal notranslate"><span class="pre">-1</span></code> is the last element, <code class="docutils literal notranslate"><span class="pre">-2</span></code> the one before
+it, and so on. The last product is the mug:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(15.5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">-1</span></code>, we do not need to know how long the array is.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> writing <code class="docutils literal notranslate"><span class="pre">prices[6]</span></code> for the sixth product. The positions are 0 to 5, so the sixth product is
+<code class="docutils literal notranslate"><span class="pre">prices[5]</span></code> (or <code class="docutils literal notranslate"><span class="pre">prices[-1]</span></code>). <code class="docutils literal notranslate"><span class="pre">prices[6]</span></code> gives the error <code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">index</span> <span class="pre">6</span> <span class="pre">is</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">bounds</span> <span class="pre">for</span> <span class="pre">axis</span> <span class="pre">0</span> <span class="pre">with</span> <span class="pre">size</span> <span class="pre">6</span></code>: there is no position 6 in an array of size 6. (Axis 0 is the one direction of a 1-D array; the
+chapter <em>Two-dimensional arrays</em> explains axes.)</p>
+</div></blockquote>
+</section>
+<section id="several-elements-slicing">
+<h2><span class="section-number">4.3. </span>Several elements: slicing<a class="headerlink" href="#several-elements-slicing" title="Link to this heading">#</a></h2>
+<p>To get several neighboring elements, write a <strong>slice</strong>: a start and a stop, with a colon between them. Here are the
+prices at positions 1, 2 and 3:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 4.5 ,  7.25, 30.  ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>A slice gives a new, shorter array: the prices of the tea, the chocolate and the grinder. As with <code class="docutils literal notranslate"><span class="pre">np.arange</span></code> and
+with list slices, <strong>the stop is not included</strong>: <code class="docutils literal notranslate"><span class="pre">1:4</span></code> means the positions 1, 2 and 3.</p>
+<p>Leave out the start to begin at the first element. Here are the first three prices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([12.  ,  4.5 ,  7.25])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Leave out the stop to go to the end. <code class="docutils literal notranslate"><span class="pre">prices[3:]</span></code> gives the prices from position 3 to the end, the last three.</p>
+<p>A slice can also have a third number, the <strong>step</strong>, as in <code class="docutils literal notranslate"><span class="pre">start:stop:step</span></code>. With a step of 2, we get every second
+element. Here we leave out the start and the stop, so the slice covers the whole array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([12.  ,  7.25,  2.75])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The elements at positions 0, 2 and 4: the coffee beans, the chocolate and the cookies.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Slice</p></th>
+<th class="head"><p>Positions</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a[1:4]</span></code></p></td>
+<td><p>1, 2, 3</p></td>
+<td><p>from 1 up to (not including) 4</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a[:3]</span></code></p></td>
+<td><p>0, 1, 2</p></td>
+<td><p>the first three</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a[3:]</span></code></p></td>
+<td><p>3, 4, 5</p></td>
+<td><p>from 3 to the end</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a[::2]</span></code></p></td>
+<td><p>0, 2, 4</p></td>
+<td><p>every second element</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p><strong>Try it:</strong> what does <code class="docutils literal notranslate"><span class="pre">prices[1::2]</span></code> give? And <code class="docutils literal notranslate"><span class="pre">prices[-2:]</span></code>? Guess first, then run them.</p>
+</div></blockquote>
+</section>
+<section id="changing-an-element">
+<h2><span class="section-number">4.4. </span>Changing an element<a class="headerlink" href="#changing-an-element" title="Link to this heading">#</a></h2>
+<p>We can also change an element: put the index on the left of <code class="docutils literal notranslate"><span class="pre">=</span></code>. Another shop, a gift shop, keeps its prices in
+whole dollars. The price of its third product drops from 15 to 12 dollars:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gift_prices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">60</span><span class="p">])</span>
+<span class="n">gift_prices</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">gift_prices</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([25, 40, 12, 60])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The element at position 2 is now 12. The other elements did not change.</p>
+<p>Now the gift shop changes its first price from 25 to 24.99:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gift_prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">24.99</span>
+<span class="n">gift_prices</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([24, 40, 12, 60])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The price became 24, not 24.99!</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> putting a float into an integer array. The dtype of <code class="docutils literal notranslate"><span class="pre">gift_prices</span></code> is <code class="docutils literal notranslate"><span class="pre">int64</span></code>, because we made
+it from whole numbers, and an array holds one type. So NumPy <strong>cuts off</strong> the decimal part of 24.99: it does not
+even round it to 25. There is no error and no warning. If an array may need decimals, make it from floats at the
+start: <code class="docutils literal notranslate"><span class="pre">np.array([25.0,</span> <span class="pre">40.0,</span> <span class="pre">15.0,</span> <span class="pre">60.0])</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="a-slice-is-a-view">
+<h2><span class="section-number">4.5. </span>A slice is a view<a class="headerlink" href="#a-slice-is-a-view" title="Link to this heading">#</a></h2>
+<p>Here is a surprise. Let’s take a slice of <code class="docutils literal notranslate"><span class="pre">gift_prices</span></code>, and change an element of the slice:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_two</span> <span class="o">=</span> <span class="n">gift_prices</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">first_two</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">gift_prices</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0, 40, 12, 60])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">gift_prices</span></code> changed too: its first price is now 0. A slice of an array is a <strong>view</strong>: a window onto the same
+elements, not a copy of them. Changing the view changes the original array. NumPy works this way to save time and
+memory with large arrays. (A slice of a <em>list</em> is different: it is a copy.)</p>
+<p>When you want an independent array, add <code class="docutils literal notranslate"><span class="pre">.copy()</span></code>. First, let’s put the price back to 25:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gift_prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">first_two</span> <span class="o">=</span> <span class="n">gift_prices</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">first_two</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">gift_prices</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([25, 40, 12, 60])
+</pre></div>
+</div>
+</div>
+</div>
+<p>This time, <code class="docutils literal notranslate"><span class="pre">first_two</span></code> is a copy, and <code class="docutils literal notranslate"><span class="pre">gift_prices</span></code> keeps its price of 25.</p>
+</section>
+<section id="arithmetic-between-two-arrays">
+<h2><span class="section-number">4.6. </span>Arithmetic between two arrays<a class="headerlink" href="#arithmetic-between-two-arrays" title="Link to this heading">#</a></h2>
+<p>Now back to the six products of the shop. The revenue of a product is its units sold times its price. With two
+arrays of the same length, one line computes the revenue of every product:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">revenue</span> <span class="o">=</span> <span class="n">units</span> <span class="o">*</span> <span class="n">prices</span>
+<span class="n">revenue</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([120. , 112.5,  58. ,  60. , 110. ,  93. ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>NumPy multiplies the two arrays <strong>element by element</strong>: the first element by the first element (10 × 12.00 = 120
+for the coffee beans), the second by the second (25 × 4.50 = 112.5 for the tea), and so on. The result has one
+revenue for each product. <code class="docutils literal notranslate"><span class="pre">units</span></code> holds integers and <code class="docutils literal notranslate"><span class="pre">prices</span></code> holds floats, so the result holds floats.</p>
+<p>The other operators work the same way: <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code> and <code class="docutils literal notranslate"><span class="pre">**</span></code>. For example, here is what each product costs the
+shop, and the profit on one unit of each:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">costs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">7.00</span><span class="p">,</span> <span class="mf">2.00</span><span class="p">,</span> <span class="mf">4.00</span><span class="p">,</span> <span class="mf">18.00</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">,</span> <span class="mf">6.50</span><span class="p">])</span>
+<span class="n">prices</span> <span class="o">-</span> <span class="n">costs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 5.  ,  2.5 ,  3.25, 12.  ,  1.5 ,  9.  ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The shop earns <span class="math notranslate nohighlight">\(12.00 on each grinder it sells, but only \)</span>1.50 on a box of cookies.</p>
+<p>To add up the revenue of all the products, we can use <code class="docutils literal notranslate"><span class="pre">.sum()</span></code> (the next chapter shows this and other summaries):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">revenue</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(553.5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The shop’s revenue last week was $553.50.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> compute what the units sold last week cost the shop, for each product: <code class="docutils literal notranslate"><span class="pre">units</span> <span class="pre">*</span> <span class="pre">costs</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="arithmetic-with-a-number">
+<h2><span class="section-number">4.7. </span>Arithmetic with a number<a class="headerlink" href="#arithmetic-with-a-number" title="Link to this heading">#</a></h2>
+<p>An array and a single number work together too: NumPy uses the number with every element. Here are the prices
+during a sale with 10% off (we pay 90% of each price):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span> <span class="o">*</span> <span class="mf">0.9</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([10.8  ,  4.05 ,  6.525, 27.   ,  2.475, 13.95 ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The coffee beans now cost 10.80 dollars instead of 12.00, and every other price is 10% lower too. This is what we
+did in the previous chapter with <code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">*</span> <span class="pre">1.08</span></code>, and in the chapter <em>What does a model learn?</em> with
+<code class="docutils literal notranslate"><span class="pre">700</span> <span class="pre">*</span> <span class="pre">customers[&quot;visits_per_month&quot;]</span></code>. The other operators work with a number in the same way.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> raise every price by 50 cents with <code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">+</span> <span class="pre">0.50</span></code>. Then compute the units sold if every product
+sold 5 more, with <code class="docutils literal notranslate"><span class="pre">units</span> <span class="pre">+</span> <span class="pre">5</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="arrays-of-different-lengths">
+<h2><span class="section-number">4.8. </span>Arrays of different lengths<a class="headerlink" href="#arrays-of-different-lengths" title="Link to this heading">#</a></h2>
+<p>What if the two arrays do not have the same length? The manager wrote down this week’s units for only the first
+three products, and multiplies them by the six prices:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">this_week</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="n">this_week</span> <span class="o">*</span> <span class="n">prices</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">this_week</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">this_week</span> <span class="o">*</span> <span class="n">prices</span>
+
+<span class="ne">ValueError</span>: operands could not be broadcast together with shapes (3,) (6,) 
+</pre></div>
+</div>
+</div>
+</div>
+<p>The last line of the error message is <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">operands</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">broadcast</span> <span class="pre">together</span> <span class="pre">with</span> <span class="pre">shapes</span> <span class="pre">(3,)</span> <span class="pre">(6,)</span></code>.
+In plain words:</p>
+<ul class="simple">
+<li><p>the <strong>operands</strong> are the two arrays on the two sides of <code class="docutils literal notranslate"><span class="pre">*</span></code>;</p></li>
+<li><p><strong>broadcast</strong> is NumPy’s word for matching up the elements of the two operands;</p></li>
+<li><p>the <strong>shapes</strong> <code class="docutils literal notranslate"><span class="pre">(3,)</span></code> and <code class="docutils literal notranslate"><span class="pre">(6,)</span></code> say that one array has 3 elements and the other has 6.</p></li>
+</ul>
+<p>NumPy cannot pair 3 elements with 6, and it does not guess which products the three numbers belong to. The fix is
+to give it arrays of the same length: for example, the units of all six products, or a slice of the first three
+prices, <code class="docutils literal notranslate"><span class="pre">this_week</span> <span class="pre">*</span> <span class="pre">prices[:3]</span></code>.</p>
+</section>
+<section id="numpy-functions-for-whole-arrays">
+<h2><span class="section-number">4.9. </span>NumPy functions for whole arrays<a class="headerlink" href="#numpy-functions-for-whole-arrays" title="Link to this heading">#</a></h2>
+<p>NumPy has many functions that work on every element of an array. Here are three.</p>
+<p><strong>Rounding.</strong> The shop also sells online in Europe. With an exchange rate of 0.9137 euros for one dollar, the
+prices in euros have many decimals:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">euros</span> <span class="o">=</span> <span class="n">prices</span> <span class="o">*</span> <span class="mf">0.9137</span>
+<span class="n">euros</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([10.9644  ,  4.11165 ,  6.624325, 27.411   ,  2.512675, 14.16235 ])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">np.round(a,</span> <span class="pre">2)</span></code> rounds every element to 2 decimals, as prices should be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">euros</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([10.96,  4.11,  6.62, 27.41,  2.51, 14.16])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The coffee beans cost 10.96 euros, the tea 4.11 euros, and so on.</p>
+<p><strong>Absolute values.</strong> Last week, the shop had a forecast of the units it would sell. The error of the forecast is the
+real value minus the forecast (as in the chapter <em>What does a model learn?</em>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">forecast</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="n">units</span> <span class="o">-</span> <span class="n">forecast</span>
+<span class="n">errors</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-2,  5, -2,  0,  5, -2])
+</pre></div>
+</div>
+</div>
+</div>
+<p>A negative error means that the forecast was too high: the shop expected 12 bags of coffee beans and sold 10, an
+error of -2. Often we care only about how big an error is, not about its sign. <code class="docutils literal notranslate"><span class="pre">np.abs</span></code> gives the <strong>absolute
+value</strong> of every element, the value without its sign:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2, 5, 2, 0, 5, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The forecast was off by 2, 5, 2, 0, 5 and 2 units. The mean absolute error (MAE) of the chapter <em>A first
+machine-learning example</em> is the average of such numbers.</p>
+<p><strong>Square roots.</strong> In the chapter <em>What does a model learn?</em>, we squared the errors. <code class="docutils literal notranslate"><span class="pre">np.sqrt</span></code> gives the square root
+of every element, so it undoes a square:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">squared</span> <span class="o">=</span> <span class="n">errors</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">squared</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2., 5., 2., 0., 5., 2.])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The square roots are the sizes of the errors again: 2, 5, 2, 0, 5 and 2. The result holds floats (<code class="docutils literal notranslate"><span class="pre">2.</span></code> is 2.0),
+because a square root is usually a decimal number: the square root of 2 is about 1.414.</p>
+</section>
+<section id="summary">
+<h2><span class="section-number">4.10. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Indexing:</strong> <code class="docutils literal notranslate"><span class="pre">a[0]</span></code> is the first element and <code class="docutils literal notranslate"><span class="pre">a[-1]</span></code> the last. Positions start at 0.</p></li>
+<li><p><strong>Slicing:</strong> <code class="docutils literal notranslate"><span class="pre">a[start:stop:step]</span></code> gives several elements as an array: <code class="docutils literal notranslate"><span class="pre">a[1:4]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[:3]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[3:]</span></code>, <code class="docutils literal notranslate"><span class="pre">a[::2]</span></code>.
+<strong>The stop is not included.</strong></p></li>
+<li><p><strong>Changing an element:</strong> <code class="docutils literal notranslate"><span class="pre">a[0]</span> <span class="pre">=</span> <span class="pre">25</span></code>. A float put into an integer array is cut off (24.99 becomes 24), without a
+warning.</p></li>
+<li><p><strong>A slice is a view:</strong> changing it changes the original array. Use <code class="docutils literal notranslate"><span class="pre">a[:2].copy()</span></code> for an independent array.</p></li>
+<li><p><strong>Arithmetic between two arrays</strong> of the same length works element by element: <code class="docutils literal notranslate"><span class="pre">units</span> <span class="pre">*</span> <span class="pre">prices</span></code> gives the
+revenue of each product. Arrays of different lengths give a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> (<em>could not be broadcast</em>).</p></li>
+<li><p><strong>Arithmetic with a number</strong> works on every element: <code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">*</span> <span class="pre">0.9</span></code>, <code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">+</span> <span class="pre">0.50</span></code>.</p></li>
+<li><p><strong>Functions</strong> on every element: <code class="docutils literal notranslate"><span class="pre">np.round(a,</span> <span class="pre">2)</span></code>, <code class="docutils literal notranslate"><span class="pre">np.abs(a)</span></code>, <code class="docutils literal notranslate"><span class="pre">np.sqrt(a)</span></code>. <code class="docutils literal notranslate"><span class="pre">a.sum()</span></code> adds up all the
+elements.</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2><span class="section-number">4.11. </span>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>“NumPy: the absolute basics for beginners”, from the NumPy documentation, the sections on indexing and slicing
+and on basic array operations: <a class="reference external" href="https://numpy.org/doc/stable/user/absolute_beginners.html">https://numpy.org/doc/stable/user/absolute_beginners.html</a>.</p></li>
+</ul>
+</section>
+<section id="practice-questions">
+<h2><span class="section-number">4.12. </span>Practice questions<a class="headerlink" href="#practice-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">4.12.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>Show the price of the chocolate (position 2). Then show the units sold of the last product, with a negative index.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The chocolate costs 7.25 dollars. The last product, the mug, sold 6 units.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">prices</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-easy">
+<h3><span class="section-number">4.12.2. </span>Question 2 (Easy)<a class="headerlink" href="#question-2-easy" title="Link to this heading">#</a></h3>
+<p>Use slices of <code class="docutils literal notranslate"><span class="pre">units</span></code> to get: the units sold of the first four products; and the units sold of every second
+product, starting with the tea (position 1).</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">[:4]</span></code> gives the positions 0 to 3 (10, 25, 8 and 2 units). <code class="docutils literal notranslate"><span class="pre">[1::2]</span></code> starts at position 1 and takes every second
+element: positions 1, 3 and 5 (25, 2 and 6 units).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">units</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">units</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-medium">
+<h3><span class="section-number">4.12.3. </span>Question 3 (Medium)<a class="headerlink" href="#question-3-medium" title="Link to this heading">#</a></h3>
+<p>The shop raises every price by 4%. Compute the new prices, rounded to 2 decimals.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Adding 4% means multiplying by 1.04. The new prices are 12.48, 4.68, 7.54, 31.2, 2.86 and 16.12 dollars.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">prices</span> <span class="o">*</span> <span class="mf">1.04</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-medium">
+<h3><span class="section-number">4.12.4. </span>Question 4 (Medium)<a class="headerlink" href="#question-4-medium" title="Link to this heading">#</a></h3>
+<p>Compute the profit of each product last week: the profit on one unit (<code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">-</span> <span class="pre">costs</span></code>) times the units sold.
+Which product earned the most profit?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The profits are 50, 62.5, 26, 24, 60 and 54 dollars. The tea (position 1) earned the most, <span class="math notranslate nohighlight">\(62.50, even though the
+shop earns only \)</span>2.50 on each unit: it sold 25 of them.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">profit</span> <span class="o">=</span> <span class="p">(</span><span class="n">prices</span> <span class="o">-</span> <span class="n">costs</span><span class="p">)</span> <span class="o">*</span> <span class="n">units</span>
+<span class="n">profit</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-medium">
+<h3><span class="section-number">4.12.5. </span>Question 5 (Medium)<a class="headerlink" href="#question-5-medium" title="Link to this heading">#</a></h3>
+<p>A deli keeps the kilograms of three cheeses in stock: <code class="docutils literal notranslate"><span class="pre">stock</span> <span class="pre">=</span> <span class="pre">np.array([3,</span> <span class="pre">5,</span> <span class="pre">2])</span></code>. After a delivery, it sets
+<code class="docutils literal notranslate"><span class="pre">stock[1]</span> <span class="pre">=</span> <span class="pre">4.5</span></code>. What does <code class="docutils literal notranslate"><span class="pre">stock</span></code> show, and why? How should the deli make the array, so that 4.5 is kept?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">stock</span></code> shows 3, 4 and 2: the array holds integers (<code class="docutils literal notranslate"><span class="pre">int64</span></code>), so NumPy cuts 4.5 to 4. If the array is made from
+floats, its dtype is <code class="docutils literal notranslate"><span class="pre">float64</span></code>, and it keeps 4.5.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stock</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">stock</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stock</span><span class="p">)</span>
+
+<span class="n">stock</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+<span class="n">stock</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stock</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-hard">
+<h3><span class="section-number">4.12.6. </span>Question 6 (Hard)<a class="headerlink" href="#question-6-hard" title="Link to this heading">#</a></h3>
+<p>What does <code class="docutils literal notranslate"><span class="pre">prices</span></code> show after these two lines? Explain, then check. How would you change the first line so that
+<code class="docutils literal notranslate"><span class="pre">prices</span></code> does not change?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cheap</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+<span class="n">cheap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.00</span>
+</pre></div>
+</div>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">cheap</span></code> is a view of the last two prices, so <code class="docutils literal notranslate"><span class="pre">cheap[0]</span></code> is the same element as <code class="docutils literal notranslate"><span class="pre">prices[4]</span></code>. The price of the
+cookies in <code class="docutils literal notranslate"><span class="pre">prices</span></code> becomes 3.0. With <code class="docutils literal notranslate"><span class="pre">cheap</span> <span class="pre">=</span> <span class="pre">prices[4:].copy()</span></code>, <code class="docutils literal notranslate"><span class="pre">cheap</span></code> is an independent array, and <code class="docutils literal notranslate"><span class="pre">prices</span></code>
+does not change.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cheap</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+<span class="n">cheap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.00</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-hard">
+<h3><span class="section-number">4.12.7. </span>Question 7 (Hard)<a class="headerlink" href="#question-7-hard" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">this_week</span> <span class="pre">=</span> <span class="pre">np.array([12,</span> <span class="pre">20,</span> <span class="pre">9])</span></code> holds this week’s units of the first three products only. Compute the revenue
+of these three products this week, without an error.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Use a slice of the first three prices, so that both arrays have 3 elements. The revenues are 144, 90 and 65.25
+dollars.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">this_week</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="n">this_week</span> <span class="o">*</span> <span class="n">prices</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-challenge">
+<h3><span class="section-number">4.12.8. </span>Question 8 (Challenge)<a class="headerlink" href="#question-8-challenge" title="Link to this heading">#</a></h3>
+<p>How big was each forecast error compared with the real units? Compute the size of each error (without its sign) as
+a percentage of the units sold, rounded to 1 decimal. For which product was the forecast worst?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Divide the absolute errors by the units sold, and multiply by 100. The percentages are 20.0, 20.0, 25.0, 0.0, 12.5
+and 33.3. The forecast was worst for the mug (position 5): it was off by 2 of the 6 units sold, 33.3%. (The next
+chapter shows how to find the position of the largest value with code.)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">percent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">units</span> <span class="o">-</span> <span class="n">forecast</span><span class="p">)</span> <span class="o">/</span> <span class="n">units</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03-lists-and-arrays.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>From lists to NumPy arrays</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05-boolean-masks.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Comparisons and Boolean masks</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shops-data">4.1. The shop’s data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-element-indexing">4.2. One element: indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-elements-slicing">4.3. Several elements: slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-an-element">4.4. Changing an element</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-slice-is-a-view">4.5. A slice is a view</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-between-two-arrays">4.6. Arithmetic between two arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-with-a-number">4.7. Arithmetic with a number</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-of-different-lengths">4.8. Arrays of different lengths</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-functions-for-whole-arrays">4.9. NumPy functions for whole arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">4.10. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">4.11. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">4.12. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">4.12.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">4.12.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-medium">4.12.3. Question 3 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">4.12.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">4.12.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">4.12.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">4.12.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">4.12.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

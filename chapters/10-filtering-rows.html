@@ -1,0 +1,1417 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>10. Filtering rows &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/10-filtering-rows';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/10-filtering-rows.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="11. New columns and sorting" href="11-new-columns-and-sorting.html" />
+    <link rel="prev" title="9. Selecting with loc and iloc" href="09-loc-and-iloc.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/10-filtering-rows.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/10-filtering-rows.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Filtering rows</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-comparison-gives-a-mask">10.1. A comparison gives a mask</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keeping-the-rows-that-match">10.2. Keeping the rows that match</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-the-rows-that-match">10.3. Counting the rows that match</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-on-text">10.4. Conditions on text</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-conditions-at-once">10.5. Two conditions at once: <code class="docutils literal notranslate"><span class="pre">&amp;</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#or-and-not-and">10.6. Or, and not: <code class="docutils literal notranslate"><span class="pre">|</span></code> and <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-values-isin">10.7. Several values: <code class="docutils literal notranslate"><span class="pre">isin</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rows-and-columns-at-once-with-loc">10.8. Rows and columns at once with <code class="docutils literal notranslate"><span class="pre">loc</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-the-matching-rows">10.9. Changing the matching rows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chained-assignment-trap">10.10. The chained-assignment trap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">10.11. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">10.12. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">10.12.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">10.12.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">10.12.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">10.12.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">10.12.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-medium">10.12.6. Question 6 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">10.12.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-hard">10.12.8. Question 8 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-9-challenge">10.12.9. Question 9 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="filtering-rows">
+<h1><span class="section-number">10. </span>Filtering rows<a class="headerlink" href="#filtering-rows" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/10-filtering-rows.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>A manager rarely wants every row. “Show me the big orders.” “How many Electronics sales had a discount?” “List
+the sales of the North stores.” Each question keeps only the rows that match a condition. This is called
+<strong>filtering</strong>, and pandas does it with the Boolean masks that we met for arrays. At the end, we use the same idea
+to change the values of the matching rows, and we learn the one safe way to do it.</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>make a mask from a comparison on a column, and keep the rows where it is <code class="docutils literal notranslate"><span class="pre">True</span></code>;</p></li>
+<li><p>count the rows that match a condition;</p></li>
+<li><p>combine conditions with <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">|</span></code> and <code class="docutils literal notranslate"><span class="pre">~</span></code>, and test for several values with <code class="docutils literal notranslate"><span class="pre">isin</span></code>;</p></li>
+<li><p>filter rows and choose columns in one step with <code class="docutils literal notranslate"><span class="pre">loc</span></code>;</p></li>
+<li><p>change the values of the matching rows with <code class="docutils literal notranslate"><span class="pre">df.loc[mask,</span> <span class="pre">&quot;col&quot;]</span> <span class="pre">=</span> <span class="pre">value</span></code>, and avoid the chained-assignment trap.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">DATA_URL</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/"</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We use the sales of a store chain: 2,000 sales in one year, one row for each sale (see the chapter
+<em>Reading and describing data</em>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"sales.csv"</span><span class="p">)</span>
+<span class="n">sales</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>region</th>
+      <th>category</th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>S1</td>
+      <td>North</td>
+      <td>Clothing</td>
+      <td>3</td>
+      <td>46.99</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>2.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>S2</td>
+      <td>North</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>5.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>11.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Grocery</td>
+      <td>13</td>
+      <td>3.99</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="a-comparison-gives-a-mask">
+<h2><span class="section-number">10.1. </span>A comparison gives a mask<a class="headerlink" href="#a-comparison-gives-a-mask" title="Link to this heading">#</a></h2>
+<p>Which sales had more than 10 units? We compare the whole column with 10:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">many_units</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span>
+<span class="n">many_units</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    False
+1    False
+2     True
+3    False
+4     True
+Name: units, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a Series of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>, one for each row, with the same index as <code class="docutils literal notranslate"><span class="pre">sales</span></code>. Compare it with
+the table above: the rows 2 and 4 have 11 and 13 units, so they are <code class="docutils literal notranslate"><span class="pre">True</span></code>; the others have 10 units or fewer.
+Its dtype is <code class="docutils literal notranslate"><span class="pre">bool</span></code>.</p>
+<p>This is a <strong>mask</strong>, exactly as for NumPy arrays in the chapter <em>Comparisons and Boolean masks</em>. The only difference
+is that a pandas mask also carries the row labels.</p>
+</section>
+<section id="keeping-the-rows-that-match">
+<h2><span class="section-number">10.2. </span>Keeping the rows that match<a class="headerlink" href="#keeping-the-rows-that-match" title="Link to this heading">#</a></h2>
+<p>Put the mask inside square brackets, and pandas keeps the rows where the mask is <code class="docutils literal notranslate"><span class="pre">True</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">big_sales</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">big_sales</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>region</th>
+      <th>category</th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>S2</td>
+      <td>North</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>5.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Grocery</td>
+      <td>13</td>
+      <td>3.99</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2025-01-03</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>13.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>2025-01-12</td>
+      <td>S1</td>
+      <td>North</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>10.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>2025-01-19</td>
+      <td>S4</td>
+      <td>South</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>12.99</td>
+      <td>0.1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Read <code class="docutils literal notranslate"><span class="pre">sales[sales[&quot;units&quot;]</span> <span class="pre">&gt;</span> <span class="pre">10]</span></code> as “the rows of <code class="docutils literal notranslate"><span class="pre">sales</span></code> where <code class="docutils literal notranslate"><span class="pre">units</span></code> is above 10”. The inner part is the mask
+from above. Every row of <code class="docutils literal notranslate"><span class="pre">big_sales</span></code> has more than 10 units.</p>
+<p>Look at the index: 2, 4, 11, 47, … The rows keep their labels from <code class="docutils literal notranslate"><span class="pre">sales</span></code>, as they did after sorting in the
+chapter <em>Selecting with loc and iloc</em>. So <code class="docutils literal notranslate"><span class="pre">big_sales.iloc[0]</span></code> is the row with the label 2.</p>
+</section>
+<section id="counting-the-rows-that-match">
+<h2><span class="section-number">10.3. </span>Counting the rows that match<a class="headerlink" href="#counting-the-rows-that-match" title="Link to this heading">#</a></h2>
+<p>How many sales had more than 10 units? There are two ways:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">many_units</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">big_sales</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>75
+75
+</pre></div>
+</div>
+</div>
+</div>
+<p>Both say 75. <code class="docutils literal notranslate"><span class="pre">many_units.sum()</span></code> adds up the mask: <code class="docutils literal notranslate"><span class="pre">True</span></code> counts as 1 and <code class="docutils literal notranslate"><span class="pre">False</span></code> as 0, so the sum is the number of
+<code class="docutils literal notranslate"><span class="pre">True</span></code> values. <code class="docutils literal notranslate"><span class="pre">len(big_sales)</span></code> counts the rows of the filtered table. Use the first one when you need only the
+number.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> <code class="docutils literal notranslate"><span class="pre">many_units.mean()</span></code> gives the <strong>share</strong> of the sales with more than 10 units. What share is it, as
+a percentage?</p>
+</div></blockquote>
+</section>
+<section id="conditions-on-text">
+<h2><span class="section-number">10.4. </span>Conditions on text<a class="headerlink" href="#conditions-on-text" title="Link to this heading">#</a></h2>
+<p>A condition can compare a text column too. Here are the sales of store S1:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s1_sales</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"S1"</span><span class="p">]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">s1_sales</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>287
+</pre></div>
+</div>
+</div>
+</div>
+<p>Store S1 made 287 of the 2,000 sales. Note the <strong>two</strong> equal signs: <code class="docutils literal notranslate"><span class="pre">==</span></code> compares, and <code class="docutils literal notranslate"><span class="pre">=</span></code> assigns.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> writing <code class="docutils literal notranslate"><span class="pre">sales[sales[&quot;store&quot;]</span> <span class="pre">=</span> <span class="pre">&quot;S1&quot;]</span></code> with one <code class="docutils literal notranslate"><span class="pre">=</span></code>. Python stops with a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>
+before it runs the cell. And text must match exactly: <code class="docutils literal notranslate"><span class="pre">sales[&quot;store&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;s1&quot;</span></code> (a small “s”) matches no row
+at all, without any error.</p>
+</div></blockquote>
+</section>
+<section id="two-conditions-at-once">
+<h2><span class="section-number">10.5. </span>Two conditions at once: <code class="docutils literal notranslate"><span class="pre">&amp;</span></code><a class="headerlink" href="#two-conditions-at-once" title="Link to this heading">#</a></h2>
+<p>Which Electronics sales had a discount? We need two conditions, and both must be true. As for arrays, we put each
+condition in parentheses and join them with <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (“and”):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">electronics_discount</span> <span class="o">=</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Electronics"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">electronics_discount</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(154)
+</pre></div>
+</div>
+</div>
+</div>
+<p>154 sales were Electronics sales with a discount. (Colab shows the sum as <code class="docutils literal notranslate"><span class="pre">np.int64(154)</span></code>, a NumPy whole number,
+as for arrays.)</p>
+<p>The parentheses are needed. Python computes <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> before <code class="docutils literal notranslate"><span class="pre">==</span></code> and <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, so without them it would try to compute
+<code class="docutils literal notranslate"><span class="pre">&quot;Electronics&quot;</span> <span class="pre">&amp;</span> <span class="pre">sales[&quot;discount&quot;]</span></code> first, and stop with an error.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> writing <code class="docutils literal notranslate"><span class="pre">and</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>. Python’s <code class="docutils literal notranslate"><span class="pre">and</span></code> works on one <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>, not on a
+whole column, so pandas stops with <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">The</span> <span class="pre">truth</span> <span class="pre">value</span> <span class="pre">of</span> <span class="pre">a</span> <span class="pre">Series</span> <span class="pre">is</span> <span class="pre">ambiguous</span></code>. With masks, always use
+<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">|</span></code> and <code class="docutils literal notranslate"><span class="pre">~</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="or-and-not-and">
+<h2><span class="section-number">10.6. </span>Or, and not: <code class="docutils literal notranslate"><span class="pre">|</span></code> and <code class="docutils literal notranslate"><span class="pre">~</span></code><a class="headerlink" href="#or-and-not-and" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">|</span></code> means “or”: the row is kept when at least one condition is true. <code class="docutils literal notranslate"><span class="pre">~</span></code> means “not”: it turns every <code class="docutils literal notranslate"><span class="pre">True</span></code> into
+<code class="docutils literal notranslate"><span class="pre">False</span></code> and every <code class="docutils literal notranslate"><span class="pre">False</span></code> into <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s1_or_s2</span> <span class="o">=</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"S1"</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"S2"</span><span class="p">)</span>
+<span class="n">not_grocery</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Grocery"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1_or_s2</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">not_grocery</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>556
+1206
+</pre></div>
+</div>
+</div>
+</div>
+<p>556 sales were made in store S1 or store S2 (287 + 269). 1,206 sales were not Grocery sales: Clothing, Home and
+Electronics together.</p>
+</section>
+<section id="several-values-isin">
+<h2><span class="section-number">10.7. </span>Several values: <code class="docutils literal notranslate"><span class="pre">isin</span></code><a class="headerlink" href="#several-values-isin" title="Link to this heading">#</a></h2>
+<p>To keep the rows whose value is one of several, a chain of <code class="docutils literal notranslate"><span class="pre">|</span></code> gets long. <code class="docutils literal notranslate"><span class="pre">isin</span></code> takes a list of values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">three_stores</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">"S1"</span><span class="p">,</span> <span class="s2">"S2"</span><span class="p">,</span> <span class="s2">"S5"</span><span class="p">])</span>
+<span class="n">three_stores</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(817)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">isin</span></code> gives a mask that is <code class="docutils literal notranslate"><span class="pre">True</span></code> where the store is <code class="docutils literal notranslate"><span class="pre">S1</span></code>, <code class="docutils literal notranslate"><span class="pre">S2</span></code> or <code class="docutils literal notranslate"><span class="pre">S5</span></code>: 817 sales. It is the same as
+<code class="docutils literal notranslate"><span class="pre">(sales[&quot;store&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;S1&quot;)</span> <span class="pre">|</span> <span class="pre">(sales[&quot;store&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;S2&quot;)</span> <span class="pre">|</span> <span class="pre">(sales[&quot;store&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;S5&quot;)</span></code>, but shorter and easier to read.</p>
+</section>
+<section id="rows-and-columns-at-once-with-loc">
+<h2><span class="section-number">10.8. </span>Rows and columns at once with <code class="docutils literal notranslate"><span class="pre">loc</span></code><a class="headerlink" href="#rows-and-columns-at-once-with-loc" title="Link to this heading">#</a></h2>
+<p>Often we want the matching rows, but only some of the columns. In the chapter <em>Selecting with loc and iloc</em>, we
+wrote <code class="docutils literal notranslate"><span class="pre">df.loc[rows,</span> <span class="pre">columns]</span></code> with labels. The row place also accepts a <strong>mask</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="s2">"date"</span><span class="p">,</span> <span class="s2">"store"</span><span class="p">,</span> <span class="s2">"units"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>units</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>S2</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>S5</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2025-01-03</td>
+      <td>S5</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>2025-01-12</td>
+      <td>S1</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>2025-01-19</td>
+      <td>S4</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The rows with more than 10 units, and only the three columns that we named. With one column name instead of a
+list, we get a Series, and we can summarize it: <code class="docutils literal notranslate"><span class="pre">sales.loc[sales[&quot;units&quot;]</span> <span class="pre">&gt;</span> <span class="pre">10,</span> <span class="pre">&quot;price&quot;].mean()</span></code> is the average
+price in the big sales.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> compare the average price of the sales with more than 10 units and of the sales with 10 units or
+fewer. Are big sales usually cheap products?</p>
+</div></blockquote>
+</section>
+<section id="changing-the-matching-rows">
+<h2><span class="section-number">10.9. </span>Changing the matching rows<a class="headerlink" href="#changing-the-matching-rows" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">loc</span></code> can also <strong>change</strong> the matching rows. A manager asks: “What if store S1 had given every customer a 50%
+discount?” We try it on a copy, <code class="docutils literal notranslate"><span class="pre">sales2</span></code>, so that <code class="docutils literal notranslate"><span class="pre">sales</span></code> keeps the real data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales2</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">sales2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sales2</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"S1"</span><span class="p">,</span> <span class="s2">"discount"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">sales2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>region</th>
+      <th>category</th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>S1</td>
+      <td>North</td>
+      <td>Clothing</td>
+      <td>3</td>
+      <td>46.99</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>2.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>S2</td>
+      <td>North</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>5.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>11.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Grocery</td>
+      <td>13</td>
+      <td>3.99</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Row 0 is a sale of store S1, and its discount is now 0.5. The other rows of the first five are from other stores,
+and they did not change.</p>
+<p>Why <code class="docutils literal notranslate"><span class="pre">copy()</span></code>? <code class="docutils literal notranslate"><span class="pre">sales2</span> <span class="pre">=</span> <span class="pre">sales</span></code> would <strong>not</strong> make a new table: it would give the same table a second name, as with
+lists in Python, and a change through <code class="docutils literal notranslate"><span class="pre">sales2</span></code> would change <code class="docutils literal notranslate"><span class="pre">sales</span></code> too. <code class="docutils literal notranslate"><span class="pre">copy()</span></code> makes a separate table, as it did
+for arrays in the chapter <em>Indexing, slicing and arithmetic</em>.</p>
+<p>Let’s check both tables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">((</span><span class="n">sales2</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">sales</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>287
+0
+</pre></div>
+</div>
+</div>
+</div>
+<p>All 287 sales of store S1 now have a discount of 0.5 in <code class="docutils literal notranslate"><span class="pre">sales2</span></code>, and <code class="docutils literal notranslate"><span class="pre">sales</span></code> has none. This is <strong>the rule</strong> for
+changing values:</p>
+<blockquote>
+<div><p><strong>Note:</strong> to change the rows that match a condition, write <code class="docutils literal notranslate"><span class="pre">df.loc[mask,</span> <span class="pre">&quot;col&quot;]</span> <span class="pre">=</span> <span class="pre">value</span></code>: the mask, the
+column and the new value, in <strong>one</strong> step.</p>
+</div></blockquote>
+</section>
+<section id="the-chained-assignment-trap">
+<h2><span class="section-number">10.10. </span>The chained-assignment trap<a class="headerlink" href="#the-chained-assignment-trap" title="Link to this heading">#</a></h2>
+<p>Many people first try something like this (it is wrong, so we do not run it):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales2</span><span class="p">[</span><span class="n">sales2</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"S1"</span><span class="p">][</span><span class="s2">"discount"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>     <span class="c1"># wrong: does not change sales2</span>
+</pre></div>
+</div>
+<p>It looks reasonable, but it has two steps. First, <code class="docutils literal notranslate"><span class="pre">sales2[sales2[&quot;store&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;S1&quot;]</span></code> makes a <strong>new</strong> table, with
+only the rows of store S1. Then <code class="docutils literal notranslate"><span class="pre">[&quot;discount&quot;]</span> <span class="pre">=</span> <span class="pre">0.5</span></code> changes the column of that new table. The new table has no
+name, so it is thrown away at once, and <code class="docutils literal notranslate"><span class="pre">sales2</span></code> stays as it was. This is called <strong>chained assignment</strong>: two
+selections in a chain, then <code class="docutils literal notranslate"><span class="pre">=</span></code>.</p>
+<p>In pandas 3, chained assignment <strong>never</strong> changes <code class="docutils literal notranslate"><span class="pre">sales2</span></code>, and pandas shows a warning. In pandas 2 it does not
+change <code class="docutils literal notranslate"><span class="pre">sales2</span></code> here either, but the same idea in the other order, <code class="docutils literal notranslate"><span class="pre">sales2[&quot;discount&quot;][mask]</span> <span class="pre">=</span> <span class="pre">0.5</span></code>, does change
+it (with a warning). So code that seems to work in pandas 2 stops working in pandas 3, and only a warning tells
+you. The warnings also differ between the versions, which is why we show this code without running it.</p>
+<p>The fix is always the same: use <code class="docutils literal notranslate"><span class="pre">loc</span></code>, with the mask and the column in one pair of brackets,
+<code class="docutils literal notranslate"><span class="pre">sales2.loc[sales2[&quot;store&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;S1&quot;,</span> <span class="pre">&quot;discount&quot;]</span> <span class="pre">=</span> <span class="pre">0.5</span></code>.</p>
+</section>
+<section id="summary">
+<h2><span class="section-number">10.11. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A comparison on a column, such as <code class="docutils literal notranslate"><span class="pre">sales[&quot;units&quot;]</span> <span class="pre">&gt;</span> <span class="pre">10</span></code>, gives a <strong>mask</strong>: a Boolean Series with one
+<code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code> for each row.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sales[mask]</span></code> keeps the rows where the mask is <code class="docutils literal notranslate"><span class="pre">True</span></code>; they keep their labels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mask.sum()</span></code> counts the matching rows (and <code class="docutils literal notranslate"><span class="pre">len(sales[mask])</span></code> too); <code class="docutils literal notranslate"><span class="pre">mask.mean()</span></code> gives their share.</p></li>
+<li><p>Combine conditions with <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (and), <code class="docutils literal notranslate"><span class="pre">|</span></code> (or), <code class="docutils literal notranslate"><span class="pre">~</span></code> (not), with parentheses around each condition:
+<code class="docutils literal notranslate"><span class="pre">(sales[&quot;category&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;Electronics&quot;)</span> <span class="pre">&amp;</span> <span class="pre">(sales[&quot;discount&quot;]</span> <span class="pre">&gt;</span> <span class="pre">0)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;store&quot;].isin([&quot;S1&quot;,</span> <span class="pre">&quot;S2&quot;])</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code> where the value is one of the list.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sales.loc[mask,</span> <span class="pre">[&quot;date&quot;,</span> <span class="pre">&quot;store&quot;,</span> <span class="pre">&quot;units&quot;]]</span></code> filters rows and chooses columns at once.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.loc[mask,</span> <span class="pre">&quot;col&quot;]</span> <span class="pre">=</span> <span class="pre">value</span></code> changes the matching rows. Work on a copy (<code class="docutils literal notranslate"><span class="pre">sales2</span> <span class="pre">=</span> <span class="pre">sales.copy()</span></code>) to keep the
+original. Never chain two selections before <code class="docutils literal notranslate"><span class="pre">=</span></code>.</p></li>
+</ul>
+</section>
+<section id="practice-questions">
+<h2><span class="section-number">10.12. </span>Practice questions<a class="headerlink" href="#practice-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">10.12.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>How many sales were in the Electronics category?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Compare the column with <code class="docutils literal notranslate"><span class="pre">&quot;Electronics&quot;</span></code>, and add up the mask. There were 287 Electronics sales.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Electronics"</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-easy">
+<h3><span class="section-number">10.12.2. </span>Question 2 (Easy)<a class="headerlink" href="#question-2-easy" title="Link to this heading">#</a></h3>
+<p>Show the sales with a price above $500. How many are there?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Filter with the mask, then count the rows of the result. There are 61 such sales, all of them Electronics.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expensive</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"price"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">500</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expensive</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">expensive</span><span class="p">))</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-easy">
+<h3><span class="section-number">10.12.3. </span>Question 3 (Easy)<a class="headerlink" href="#question-3-easy" title="Link to this heading">#</a></h3>
+<p>Say in words which sales <code class="docutils literal notranslate"><span class="pre">sales[~(sales[&quot;discount&quot;]</span> <span class="pre">&gt;</span> <span class="pre">0)]</span></code> keeps. How many are there?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">sales[&quot;discount&quot;]</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code> for the sales with a discount, and <code class="docutils literal notranslate"><span class="pre">~</span></code> turns it around: the sales with <strong>no</strong>
+discount. There are 1,018 of them. <code class="docutils literal notranslate"><span class="pre">sales[&quot;discount&quot;]</span> <span class="pre">==</span> <span class="pre">0</span></code> gives the same rows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">no_discount</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">no_discount</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-medium">
+<h3><span class="section-number">10.12.4. </span>Question 4 (Medium)<a class="headerlink" href="#question-4-medium" title="Link to this heading">#</a></h3>
+<p>How many sales in the West region had at least 10 units?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Both conditions must be true, so join them with <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, each in parentheses. “At least 10” is <code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">10</span></code>. 31 sales
+in the West region had at least 10 units.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">west_big</span> <span class="o">=</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"region"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"West"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">west_big</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-medium">
+<h3><span class="section-number">10.12.5. </span>Question 5 (Medium)<a class="headerlink" href="#question-5-medium" title="Link to this heading">#</a></h3>
+<p>Show the Clothing and Home sales of store S3. Use <code class="docutils literal notranslate"><span class="pre">isin</span></code> for the two categories. How many are there?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">isin</span></code> handles the two categories, and <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> adds the store. <code class="docutils literal notranslate"><span class="pre">sales[&quot;category&quot;].isin(...)</span></code> needs no parentheses of
+its own, because it is a method call, not a comparison. Store S3 made 120 Clothing and Home sales.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s3_clothing_home</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"S3"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">"Clothing"</span><span class="p">,</span> <span class="s2">"Home"</span><span class="p">])]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s3_clothing_home</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s3_clothing_home</span><span class="p">))</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-medium">
+<h3><span class="section-number">10.12.6. </span>Question 6 (Medium)<a class="headerlink" href="#question-6-medium" title="Link to this heading">#</a></h3>
+<p>Show only the date, the category and the price of the sales with a price above $400 (the first five rows).</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Use <code class="docutils literal notranslate"><span class="pre">loc</span></code> with the mask in the row place and a list of columns in the column place.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"price"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">400</span><span class="p">,</span> <span class="p">[</span><span class="s2">"date"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">,</span> <span class="s2">"price"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-hard">
+<h3><span class="section-number">10.12.7. </span>Question 7 (Hard)<a class="headerlink" href="#question-7-hard" title="Link to this heading">#</a></h3>
+<p>What share of the sales of store S8 had a discount? First keep the sales of store S8, then use a mask on them.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">mean()</span></code> of a mask gives the share of <code class="docutils literal notranslate"><span class="pre">True</span></code> values. About 50% of the sales of store S8 had a discount.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s8</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"S8"</span><span class="p">]</span>
+<span class="p">(</span><span class="n">s8</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-hard">
+<h3><span class="section-number">10.12.8. </span>Question 8 (Hard)<a class="headerlink" href="#question-8-hard" title="Link to this heading">#</a></h3>
+<p>In a copy of <code class="docutils literal notranslate"><span class="pre">sales</span></code>, give every Electronics sale in December a discount of 0.2. How many rows did you change?
+(Hint: the dates are text such as <code class="docutils literal notranslate"><span class="pre">&quot;2025-12-05&quot;</span></code>, and text in this form can be compared: <code class="docutils literal notranslate"><span class="pre">&quot;2025-12-05&quot;</span> <span class="pre">&gt;=</span> <span class="pre">&quot;2025-12-01&quot;</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.)</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Make the copy first. The December sales are the ones whose date is <code class="docutils literal notranslate"><span class="pre">&quot;2025-12-01&quot;</span></code> or later. Then change the
+matching rows with <code class="docutils literal notranslate"><span class="pre">loc</span></code>, in one step. The mask matches 19 sales, so <code class="docutils literal notranslate"><span class="pre">loc</span></code> set the discount of 19 rows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales3</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">december_electronics</span> <span class="o">=</span> <span class="p">(</span><span class="n">sales3</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Electronics"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sales3</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="s2">"2025-12-01"</span><span class="p">)</span>
+<span class="n">sales3</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">december_electronics</span><span class="p">,</span> <span class="s2">"discount"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">december_electronics</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales3</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">december_electronics</span><span class="p">,</span> <span class="p">[</span><span class="s2">"date"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">,</span> <span class="s2">"discount"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-9-challenge">
+<h3><span class="section-number">10.12.9. </span>Question 9 (Challenge)<a class="headerlink" href="#question-9-challenge" title="Link to this heading">#</a></h3>
+<p>For each store, count the sales with more than 10 units. Which store had the most? Use a loop over the store
+names, which <code class="docutils literal notranslate"><span class="pre">sorted(sales[&quot;store&quot;].unique())</span></code> gives in order.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>For each store, make a mask with two conditions, and add it up. Store S1 had the most sales with more than 10
+units: 16.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">store</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="p">((</span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span> <span class="o">==</span> <span class="n">store</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="09-loc-and-iloc.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>Selecting with loc and iloc</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="11-new-columns-and-sorting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>New columns and sorting</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-comparison-gives-a-mask">10.1. A comparison gives a mask</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keeping-the-rows-that-match">10.2. Keeping the rows that match</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-the-rows-that-match">10.3. Counting the rows that match</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-on-text">10.4. Conditions on text</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-conditions-at-once">10.5. Two conditions at once: <code class="docutils literal notranslate"><span class="pre">&amp;</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#or-and-not-and">10.6. Or, and not: <code class="docutils literal notranslate"><span class="pre">|</span></code> and <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-values-isin">10.7. Several values: <code class="docutils literal notranslate"><span class="pre">isin</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rows-and-columns-at-once-with-loc">10.8. Rows and columns at once with <code class="docutils literal notranslate"><span class="pre">loc</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-the-matching-rows">10.9. Changing the matching rows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chained-assignment-trap">10.10. The chained-assignment trap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">10.11. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">10.12. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">10.12.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">10.12.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">10.12.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">10.12.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">10.12.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-medium">10.12.6. Question 6 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">10.12.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-hard">10.12.8. Question 8 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-9-challenge">10.12.9. Question 9 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

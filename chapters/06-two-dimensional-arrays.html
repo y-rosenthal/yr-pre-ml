@@ -1,0 +1,1367 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6. Two-dimensional arrays &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/06-two-dimensional-arrays';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/06-two-dimensional-arrays.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7. Series and DataFrames" href="07-series-and-dataframes.html" />
+    <link rel="prev" title="5. Comparisons and Boolean masks" href="05-boolean-masks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/06-two-dimensional-arrays.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/06-two-dimensional-arrays.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Two-dimensional arrays</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-table-of-numbers">6.1. A table of numbers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shape-rows-and-columns">6.2. The shape: rows and columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-value-a-row-col">6.3. One value: <code class="docutils literal notranslate"><span class="pre">a[row,</span> <span class="pre">col]</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-whole-row-or-a-whole-column">6.4. A whole row or a whole column</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-rows-and-columns">6.5. Slicing rows and columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summaries-along-an-axis">6.6. Summaries along an axis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-with-a-number">6.7. Arithmetic with a number</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bridge-to-machine-learning-x-and-y">6.8. The bridge to machine learning: <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-the-first-machine-learning-example">6.9. Back to the first machine-learning example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">6.10. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">6.11. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">6.11.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">6.11.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">6.11.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">6.11.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">6.11.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">6.11.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">6.11.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">6.11.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="two-dimensional-arrays">
+<h1><span class="section-number">6. </span>Two-dimensional arrays<a class="headerlink" href="#two-dimensional-arrays" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/06-two-dimensional-arrays.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>So far, every array was a single row of values: the prices of some products, or the visits of 500 customers. But
+business data usually comes as a table, with rows and columns. In this chapter, we keep a table of numbers in a
+two-dimensional NumPy array, select its rows and columns, and summarize it row by row or column by column. At the
+end, we see why this matters for machine learning: the predictors of a model are exactly such a table.</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>create a two-dimensional array from a list of lists, and read its <code class="docutils literal notranslate"><span class="pre">.shape</span></code> (rows, columns) and <code class="docutils literal notranslate"><span class="pre">.ndim</span></code>;</p></li>
+<li><p>select one value with <code class="docutils literal notranslate"><span class="pre">a[row,</span> <span class="pre">col]</span></code>, a whole row or column, and a block of rows and columns with slices;</p></li>
+<li><p>summarize each column with <code class="docutils literal notranslate"><span class="pre">axis=0</span></code>, and each row with <code class="docutils literal notranslate"><span class="pre">axis=1</span></code>;</p></li>
+<li><p>do arithmetic on a whole table with one number;</p></li>
+<li><p>explain why, in machine learning, <code class="docutils literal notranslate"><span class="pre">X</span></code> is a 2-D array and <code class="docutils literal notranslate"><span class="pre">y</span></code> a 1-D array, and why <code class="docutils literal notranslate"><span class="pre">X.shape[0]</span></code> must equal
+<code class="docutils literal notranslate"><span class="pre">y.shape[0]</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="n">DATA_URL</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/"</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We need pandas and scikit-learn only in the last sections, about machine learning.</p>
+<section id="a-table-of-numbers">
+<h2><span class="section-number">6.1. </span>A table of numbers<a class="headerlink" href="#a-table-of-numbers" title="Link to this heading">#</a></h2>
+<p>A chain has four stores, S1 to S4. Here are the units of its best-selling product that each store sold in the
+first six months of the year:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Store</p></th>
+<th class="head"><p>Jan</p></th>
+<th class="head"><p>Feb</p></th>
+<th class="head"><p>Mar</p></th>
+<th class="head"><p>Apr</p></th>
+<th class="head"><p>May</p></th>
+<th class="head"><p>Jun</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>150</p></td>
+<td><p>160</p></td>
+<td><p>140</p></td>
+<td><p>175</p></td>
+<td><p>155</p></td>
+<td><p>120</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>80</p></td>
+<td><p>90</p></td>
+<td><p>85</p></td>
+<td><p>95</p></td>
+<td><p>90</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>140</p></td>
+<td><p>150</p></td>
+<td><p>175</p></td>
+<td><p>170</p></td>
+<td><p>190</p></td>
+<td><p>195</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>60</p></td>
+<td><p>65</p></td>
+<td><p>70</p></td>
+<td><p>60</p></td>
+<td><p>75</p></td>
+<td><p>90</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To put this table into NumPy, we write it as a list of rows. Each row is a list of six numbers, and the four rows
+go inside one more pair of square brackets:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">150</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">155</span><span class="p">,</span> <span class="mi">120</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">140</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">170</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">195</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">units</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[150, 160, 140, 175, 155, 120],
+       [ 80,  90,  85,  95,  90, 100],
+       [140, 150, 175, 170, 190, 195],
+       [ 60,  65,  70,  60,  75,  90]])
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>In Thonny:</strong> wrap the last line in <code class="docutils literal notranslate"><span class="pre">print()</span></code>: <code class="docutils literal notranslate"><span class="pre">print(units)</span></code>. <code class="docutils literal notranslate"><span class="pre">print()</span></code> shows the same table without
+<code class="docutils literal notranslate"><span class="pre">array(...)</span></code> and without commas, one row on each line.</p>
+</div></blockquote>
+<p>NumPy shows one store on each line, and lines up the columns. This is a <strong>two-dimensional array</strong> (a <strong>2-D
+array</strong>): its values go in two directions, down (the stores) and across (the months). The arrays of the earlier
+chapters were <strong>one-dimensional</strong> (1-D): a single row of values.</p>
+<p>The names of the stores and of the months are not in the array: it holds only the numbers. We must remember that
+row 0 is store S1 and column 0 is January. (pandas, from the next chapter on, keeps such names with the values.)</p>
+</section>
+<section id="the-shape-rows-and-columns">
+<h2><span class="section-number">6.2. </span>The shape: rows and columns<a class="headerlink" href="#the-shape-rows-and-columns" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"shape:"</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"ndim: "</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"size: "</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>shape: (4, 6)
+ndim:  2
+size:  24
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <strong>shape</strong> of an array gives its size in each direction. For a 2-D array, it is always <strong>(rows, columns)</strong>: here
+4 rows (the stores) and 6 columns (the months). <code class="docutils literal notranslate"><span class="pre">.ndim</span></code> is the <strong>number of dimensions</strong>: 2. And <code class="docutils literal notranslate"><span class="pre">.size</span></code> is the
+number of values: 4 × 6 = 24.</p>
+<p>For a 1-D array, the shape has only one number: <code class="docutils literal notranslate"><span class="pre">np.array([5,</span> <span class="pre">7,</span> <span class="pre">9]).shape</span></code> is <code class="docutils literal notranslate"><span class="pre">(3,)</span></code>, and its <code class="docutils literal notranslate"><span class="pre">.ndim</span></code> is 1. The
+comma in <code class="docutils literal notranslate"><span class="pre">(3,)</span></code> tells us that this is a tuple with one value, not the number 3 in parentheses. You saw such shapes,
+<code class="docutils literal notranslate"><span class="pre">(3,)</span></code> and <code class="docutils literal notranslate"><span class="pre">(6,)</span></code>, in an error message in the chapter <em>Indexing, slicing and arithmetic</em>.</p>
+</section>
+<section id="one-value-a-row-col">
+<h2><span class="section-number">6.3. </span>One value: <code class="docutils literal notranslate"><span class="pre">a[row,</span> <span class="pre">col]</span></code><a class="headerlink" href="#one-value-a-row-col" title="Link to this heading">#</a></h2>
+<p>To get one value, give its row and its column, in that order, separated by a comma. How many units did store S2
+(row 1) sell in March (column 2)?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(85)
+</pre></div>
+</div>
+</div>
+</div>
+<p>85 units. (Colab shows <code class="docutils literal notranslate"><span class="pre">np.int64(85)</span></code>: the number 85, as in the chapter <em>Indexing, slicing and arithmetic</em>.) As
+in 1-D arrays, the positions start at 0: row 1 is the second store, and column 2 is the third month. Negative
+positions count from the end, so <code class="docutils literal notranslate"><span class="pre">units[-1,</span> <span class="pre">-1]</span></code> is the last store in the last month: 90.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> swapping the row and the column. <code class="docutils literal notranslate"><span class="pre">units[2,</span> <span class="pre">1]</span></code> is store S3 in February (150), not store S2 in
+March. The row always comes first.</p>
+</div></blockquote>
+</section>
+<section id="a-whole-row-or-a-whole-column">
+<h2><span class="section-number">6.4. </span>A whole row or a whole column<a class="headerlink" href="#a-whole-row-or-a-whole-column" title="Link to this heading">#</a></h2>
+<p>With only one position, we get a whole row. Here are the six months of store S2:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 80,  90,  85,  95,  90, 100])
+</pre></div>
+</div>
+</div>
+</div>
+<p>For a column, we need a way to say “all the rows”. That is a colon alone, <code class="docutils literal notranslate"><span class="pre">:</span></code>: a slice with no start and no stop,
+which takes everything. Here is March, for all four stores:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([140,  85, 175,  70])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Read <code class="docutils literal notranslate"><span class="pre">units[:,</span> <span class="pre">2]</span></code> as “all rows, column 2”. In March, S3 sold the most (175) and S4 the least (70). In the same
+way, <code class="docutils literal notranslate"><span class="pre">units[1,</span> <span class="pre">:]</span></code> means “row 1, all columns”, the same as <code class="docutils literal notranslate"><span class="pre">units[1]</span></code>. A single row or a single column is a 1-D
+array.</p>
+</section>
+<section id="slicing-rows-and-columns">
+<h2><span class="section-number">6.5. </span>Slicing rows and columns<a class="headerlink" href="#slicing-rows-and-columns" title="Link to this heading">#</a></h2>
+<p>A slice can choose rows and columns at once. The rules of 1-D slices apply in each direction: the start is
+included, and the stop is not. Here are the first two stores (rows 0 and 1) in the first three months (columns 0,
+1 and 2):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[150, 160, 140],
+       [ 80,  90,  85]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a smaller table: a 2-D array with the shape (2, 3). A slice with no start begins at the first row or
+column, and a slice with no stop goes to the end. So <code class="docutils literal notranslate"><span class="pre">units[:,</span> <span class="pre">3:]</span></code> is all four stores from April to June, the
+second quarter of the year.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> show stores S3 and S4 (rows 2 and 3) in January and February. What is the shape of the result?</p>
+</div></blockquote>
+</section>
+<section id="summaries-along-an-axis">
+<h2><span class="section-number">6.6. </span>Summaries along an axis<a class="headerlink" href="#summaries-along-an-axis" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sum()</span></code> with no argument adds up every value of the table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(2880)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The four stores sold 2,880 units in six months. But a manager usually wants a total for each month, or for each
+store. For that, we tell <code class="docutils literal notranslate"><span class="pre">sum</span></code> in which direction to add up, with the argument <code class="docutils literal notranslate"><span class="pre">axis</span></code>.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">axis=0</span></code> adds down the rows</strong>: it gives one total for each column, here for each month.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([430, 465, 470, 500, 510, 505])
+</pre></div>
+</div>
+</div>
+</div>
+<p>In January, the four stores sold 150 + 80 + 140 + 60 = 430 units together. The chain’s sales grew until May (510),
+then dipped a little in June (505).</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">axis=1</span></code> adds across the columns</strong>: it gives one total for each row, here for each store.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 900,  540, 1020,  420])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Store S1 sold 900 units in six months, and store S3, the best store, sold 1,020. This table shows both results
+around the data:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Jan</p></th>
+<th class="head"><p>Feb</p></th>
+<th class="head"><p>Mar</p></th>
+<th class="head"><p>Apr</p></th>
+<th class="head"><p>May</p></th>
+<th class="head"><p>Jun</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">sum(axis=1)</span></code> →</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>S1</strong></p></td>
+<td><p>150</p></td>
+<td><p>160</p></td>
+<td><p>140</p></td>
+<td><p>175</p></td>
+<td><p>155</p></td>
+<td><p>120</p></td>
+<td><p><strong>900</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>S2</strong></p></td>
+<td><p>80</p></td>
+<td><p>90</p></td>
+<td><p>85</p></td>
+<td><p>95</p></td>
+<td><p>90</p></td>
+<td><p>100</p></td>
+<td><p><strong>540</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>S3</strong></p></td>
+<td><p>140</p></td>
+<td><p>150</p></td>
+<td><p>175</p></td>
+<td><p>170</p></td>
+<td><p>190</p></td>
+<td><p>195</p></td>
+<td><p><strong>1020</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>S4</strong></p></td>
+<td><p>60</p></td>
+<td><p>65</p></td>
+<td><p>70</p></td>
+<td><p>60</p></td>
+<td><p>75</p></td>
+<td><p>90</p></td>
+<td><p><strong>420</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">sum(axis=0)</span></code></strong> ↓</p></td>
+<td><p><strong>430</strong></p></td>
+<td><p><strong>465</strong></p></td>
+<td><p><strong>470</strong></p></td>
+<td><p><strong>500</strong></p></td>
+<td><p><strong>510</strong></p></td>
+<td><p><strong>505</strong></p></td>
+<td><p><strong>2880</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>A way to remember it: the shape is (4, 6), and <strong>the axis you name is the one that disappears</strong>. Axis 0 is the
+first number of the shape, the 4 rows: <code class="docutils literal notranslate"><span class="pre">axis=0</span></code> adds them up and leaves 6 results, one for each column. Axis 1 is
+the 6 columns: <code class="docutils literal notranslate"><span class="pre">axis=1</span></code> adds them up and leaves 4 results, one for each row.</p>
+<p><code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">min</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> take <code class="docutils literal notranslate"><span class="pre">axis</span></code> too. Here are the average units of each store in a month, and the best result
+of any store in each month:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[150.  90. 170.  70.]
+[150 160 175 175 190 195]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In an average month, store S3 sells 170 units, and store S4 only 70. The best result of a single store rose from
+150 units in January to 195 in June. (<code class="docutils literal notranslate"><span class="pre">max</span></code> gives the largest value, not which store it belongs to; a practice
+question finds the store with <code class="docutils literal notranslate"><span class="pre">argmax</span></code>.)</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> mixing up the axes. If you want the total of each of the 4 stores and get 6 numbers, you
+used <code class="docutils literal notranslate"><span class="pre">axis=0</span></code> instead of <code class="docutils literal notranslate"><span class="pre">axis=1</span></code>. Check the length of the result.</p>
+</div></blockquote>
+</section>
+<section id="arithmetic-with-a-number">
+<h2><span class="section-number">6.7. </span>Arithmetic with a number<a class="headerlink" href="#arithmetic-with-a-number" title="Link to this heading">#</a></h2>
+<p>Arithmetic with one number works on every value of a 2-D array, as it does on a 1-D array. The product sells for
+$25. Here is the revenue of each store in each month:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">revenue</span> <span class="o">=</span> <span class="n">units</span> <span class="o">*</span> <span class="mi">25</span>
+<span class="n">revenue</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[3750, 4000, 3500, 4375, 3875, 3000],
+       [2000, 2250, 2125, 2375, 2250, 2500],
+       [3500, 3750, 4375, 4250, 4750, 4875],
+       [1500, 1625, 1750, 1500, 1875, 2250]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result has the same shape as <code class="docutils literal notranslate"><span class="pre">units</span></code>, (4, 6): store S1 made 150 × 25 = $3,750 in January, and so on. All the
+tools of this chapter work on the new table too: for example, <code class="docutils literal notranslate"><span class="pre">revenue.sum(axis=1)</span></code> gives the revenue of each
+store.</p>
+</section>
+<section id="the-bridge-to-machine-learning-x-and-y">
+<h2><span class="section-number">6.8. </span>The bridge to machine learning: <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code><a class="headerlink" href="#the-bridge-to-machine-learning-x-and-y" title="Link to this heading">#</a></h2>
+<p>Why do 2-D arrays matter? Because the data of a machine-learning model is a table. Think of the customers of the
+chapter <em>A first machine-learning example</em>:</p>
+<ul class="simple">
+<li><p>The <strong>predictors</strong> form a table, with <strong>one row for each example</strong> (a customer) and <strong>one column for each
+predictor</strong>. That is a 2-D array, named <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p></li>
+<li><p>The <strong>target</strong> has <strong>one value for each example</strong> (what the customer spent). That is a 1-D array, named <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
+</ul>
+<p>(The capital <code class="docutils literal notranslate"><span class="pre">X</span></code> is a custom from mathematics, where a capital letter often names a table of numbers, and a small
+letter a single list of numbers.)</p>
+<p>Let’s make <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> from <code class="docutils literal notranslate"><span class="pre">customers.csv</span></code>, with two predictors: how many months each person has been a customer,
+and how often they visit a store.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"customers.csv"</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">customers</span><span class="p">[[</span><span class="s2">"months_as_customer"</span><span class="p">,</span> <span class="s2">"visits_per_month"</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">customers</span><span class="p">[</span><span class="s2">"annual_spend"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((500, 2), (500,))
+</pre></div>
+</div>
+</div>
+</div>
+<p>These lines use pandas, which the next chapter, <em>Series and DataFrames</em>, starts to teach. In short: the first line
+reads the data file into a table (the chapter <em>Reading and describing data</em> explains <code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code>). The second
+line takes two columns of the table (the double brackets hold a list of column names), and <code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code> turns
+that table into a NumPy array. The third line takes one column, and <code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code> turns it into a 1-D array. So
+<strong><code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code> turns a pandas table into a NumPy array.</strong></p>
+<p>The shapes say it all. <code class="docutils literal notranslate"><span class="pre">X</span></code> has the shape (500, 2): 500 rows (the customers) and 2 columns (the predictors). <code class="docutils literal notranslate"><span class="pre">y</span></code> has
+the shape (500,): 500 values, one for each customer. Let’s look at the first three customers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 8.   5.6]
+ [55.   2.4]
+ [74.   3.1]]
+[3577.54 1915.38 1462.89]
+</pre></div>
+</div>
+</div>
+</div>
+<p>With only one slice, <code class="docutils literal notranslate"><span class="pre">X[:3]</span></code> takes the first three rows, with all their columns. (NumPy shows <code class="docutils literal notranslate"><span class="pre">8.</span></code> for 8 months: an
+array holds one type, and with the floats of <code class="docutils literal notranslate"><span class="pre">visits_per_month</span></code>, the months became floats too.)</p>
+<p>Row 0 of <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y[0]</span></code> describe the same customer: a member for 8 months, who visits 5.6 times a month, and who
+spent $3,577.54 in a year. Row 1 and <code class="docutils literal notranslate"><span class="pre">y[1]</span></code> are the second customer, and so on. A model learns from these pairs.
+So <strong>the number of rows of <code class="docutils literal notranslate"><span class="pre">X</span></code> must equal the number of values of <code class="docutils literal notranslate"><span class="pre">y</span></code></strong>: <code class="docutils literal notranslate"><span class="pre">X.shape[0]</span> <span class="pre">==</span> <span class="pre">y.shape[0]</span></code>, where
+<code class="docutils literal notranslate"><span class="pre">shape[0]</span></code> is the first number of the shape.</p>
+<p>What if they do not match? Let’s give a model all 500 rows of <code class="docutils literal notranslate"><span class="pre">X</span></code>, but only the first 400 values of <code class="docutils literal notranslate"><span class="pre">y</span></code>:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">[:</span><span class="mi">400</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">[:</span><span class="mi">400</span><span class="p">])</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/sklearn/base.py:1389,</span> in <span class="ni">_fit_context.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(estimator, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1382</span>     <span class="n">estimator</span><span class="o">.</span><span class="n">_validate_params</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1384</span> <span class="k">with</span> <span class="n">config_context</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1385</span>     <span class="n">skip_parameter_validation</span><span class="o">=</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1386</span>         <span class="n">prefer_skip_nested_validation</span> <span class="ow">or</span> <span class="n">global_skip_validation</span>
+<span class="g g-Whitespace">   </span><span class="mi">1387</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1388</span> <span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1389</span>     <span class="k">return</span> <span class="n">fit_method</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/sklearn/linear_model/_base.py:601,</span> in <span class="ni">LinearRegression.fit</span><span class="nt">(self, X, y, sample_weight)</span>
+<span class="g g-Whitespace">    </span><span class="mi">597</span> <span class="n">n_jobs_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span>
+<span class="g g-Whitespace">    </span><span class="mi">599</span> <span class="n">accept_sparse</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">positive</span> <span class="k">else</span> <span class="p">[</span><span class="s2">"csr"</span><span class="p">,</span> <span class="s2">"csc"</span><span class="p">,</span> <span class="s2">"coo"</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">601</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">validate_data</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">602</span>     <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">603</span>     <span class="n">X</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">604</span>     <span class="n">y</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">605</span>     <span class="n">accept_sparse</span><span class="o">=</span><span class="n">accept_sparse</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">606</span>     <span class="n">y_numeric</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">607</span>     <span class="n">multi_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">608</span>     <span class="n">force_writeable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">609</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">611</span> <span class="n">has_sw</span> <span class="o">=</span> <span class="n">sample_weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">612</span> <span class="k">if</span> <span class="n">has_sw</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/sklearn/utils/validation.py:2961,</span> in <span class="ni">validate_data</span><span class="nt">(_estimator, X, y, reset, validate_separately, skip_check_array, **check_params)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2959</span>         <span class="n">y</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">input_name</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="o">**</span><span class="n">check_y_params</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2960</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2961</span>         <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">check_params</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2962</span>     <span class="n">out</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+<span class="g g-Whitespace">   </span><span class="mi">2964</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">no_val_X</span> <span class="ow">and</span> <span class="n">check_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"ensure_2d"</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/sklearn/utils/validation.py:1389,</span> in <span class="ni">check_X_y</span><span class="nt">(X, y, accept_sparse, accept_large_sparse, dtype, order, copy, force_writeable, force_all_finite, ensure_all_finite, ensure_2d, allow_nd, multi_output, ensure_min_samples, ensure_min_features, y_numeric, estimator)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1370</span> <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1371</span>     <span class="n">X</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1372</span>     <span class="n">accept_sparse</span><span class="o">=</span><span class="n">accept_sparse</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">1384</span>     <span class="n">input_name</span><span class="o">=</span><span class="s2">"X"</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1385</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1387</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_check_y</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">multi_output</span><span class="o">=</span><span class="n">multi_output</span><span class="p">,</span> <span class="n">y_numeric</span><span class="o">=</span><span class="n">y_numeric</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span><span class="n">estimator</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1389</span> <span class="n">check_consistent_length</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1391</span> <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/sklearn/utils/validation.py:475,</span> in <span class="ni">check_consistent_length</span><span class="nt">(*arrays)</span>
+<span class="g g-Whitespace">    </span><span class="mi">473</span> <span class="n">uniques</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">474</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">uniques</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">475</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">476</span>         <span class="s2">"Found input variables with inconsistent numbers of samples: </span><span class="si">%r</span><span class="s2">"</span>
+<span class="g g-Whitespace">    </span><span class="mi">477</span>         <span class="o">%</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lengths</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">478</span>     <span class="p">)</span>
+
+<span class="ne">ValueError</span>: Found input variables with inconsistent numbers of samples: [500, 400]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The last line is <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">Found</span> <span class="pre">input</span> <span class="pre">variables</span> <span class="pre">with</span> <span class="pre">inconsistent</span> <span class="pre">numbers</span> <span class="pre">of</span> <span class="pre">samples:</span> <span class="pre">[500,</span> <span class="pre">400]</span></code>. A <em>sample</em>
+is scikit-learn’s word for an example, one row. Before it learns anything, <code class="docutils literal notranslate"><span class="pre">fit</span></code> checks the shapes: <code class="docutils literal notranslate"><span class="pre">X</span></code> has 500
+rows, but <code class="docutils literal notranslate"><span class="pre">y</span></code> has only 400 values, so 100 customers have no target. The model refuses.</p>
+<p>With all of <code class="docutils literal notranslate"><span class="pre">y</span></code>, the shapes match, and <code class="docutils literal notranslate"><span class="pre">fit</span></code> works on our NumPy arrays:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([  5.97, 792.43])
+</pre></div>
+</div>
+</div>
+</div>
+<p>As in the chapter <em>What does a model learn?</em>, linear regression learned one number for each predictor, so one
+number for each <strong>column</strong> of <code class="docutils literal notranslate"><span class="pre">X</span></code>: about <span class="math notranslate nohighlight">\(6 of yearly spending for each month as a customer, and about \)</span>792 for
+each visit per month.</p>
+</section>
+<section id="back-to-the-first-machine-learning-example">
+<h2><span class="section-number">6.9. </span>Back to the first machine-learning example<a class="headerlink" href="#back-to-the-first-machine-learning-example" title="Link to this heading">#</a></h2>
+<p>Now we can read the shapes of the chapter <em>A first machine-learning example</em>. There, after preparing the data and
+splitting it, the cell <code class="docutils literal notranslate"><span class="pre">X_train.shape,</span> <span class="pre">X_test.shape</span></code> showed <code class="docutils literal notranslate"><span class="pre">((356,</span> <span class="pre">8),</span> <span class="pre">(119,</span> <span class="pre">8))</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X_train</span></code> has 356 rows (the customers that the models learned from) and 8 columns (the predictors: <code class="docutils literal notranslate"><span class="pre">age</span></code>,
+<code class="docutils literal notranslate"><span class="pre">months_as_customer</span></code>, <code class="docutils literal notranslate"><span class="pre">visits_per_month</span></code>, <code class="docutils literal notranslate"><span class="pre">avg_basket</span></code> and the four region columns).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X_test</span></code> has <strong>the same 8 columns</strong>, for 119 other customers. A model that learned from 8 predictors needs the
+same 8 to make a prediction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_train</span></code> has the shape <code class="docutils literal notranslate"><span class="pre">(356,)</span></code> and <code class="docutils literal notranslate"><span class="pre">y_test</span></code> the shape <code class="docutils literal notranslate"><span class="pre">(119,)</span></code>: one value for each row.</p></li>
+</ul>
+<p>In that chapter, <code class="docutils literal notranslate"><span class="pre">X</span></code> was a pandas table, not a NumPy array. scikit-learn accepts both, and turns a pandas table
+into a NumPy array inside. And in the chapter <em>What does a model learn?</em>, we wrote <code class="docutils literal notranslate"><span class="pre">customers[[&quot;visits_per_month&quot;]]</span></code>,
+with double brackets, for <code class="docutils literal notranslate"><span class="pre">X</span></code>: <strong><code class="docutils literal notranslate"><span class="pre">X</span></code> must be 2-D even when there is only one predictor</strong>. It is then a table with
+one column.</p>
+<p>The next chapters teach pandas, the tool that builds <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> from a real table: choosing columns, filtering
+rows, filling in missing values, turning text into numbers. When the table is ready, <code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code> gives the arrays
+of this chapter.</p>
+</section>
+<section id="summary">
+<h2><span class="section-number">6.10. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A <strong>2-D array</strong> holds a table of numbers: <code class="docutils literal notranslate"><span class="pre">np.array([[...],</span> <span class="pre">[...]])</span></code>, a list of rows, all of the same length.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.shape</span></code> gives <strong>(rows, columns)</strong>, and <code class="docutils literal notranslate"><span class="pre">.ndim</span></code> the number of dimensions (2). A 1-D array has a shape such as
+<code class="docutils literal notranslate"><span class="pre">(500,)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a[row,</span> <span class="pre">col]</span></code> is one value. <code class="docutils literal notranslate"><span class="pre">a[1]</span></code> (or <code class="docutils literal notranslate"><span class="pre">a[1,</span> <span class="pre">:]</span></code>) is a whole row, and <code class="docutils literal notranslate"><span class="pre">a[:,</span> <span class="pre">2]</span></code> a whole column. Slices work in
+both directions: <code class="docutils literal notranslate"><span class="pre">a[0:2,</span> <span class="pre">0:3]</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a.sum(axis=0)</span></code> adds down the rows: one result for each <strong>column</strong>. <code class="docutils literal notranslate"><span class="pre">a.sum(axis=1)</span></code> adds across the columns: one
+result for each <strong>row</strong>. <code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code> (and <code class="docutils literal notranslate"><span class="pre">argmax</span></code>) take <code class="docutils literal notranslate"><span class="pre">axis</span></code> too.</p></li>
+<li><p>Arithmetic with a number, such as <code class="docutils literal notranslate"><span class="pre">units</span> <span class="pre">*</span> <span class="pre">25</span></code>, works on every value, and keeps the shape.</p></li>
+<li><p>In machine learning, <code class="docutils literal notranslate"><span class="pre">X</span></code> is a 2-D array (one row for each example, one column for each predictor), and <code class="docutils literal notranslate"><span class="pre">y</span></code> is a
+1-D array (one value for each example). <code class="docutils literal notranslate"><span class="pre">X.shape[0]</span></code> must equal <code class="docutils literal notranslate"><span class="pre">y.shape[0]</span></code>. <code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code> turns a pandas
+table into a NumPy array.</p></li>
+</ul>
+</section>
+<section id="practice-questions">
+<h2><span class="section-number">6.11. </span>Practice questions<a class="headerlink" href="#practice-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">6.11.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>What is the shape of <code class="docutils literal notranslate"><span class="pre">np.array([[1,</span> <span class="pre">2,</span> <span class="pre">3],</span> <span class="pre">[4,</span> <span class="pre">5,</span> <span class="pre">6]])</span></code>? What is its <code class="docutils literal notranslate"><span class="pre">.ndim</span></code>? Check with Python.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The shape is <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">3)</span></code>: two inner lists make two rows, with three values each. <code class="docutils literal notranslate"><span class="pre">.ndim</span></code> is 2.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">small</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">small</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">small</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-easy">
+<h3><span class="section-number">6.11.2. </span>Question 2 (Easy)<a class="headerlink" href="#question-2-easy" title="Link to this heading">#</a></h3>
+<p>How many units did store S4 sell in May?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>S4 is row 3 and May is column 4 (positions start at 0): 75 units.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-easy">
+<h3><span class="section-number">6.11.3. </span>Question 3 (Easy)<a class="headerlink" href="#question-3-easy" title="Link to this heading">#</a></h3>
+<p>Show the February sales of all four stores.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>February is column 1. <code class="docutils literal notranslate"><span class="pre">:</span></code> takes all the rows: 160, 90, 150 and 65 units.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-medium">
+<h3><span class="section-number">6.11.4. </span>Question 4 (Medium)<a class="headerlink" href="#question-4-medium" title="Link to this heading">#</a></h3>
+<p>Compute the total units of each store in the first quarter (January to March) and in the second quarter (April to
+June). Which store did not grow?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Slice the columns of each quarter, then add across the columns with <code class="docutils literal notranslate"><span class="pre">axis=1</span></code>. Store S1 sold 450 units in both
+quarters; the other three stores grew.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">units</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">units</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-medium">
+<h3><span class="section-number">6.11.5. </span>Question 5 (Medium)<a class="headerlink" href="#question-5-medium" title="Link to this heading">#</a></h3>
+<p>Compute the average units of the four stores in each month. In which month was the average highest?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>One result for each month (column) means <code class="docutils literal notranslate"><span class="pre">axis=0</span></code>. The highest average is 127.5 units, in May.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-hard">
+<h3><span class="section-number">6.11.6. </span>Question 6 (Hard)<a class="headerlink" href="#question-6-hard" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">units.max(axis=0)</span></code> gives the best result in each month, but not which store had it. Which store sold the most in
+each month?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">argmax(axis=0)</span></code> gives, for each column, the position of the largest value: the row, so the store. The result,
+<code class="docutils literal notranslate"><span class="pre">array([0,</span> <span class="pre">0,</span> <span class="pre">2,</span> <span class="pre">0,</span> <span class="pre">2,</span> <span class="pre">2])</span></code>, means S1 in January, February and April, and S3 in March, May and June.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-hard">
+<h3><span class="section-number">6.11.7. </span>Question 7 (Hard)<a class="headerlink" href="#question-7-hard" title="Link to this heading">#</a></h3>
+<p>Make <code class="docutils literal notranslate"><span class="pre">X</span></code> with only one predictor, <code class="docutils literal notranslate"><span class="pre">visits_per_month</span></code>, in two ways: with double brackets,
+<code class="docutils literal notranslate"><span class="pre">customers[[&quot;visits_per_month&quot;]].to_numpy()</span></code>, and with single brackets, <code class="docutils literal notranslate"><span class="pre">customers[&quot;visits_per_month&quot;].to_numpy()</span></code>.
+Compare their shapes. Which one can you give to <code class="docutils literal notranslate"><span class="pre">fit</span></code> as <code class="docutils literal notranslate"><span class="pre">X</span></code>?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Double brackets give a table with one column, shape <code class="docutils literal notranslate"><span class="pre">(500,</span> <span class="pre">1)</span></code>: a 2-D array, which <code class="docutils literal notranslate"><span class="pre">fit</span></code> accepts as <code class="docutils literal notranslate"><span class="pre">X</span></code>. Single
+brackets give one column as a 1-D array, shape <code class="docutils literal notranslate"><span class="pre">(500,)</span></code>, which <code class="docutils literal notranslate"><span class="pre">fit</span></code> refuses as <code class="docutils literal notranslate"><span class="pre">X</span></code>. That is why the chapter <em>What
+does a model learn?</em> used double brackets.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_one</span> <span class="o">=</span> <span class="n">customers</span><span class="p">[[</span><span class="s2">"visits_per_month"</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">visits_1d</span> <span class="o">=</span> <span class="n">customers</span><span class="p">[</span><span class="s2">"visits_per_month"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_one</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_one</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">visits_1d</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">visits_1d</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-challenge">
+<h3><span class="section-number">6.11.8. </span>Question 8 (Challenge)<a class="headerlink" href="#question-8-challenge" title="Link to this heading">#</a></h3>
+<p>In how many months did each store sell <strong>more than 150</strong> units? Use a mask, as in the chapter <em>Comparisons and
+Boolean masks</em>, and an axis.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">units</span> <span class="pre">&gt;</span> <span class="pre">150</span></code> is a 2-D mask with the same shape as <code class="docutils literal notranslate"><span class="pre">units</span></code>. <code class="docutils literal notranslate"><span class="pre">True</span></code> counts as 1, so adding across the columns with
+<code class="docutils literal notranslate"><span class="pre">axis=1</span></code> counts the months of each store. S1 had 3 such months and S3 had 4; S2 and S4 had none.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">big</span> <span class="o">=</span> <span class="n">units</span> <span class="o">&gt;</span> <span class="mi">150</span>
+<span class="n">big</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="05-boolean-masks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Comparisons and Boolean masks</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="07-series-and-dataframes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>Series and DataFrames</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-table-of-numbers">6.1. A table of numbers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shape-rows-and-columns">6.2. The shape: rows and columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-value-a-row-col">6.3. One value: <code class="docutils literal notranslate"><span class="pre">a[row,</span> <span class="pre">col]</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-whole-row-or-a-whole-column">6.4. A whole row or a whole column</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-rows-and-columns">6.5. Slicing rows and columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summaries-along-an-axis">6.6. Summaries along an axis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-with-a-number">6.7. Arithmetic with a number</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bridge-to-machine-learning-x-and-y">6.8. The bridge to machine learning: <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-the-first-machine-learning-example">6.9. Back to the first machine-learning example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">6.10. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">6.11. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">6.11.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">6.11.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">6.11.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">6.11.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">6.11.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">6.11.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">6.11.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">6.11.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

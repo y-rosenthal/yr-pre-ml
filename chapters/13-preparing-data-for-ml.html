@@ -1,0 +1,2050 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>13. Preparing data for machine learning &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/13-preparing-data-for-ml';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/13-preparing-data-for-ml.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="14. Guided project: delivery times" href="14-guided-project.html" />
+    <link rel="prev" title="12. Grouping and summarizing" href="12-grouping-and-summarizing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/13-preparing-data-for-ml.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/13-preparing-data-for-ml.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Preparing data for machine learning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-first-fit-failed">13.1. Why the first fit failed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-missing-values">13.2. Finding missing values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rows-with-a-missing-value">13.3. Rows with a missing value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-rows-with-dropna">13.4. Dropping rows with dropna()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filling-missing-numbers-with-fillna">13.5. Filling missing numbers with fillna()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filling-missing-text-with-unknown">13.6. Filling missing text with “Unknown”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-drop-and-when-to-fill">13.7. When to drop and when to fill</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-to-numbers-with-get-dummies">13.8. Text to numbers with get_dummies()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-x-and-y">13.9. Choosing X and y</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-that-x-is-ready">13.10. Checking that X is ready</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-numpy-array-inside">13.11. The NumPy array inside</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-the-model-fits">13.12. Now the model fits</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">13.13. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">13.14. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">13.15. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">13.15.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">13.15.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">13.15.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">13.15.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">13.15.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-medium">13.15.6. Question 6 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">13.15.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">13.15.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="preparing-data-for-machine-learning">
+<h1><span class="section-number">13. </span>Preparing data for machine learning<a class="headerlink" href="#preparing-data-for-machine-learning" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/13-preparing-data-for-ml.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>In the chapter <em>A first machine-learning example</em>, our first <code class="docutils literal notranslate"><span class="pre">fit</span></code> failed: the data had a text column and missing
+values. We fixed it with two lines that we explained only briefly. In this chapter, we prepare the same data step by
+step, and we understand each step. At the end, <code class="docutils literal notranslate"><span class="pre">fit</span></code> works. The two projects that follow this chapter use exactly
+these steps.</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>find the missing values of a DataFrame, column by column and row by row;</p></li>
+<li><p>drop the rows with missing values, or fill the missing values, and decide which one to do;</p></li>
+<li><p>turn a text column into number columns with <code class="docutils literal notranslate"><span class="pre">pd.get_dummies</span></code>;</p></li>
+<li><p>choose <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, and check that <code class="docutils literal notranslate"><span class="pre">X</span></code> is ready for a model.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="n">DATA_URL</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/"</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We import <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> for the last section of the chapter.</p>
+<section id="why-the-first-fit-failed">
+<h2><span class="section-number">13.1. </span>Why the first fit failed<a class="headerlink" href="#why-the-first-fit-failed" title="Link to this heading">#</a></h2>
+<p>We use the customers of the loyalty program again: one row for each member, and the amount they spent in a year,
+<code class="docutils literal notranslate"><span class="pre">annual_spend</span></code>, which we want to predict.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"customers.csv"</span><span class="p">)</span>
+<span class="n">customers</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>region</th>
+      <th>months_as_customer</th>
+      <th>visits_per_month</th>
+      <th>avg_basket</th>
+      <th>annual_spend</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>29.0</td>
+      <td>South</td>
+      <td>8</td>
+      <td>5.6</td>
+      <td>57.28</td>
+      <td>3577.54</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>64.0</td>
+      <td>East</td>
+      <td>55</td>
+      <td>2.4</td>
+      <td>58.40</td>
+      <td>1915.38</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>29.0</td>
+      <td>North</td>
+      <td>74</td>
+      <td>3.1</td>
+      <td>26.96</td>
+      <td>1462.89</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>37.0</td>
+      <td>North</td>
+      <td>25</td>
+      <td>11.9</td>
+      <td>27.93</td>
+      <td>4870.25</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>43.0</td>
+      <td>East</td>
+      <td>95</td>
+      <td>1.5</td>
+      <td>42.84</td>
+      <td>977.17</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In that chapter, <code class="docutils literal notranslate"><span class="pre">model.fit(X,</span> <span class="pre">y)</span></code> stopped with an error, and the data had two problems:</p>
+<ol class="arabic simple">
+<li><p><strong>Text.</strong> The column <code class="docutils literal notranslate"><span class="pre">region</span></code> holds text, such as <code class="docutils literal notranslate"><span class="pre">South</span></code>. The error said
+<code class="docutils literal notranslate"><span class="pre">could</span> <span class="pre">not</span> <span class="pre">convert</span> <span class="pre">string</span> <span class="pre">to</span> <span class="pre">float:</span> <span class="pre">'South'</span></code>. A model computes with numbers, as in
+<em>spending = a + b × visits</em>, and it cannot multiply a number by <code class="docutils literal notranslate"><span class="pre">South</span></code>.</p></li>
+<li><p><strong>Missing values.</strong> Some values are missing (<code class="docutils literal notranslate"><span class="pre">NaN</span></code>, “Not a Number”). We do not see one in the first five rows,
+but there are some further down, and many of scikit-learn’s models, such as <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>, refuse them too. With the text fixed, <code class="docutils literal notranslate"><span class="pre">fit</span></code> would stop
+with a second error, <code class="docutils literal notranslate"><span class="pre">Input</span> <span class="pre">X</span> <span class="pre">contains</span> <span class="pre">NaN</span></code>.</p></li>
+</ol>
+<p>We fix the missing values first, and then the text.</p>
+</section>
+<section id="finding-missing-values">
+<h2><span class="section-number">13.2. </span>Finding missing values<a class="headerlink" href="#finding-missing-values" title="Link to this heading">#</a></h2>
+<p>Let’s start with a small made-up table of four new members, so that we can see every value. Python’s <code class="docutils literal notranslate"><span class="pre">None</span></code>
+means “no value”, and pandas treats it as a missing value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">members</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"age"</span><span class="p">:</span> <span class="p">[</span><span class="mi">34</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span>
+    <span class="s2">"region"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"North"</span><span class="p">,</span> <span class="s2">"South"</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">"East"</span><span class="p">],</span>
+    <span class="s2">"visits"</span><span class="p">:</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">],</span>
+<span class="p">})</span>
+<span class="n">members</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>region</th>
+      <th>visits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>34.0</td>
+      <td>North</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NaN</td>
+      <td>South</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>51.0</td>
+      <td>None</td>
+      <td>6.1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>28.0</td>
+      <td>East</td>
+      <td>3.3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>pandas shows a missing number as <code class="docutils literal notranslate"><span class="pre">NaN</span></code>. In the text column <code class="docutils literal notranslate"><span class="pre">region</span></code>, it shows the missing value as <code class="docutils literal notranslate"><span class="pre">None</span></code> (in
+pandas 3, as <code class="docutils literal notranslate"><span class="pre">NaN</span></code>). The method <code class="docutils literal notranslate"><span class="pre">isna()</span></code> (“is it NaN?”) answers for <strong>every</strong> value: <code class="docutils literal notranslate"><span class="pre">True</span></code> where the value is
+missing, and <code class="docutils literal notranslate"><span class="pre">False</span></code> where it is not.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">members</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>region</th>
+      <th>visits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The result is a table of the same shape, full of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>, like a mask of the chapter <em>Comparisons and
+Boolean masks</em>. And as there, <code class="docutils literal notranslate"><span class="pre">sum()</span></code> counts the <code class="docutils literal notranslate"><span class="pre">True</span></code> values, because <code class="docutils literal notranslate"><span class="pre">True</span></code> counts as 1. On a DataFrame, <code class="docutils literal notranslate"><span class="pre">sum()</span></code>
+gives one count for each column. Here it is for the 500 customers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customers</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age                   14
+region                 0
+months_as_customer     0
+visits_per_month       0
+avg_basket            11
+annual_spend           0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>14 ages and 11 average baskets are missing. The other columns are complete. This one line is the first thing to
+run on any new data set.</p>
+</section>
+<section id="rows-with-a-missing-value">
+<h2><span class="section-number">13.3. </span>Rows with a missing value<a class="headerlink" href="#rows-with-a-missing-value" title="Link to this heading">#</a></h2>
+<p>Which customers have a missing value? <code class="docutils literal notranslate"><span class="pre">any()</span></code> asks “is at least one value <code class="docutils literal notranslate"><span class="pre">True</span></code>?”. With <code class="docutils literal notranslate"><span class="pre">axis=1</span></code>, it asks this
+for each row, as <code class="docutils literal notranslate"><span class="pre">axis=1</span></code> gave one result for each row in the chapter <em>Two-dimensional arrays</em>. The result is a
+mask with one value for each customer, and we use it to filter the rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missing_rows</span> <span class="o">=</span> <span class="n">customers</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">customers</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">missing_rows</span><span class="p">,</span> <span class="p">[</span><span class="s2">"age"</span><span class="p">,</span> <span class="s2">"region"</span><span class="p">,</span> <span class="s2">"visits_per_month"</span><span class="p">,</span> <span class="s2">"avg_basket"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>region</th>
+      <th>visits_per_month</th>
+      <th>avg_basket</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24</th>
+      <td>NaN</td>
+      <td>North</td>
+      <td>4.9</td>
+      <td>54.95</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>NaN</td>
+      <td>South</td>
+      <td>2.3</td>
+      <td>57.17</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>NaN</td>
+      <td>South</td>
+      <td>6.0</td>
+      <td>58.45</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>NaN</td>
+      <td>North</td>
+      <td>2.0</td>
+      <td>55.77</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>38.0</td>
+      <td>North</td>
+      <td>2.1</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Each of these customers has <code class="docutils literal notranslate"><span class="pre">NaN</span></code> in <code class="docutils literal notranslate"><span class="pre">age</span></code> or in <code class="docutils literal notranslate"><span class="pre">avg_basket</span></code>. We kept the mask in the variable <code class="docutils literal notranslate"><span class="pre">missing_rows</span></code>,
+because we will look at the same rows again after we fill them.</p>
+</section>
+<section id="dropping-rows-with-dropna">
+<h2><span class="section-number">13.4. </span>Dropping rows with dropna()<a class="headerlink" href="#dropping-rows-with-dropna" title="Link to this heading">#</a></h2>
+<p>The simplest fix is to remove every row that has a missing value. <code class="docutils literal notranslate"><span class="pre">dropna()</span></code> does that. Let’s compare the shape
+before and after:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">customers</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">customers</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">customers</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">"age"</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(500, 6)
+(475, 6)
+(486, 6)
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">customers</span></code> has 500 rows. <code class="docutils literal notranslate"><span class="pre">dropna()</span></code> returns a <strong>new</strong> DataFrame without the rows that have a missing value, and
+it has 475 rows: 25 customers had a missing value (14 ages and 11 baskets: no customer misses both).
+<code class="docutils literal notranslate"><span class="pre">customers</span></code> itself does not change.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dropna(subset=[&quot;age&quot;])</span></code> looks only at the columns in the list. It drops the 14 rows without an age, and keeps
+the 11 rows without a basket: 486 rows remain. This is useful when we need only some of the columns.</p></li>
+</ul>
+<p>The first example used <code class="docutils literal notranslate"><span class="pre">dropna()</span></code>, and lost 5% of the customers. Next, we see how to keep them.</p>
+</section>
+<section id="filling-missing-numbers-with-fillna">
+<h2><span class="section-number">13.5. </span>Filling missing numbers with fillna()<a class="headerlink" href="#filling-missing-numbers-with-fillna" title="Link to this heading">#</a></h2>
+<p>Instead of dropping a customer, we can fill in a value for the missing one. <code class="docutils literal notranslate"><span class="pre">fillna(value)</span></code> returns a copy of a
+column with every missing value replaced by <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+<p>Which value? For a number column, a common choice is the <strong>median</strong>, the middle value when the values are sorted
+(we met <code class="docutils literal notranslate"><span class="pre">np.median</span></code> in the chapter <em>Comparisons and Boolean masks</em>). Unlike the average, the median does not move
+much when a few values are very large. We fill both columns with their medians, and look at the same rows again:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customers</span><span class="p">[</span><span class="s2">"age"</span><span class="p">]</span> <span class="o">=</span> <span class="n">customers</span><span class="p">[</span><span class="s2">"age"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">customers</span><span class="p">[</span><span class="s2">"age"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+<span class="n">customers</span><span class="p">[</span><span class="s2">"avg_basket"</span><span class="p">]</span> <span class="o">=</span> <span class="n">customers</span><span class="p">[</span><span class="s2">"avg_basket"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">customers</span><span class="p">[</span><span class="s2">"avg_basket"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+<span class="n">customers</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">missing_rows</span><span class="p">,</span> <span class="p">[</span><span class="s2">"age"</span><span class="p">,</span> <span class="s2">"region"</span><span class="p">,</span> <span class="s2">"visits_per_month"</span><span class="p">,</span> <span class="s2">"avg_basket"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>region</th>
+      <th>visits_per_month</th>
+      <th>avg_basket</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24</th>
+      <td>46.0</td>
+      <td>North</td>
+      <td>4.9</td>
+      <td>54.95</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>46.0</td>
+      <td>South</td>
+      <td>2.3</td>
+      <td>57.17</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>46.0</td>
+      <td>South</td>
+      <td>6.0</td>
+      <td>58.45</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>46.0</td>
+      <td>North</td>
+      <td>2.0</td>
+      <td>55.77</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>38.0</td>
+      <td>North</td>
+      <td>2.1</td>
+      <td>51.56</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Each line computes the median of the column, fills the missing values with it, and puts the result back into the
+column with <code class="docutils literal notranslate"><span class="pre">=</span></code>. The four customers here who had no age now have the age 46.0, the median age. The last customer had
+no basket amount, and now has 51.56, the median basket. All 500 customers are still there.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> writing <code class="docutils literal notranslate"><span class="pre">customers[&quot;age&quot;].fillna(46)</span></code> on a line of its own. <code class="docutils literal notranslate"><span class="pre">fillna</span></code> returns a new column
+and does not change <code class="docutils literal notranslate"><span class="pre">customers</span></code>, so nothing is filled. Always assign the result back:
+<code class="docutils literal notranslate"><span class="pre">customers[&quot;age&quot;]</span> <span class="pre">=</span> <span class="pre">customers[&quot;age&quot;].fillna(46)</span></code>. (You may see older code that writes <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> instead.
+Do not use it: in pandas 3, <code class="docutils literal notranslate"><span class="pre">customers[&quot;age&quot;].fillna(46,</span> <span class="pre">inplace=True)</span></code> does not change <code class="docutils literal notranslate"><span class="pre">customers</span></code> at all.)</p>
+</div></blockquote>
+</section>
+<section id="filling-missing-text-with-unknown">
+<h2><span class="section-number">13.6. </span>Filling missing text with “Unknown”<a class="headerlink" href="#filling-missing-text-with-unknown" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">customers.csv</span></code> has no missing text, so we go back to the small table. There is no median of text. A simple and
+honest choice is a new value, <code class="docutils literal notranslate"><span class="pre">&quot;Unknown&quot;</span></code>: it keeps the row, and it says that we do not know.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">members</span><span class="p">[</span><span class="s2">"region"</span><span class="p">]</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="s2">"region"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">"Unknown"</span><span class="p">)</span>
+<span class="n">members</span><span class="p">[</span><span class="s2">"age"</span><span class="p">]</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="s2">"age"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">members</span><span class="p">[</span><span class="s2">"age"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+<span class="n">members</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>region</th>
+      <th>visits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>34.0</td>
+      <td>North</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>34.0</td>
+      <td>South</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>51.0</td>
+      <td>Unknown</td>
+      <td>6.1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>28.0</td>
+      <td>East</td>
+      <td>3.3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The third member’s region is now <code class="docutils literal notranslate"><span class="pre">Unknown</span></code>, and the second member’s age is 34.0, the median of 34, 51 and 28.
+“Unknown” becomes a category of its own. Members with an unknown region may differ from the others, and a model
+can learn that.</p>
+</section>
+<section id="when-to-drop-and-when-to-fill">
+<h2><span class="section-number">13.7. </span>When to drop and when to fill<a class="headerlink" href="#when-to-drop-and-when-to-fill" title="Link to this heading">#</a></h2>
+<p>Both ways have a cost. Dropping a row throws away everything else that we know about that customer: a customer
+without an age still has a region, visits and a basket. Filling keeps the customer, but puts in a value that we
+made up. The median is a reasonable guess, not the truth.</p>
+<p>Some rules of thumb:</p>
+<ul class="simple">
+<li><p><strong>Few rows affected: dropping is fine.</strong> Here, only 25 of 500 rows (5%) have a missing value.</p></li>
+<li><p><strong>Many rows would go: fill.</strong> One missing value should not cost us a whole row of useful facts.</p></li>
+<li><p><strong>New data will have gaps too: fill.</strong> A model that predicts for new customers meets missing values again. We
+can fill a new customer’s missing age with the same median, but we cannot drop a customer that we must predict.</p></li>
+<li><p><strong>Never fill the target.</strong> If <code class="docutils literal notranslate"><span class="pre">annual_spend</span></code> were missing for a customer, drop that row. A made-up target would
+teach the model a made-up answer.</p></li>
+<li><p>Fill a number column with its median, and a text column with <code class="docutils literal notranslate"><span class="pre">&quot;Unknown&quot;</span></code>.</p></li>
+</ul>
+<p>Whatever we choose, we say so when we report the results. In this chapter, we filled.</p>
+</section>
+<section id="text-to-numbers-with-get-dummies">
+<h2><span class="section-number">13.8. </span>Text to numbers with get_dummies()<a class="headerlink" href="#text-to-numbers-with-get-dummies" title="Link to this heading">#</a></h2>
+<p>Now the text. The rule is simple: for a text column, make one new column for each of its values. In each new
+column, a row gets 1 if it has that value, and 0 if not. Such 0/1 columns are called <strong>dummy variables</strong>, and
+<code class="docutils literal notranslate"><span class="pre">pd.get_dummies</span></code> makes them. The small table first:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"region"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>visits</th>
+      <th>region_East</th>
+      <th>region_North</th>
+      <th>region_South</th>
+      <th>region_Unknown</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>34.0</td>
+      <td>4.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>34.0</td>
+      <td>2.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>51.0</td>
+      <td>6.1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>28.0</td>
+      <td>3.3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The column <code class="docutils literal notranslate"><span class="pre">region</span></code> is gone. In its place are four columns, one for each value: <code class="docutils literal notranslate"><span class="pre">region_East</span></code>, <code class="docutils literal notranslate"><span class="pre">region_North</span></code>,
+<code class="docutils literal notranslate"><span class="pre">region_South</span></code> and <code class="docutils literal notranslate"><span class="pre">region_Unknown</span></code>. Each row has exactly one 1: the first member is from the North, so it has a 1
+in <code class="docutils literal notranslate"><span class="pre">region_North</span></code>. <code class="docutils literal notranslate"><span class="pre">dtype=int</span></code> asks for the numbers 0 and 1. Without it, the new columns hold <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+as in the first example. A model accepts both, but 0 and 1 are easier to read.</p>
+<p><code class="docutils literal notranslate"><span class="pre">get_dummies</span></code> returns a new DataFrame, so we assign it back, as with <code class="docutils literal notranslate"><span class="pre">fillna</span></code>. Now the customers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">customers</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"region"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">customers</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index(['age', 'months_as_customer', 'visits_per_month', 'avg_basket',
+       'annual_spend', 'region_East', 'region_North', 'region_South',
+       'region_West'],
+      dtype='object')
+</pre></div>
+</div>
+</div>
+</div>
+<p>The four regions became four columns at the end, and <code class="docutils literal notranslate"><span class="pre">region</span></code> is gone. <code class="docutils literal notranslate"><span class="pre">customers</span></code> now has 9 columns, all of them
+numbers. (The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> at the bottom of the list of names is <code class="docutils literal notranslate"><span class="pre">object</span></code>, or <code class="docutils literal notranslate"><span class="pre">str</span></code> in pandas 3: the column <em>names</em> are
+text, which is fine.)</p>
+</section>
+<section id="choosing-x-and-y">
+<h2><span class="section-number">13.9. </span>Choosing X and y<a class="headerlink" href="#choosing-x-and-y" title="Link to this heading">#</a></h2>
+<p>The predictors <code class="docutils literal notranslate"><span class="pre">X</span></code> are all the columns except the target, and the target <code class="docutils literal notranslate"><span class="pre">y</span></code> is one column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">customers</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"annual_spend"</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">customers</span><span class="p">[</span><span class="s2">"annual_spend"</span><span class="p">]</span>
+<span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((500, 8), (500,))
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">X</span></code> is a table with 500 rows and 8 columns, and <code class="docutils literal notranslate"><span class="pre">y</span></code> is one column with 500 values. The numbers of rows must be
+equal (<code class="docutils literal notranslate"><span class="pre">X.shape[0]</span> <span class="pre">==</span> <span class="pre">y.shape[0]</span></code>): row 0 of <code class="docutils literal notranslate"><span class="pre">X</span></code> describes the customer whose spending is value 0 of <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> leaving the target in <code class="docutils literal notranslate"><span class="pre">X</span></code>. If <code class="docutils literal notranslate"><span class="pre">annual_spend</span></code> stays among the predictors, the model just
+copies it. It then looks perfect on our data, and is useless for a new customer, whose spending we do not know.
+<code class="docutils literal notranslate"><span class="pre">drop(columns=&quot;annual_spend&quot;)</span></code> removes it.</p>
+</div></blockquote>
+</section>
+<section id="checking-that-x-is-ready">
+<h2><span class="section-number">13.10. </span>Checking that X is ready<a class="headerlink" href="#checking-that-x-is-ready" title="Link to this heading">#</a></h2>
+<p>Before we call <code class="docutils literal notranslate"><span class="pre">fit</span></code>, we check two things: no value is missing, and every column holds numbers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age                   float64
+months_as_customer      int64
+visits_per_month      float64
+avg_basket            float64
+region_East             int64
+region_North            int64
+region_South            int64
+region_West             int64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">X.isna().sum()</span></code> gives one count of missing values for each column, and the second <code class="docutils literal notranslate"><span class="pre">.sum()</span></code> adds the counts up.
+The total is 0, so the comparison prints <code class="docutils literal notranslate"><span class="pre">True</span></code>. The dtypes are all <code class="docutils literal notranslate"><span class="pre">int64</span></code> (whole numbers) or <code class="docutils literal notranslate"><span class="pre">float64</span></code> (numbers
+with decimals). No column is <code class="docutils literal notranslate"><span class="pre">object</span></code> (or <code class="docutils literal notranslate"><span class="pre">str</span></code> in pandas 3), so no text is left.</p>
+</section>
+<section id="the-numpy-array-inside">
+<h2><span class="section-number">13.11. </span>The NumPy array inside<a class="headerlink" href="#the-numpy-array-inside" title="Link to this heading">#</a></h2>
+<p>A model does not work on a DataFrame directly. <code class="docutils literal notranslate"><span class="pre">fit</span></code> turns <code class="docutils literal notranslate"><span class="pre">X</span></code> into a two-dimensional NumPy array, as in the
+chapter <em>Two-dimensional arrays</em>. <code class="docutils literal notranslate"><span class="pre">to_numpy()</span></code> shows us that array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_array</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">X_array</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[29.  ,  8.  ,  5.6 , 57.28,  0.  ,  0.  ,  1.  ,  0.  ],
+       [64.  , 55.  ,  2.4 , 58.4 ,  1.  ,  0.  ,  0.  ,  0.  ],
+       [29.  , 74.  ,  3.1 , 26.96,  0.  ,  1.  ,  0.  ,  0.  ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each row of the array is a customer, and each column a predictor, in the order of <code class="docutils literal notranslate"><span class="pre">X.columns</span></code>: the first customer
+is 29 years old, a customer for 8 months, and so on, and the <code class="docutils literal notranslate"><span class="pre">1.</span></code> in the seventh column says that this customer is
+in the South. All the values are floats, because an array holds one type, and mixing whole numbers and decimals
+gives floats. That is why every column must be a number: an array of numbers cannot hold the text <code class="docutils literal notranslate"><span class="pre">South</span></code> or a gap.</p>
+</section>
+<section id="now-the-model-fits">
+<h2><span class="section-number">13.12. </span>Now the model fits<a class="headerlink" href="#now-the-model-fits" title="Link to this heading">#</a></h2>
+<p>Everything is ready. This is the line that failed in the first example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>LinearRegression</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>LinearRegression()</pre></div> </div></div></div></div></div></div>
+</div>
+<p>No error. Under the cell, Colab shows a short description of the model: <code class="docutils literal notranslate"><span class="pre">fit</span></code> worked, and the model has learned
+its numbers from the 500 customers. The next steps (a training set and a test set, predictions,
+the mean absolute error) are the model code of the chapter <em>A first machine-learning example</em>, and the two projects
+use it.</p>
+</section>
+<section id="summary">
+<h2><span class="section-number">13.13. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>The steps that make a DataFrame ready for a model:</p>
+<ol class="arabic simple">
+<li><p><strong>Find the missing values:</strong> <code class="docutils literal notranslate"><span class="pre">df.isna().sum()</span></code> counts them in each column, and <code class="docutils literal notranslate"><span class="pre">df.isna().any(axis=1)</span></code> gives a
+mask of the rows that have one.</p></li>
+<li><p><strong>Drop or fill them:</strong> <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.dropna()</span></code> (or <code class="docutils literal notranslate"><span class="pre">dropna(subset=[...])</span></code>) drops rows.
+<code class="docutils literal notranslate"><span class="pre">df[&quot;col&quot;]</span> <span class="pre">=</span> <span class="pre">df[&quot;col&quot;].fillna(df[&quot;col&quot;].median())</span></code> fills a number column, and
+<code class="docutils literal notranslate"><span class="pre">df[&quot;col&quot;]</span> <span class="pre">=</span> <span class="pre">df[&quot;col&quot;].fillna(&quot;Unknown&quot;)</span></code> a text column. Drop when few rows are affected, fill when many would
+go. Never fill the target.</p></li>
+<li><p><strong>Turn text into numbers:</strong> <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">pd.get_dummies(df,</span> <span class="pre">columns=[&quot;col&quot;],</span> <span class="pre">dtype=int)</span></code> makes one 0/1 column for
+each value.</p></li>
+<li><p><strong>Choose <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>:</strong> <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">=</span> <span class="pre">df.drop(columns=&quot;target&quot;)</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">df[&quot;target&quot;]</span></code>.</p></li>
+<li><p><strong>Check <code class="docutils literal notranslate"><span class="pre">X</span></code>:</strong> <code class="docutils literal notranslate"><span class="pre">X.isna().sum().sum()</span> <span class="pre">==</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">X.dtypes</span></code> (numbers only), and <code class="docutils literal notranslate"><span class="pre">X.shape[0]</span> <span class="pre">==</span> <span class="pre">y.shape[0]</span></code>.</p></li>
+</ol>
+<p>Then <code class="docutils literal notranslate"><span class="pre">fit</span></code> works. <code class="docutils literal notranslate"><span class="pre">X.to_numpy()</span></code> shows the NumPy array that the model gets.</p>
+</section>
+<section id="further-reading">
+<h2><span class="section-number">13.14. </span>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The pandas guide “Working with missing data” (<a class="reference external" href="https://pandas.pydata.org/docs/user_guide/missing_data.html">https://pandas.pydata.org/docs/user_guide/missing_data.html</a>)
+shows more ways to find and fill missing values. Some of it goes beyond this book.</p></li>
+</ul>
+</section>
+<section id="practice-questions">
+<h2><span class="section-number">13.15. </span>Practice questions<a class="headerlink" href="#practice-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">13.15.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>Read <code class="docutils literal notranslate"><span class="pre">customers.csv</span></code> again into a new variable, <code class="docutils literal notranslate"><span class="pre">raw</span></code>. How many values are missing in the whole table?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">isna().sum()</span></code> counts the missing values of each column, and the second <code class="docutils literal notranslate"><span class="pre">sum()</span></code> adds these counts up: 25.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"customers.csv"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-easy">
+<h3><span class="section-number">13.15.2. </span>Question 2 (Easy)<a class="headerlink" href="#question-2-easy" title="Link to this heading">#</a></h3>
+<p>Why must <code class="docutils literal notranslate"><span class="pre">annual_spend</span></code> not be one of the columns of <code class="docutils literal notranslate"><span class="pre">X</span></code>?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">annual_spend</span></code> is the target, the value that we want to predict. If it is in <code class="docutils literal notranslate"><span class="pre">X</span></code>, the model can copy it, and it
+looks perfect. But for a new customer, we do not know the spending: that is why we predict it. So the model must
+learn from the other columns only.</p>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-easy">
+<h3><span class="section-number">13.15.3. </span>Question 3 (Easy)<a class="headerlink" href="#question-3-easy" title="Link to this heading">#</a></h3>
+<p>A table of four orders has a column <code class="docutils literal notranslate"><span class="pre">payment</span></code> with the values <code class="docutils literal notranslate"><span class="pre">Card</span></code>, <code class="docutils literal notranslate"><span class="pre">Cash</span></code>, <code class="docutils literal notranslate"><span class="pre">Card</span></code> and <code class="docutils literal notranslate"><span class="pre">Phone</span></code>. How many dummy
+columns does <code class="docutils literal notranslate"><span class="pre">pd.get_dummies</span></code> make, and what are their names? Check with code.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>One column for each different value: three columns, <code class="docutils literal notranslate"><span class="pre">payment_Card</span></code>, <code class="docutils literal notranslate"><span class="pre">payment_Cash</span></code> and <code class="docutils literal notranslate"><span class="pre">payment_Phone</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">orders</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"payment"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Card"</span><span class="p">,</span> <span class="s2">"Cash"</span><span class="p">,</span> <span class="s2">"Card"</span><span class="p">,</span> <span class="s2">"Phone"</span><span class="p">]})</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">orders</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"payment"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-medium">
+<h3><span class="section-number">13.15.4. </span>Question 4 (Medium)<a class="headerlink" href="#question-4-medium" title="Link to this heading">#</a></h3>
+<p>Five customers have the average baskets 20, 25, 30, 35 and 400 dollars. Compute the average and the median. Which
+one is the better value to fill in for a missing basket, and why?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The average is 102 and the median is 30. The one very large basket pulls the average far above four of the five
+customers. The median, 30, is much closer to a typical customer, so it is the better guess.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">baskets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">400</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">baskets</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">baskets</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-medium">
+<h3><span class="section-number">13.15.5. </span>Question 5 (Medium)<a class="headerlink" href="#question-5-medium" title="Link to this heading">#</a></h3>
+<p>Start from <code class="docutils literal notranslate"><span class="pre">raw</span> <span class="pre">=</span> <span class="pre">pd.read_csv(DATA_URL</span> <span class="pre">+</span> <span class="pre">&quot;customers.csv&quot;)</span></code>. Drop only the rows where <code class="docutils literal notranslate"><span class="pre">avg_basket</span></code> is missing. How
+many rows remain? Which column still has missing values?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>489 rows remain (500 minus the 11 rows without a basket). <code class="docutils literal notranslate"><span class="pre">age</span></code> still has its 14 missing values, because
+<code class="docutils literal notranslate"><span class="pre">subset</span></code> looks only at <code class="docutils literal notranslate"><span class="pre">avg_basket</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"customers.csv"</span><span class="p">)</span>
+<span class="n">some</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">"avg_basket"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">some</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">some</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-medium">
+<h3><span class="section-number">13.15.6. </span>Question 6 (Medium)<a class="headerlink" href="#question-6-medium" title="Link to this heading">#</a></h3>
+<p>Here is a small table of deliveries. Fill the missing <code class="docutils literal notranslate"><span class="pre">minutes</span></code> with the median, and the missing <code class="docutils literal notranslate"><span class="pre">weather</span></code> with
+<code class="docutils literal notranslate"><span class="pre">&quot;Unknown&quot;</span></code>. Then replace <code class="docutils literal notranslate"><span class="pre">weather</span></code> with 0/1 dummy columns.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trips</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"minutes"</span><span class="p">:</span> <span class="p">[</span><span class="mf">25.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">40.0</span><span class="p">,</span> <span class="mf">31.0</span><span class="p">],</span>
+    <span class="s2">"weather"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Clear"</span><span class="p">,</span> <span class="s2">"Rain"</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">"Clear"</span><span class="p">],</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The median of 25, 40 and 31 is 31, so the second delivery gets 31.0 minutes. The weather becomes three columns:
+<code class="docutils literal notranslate"><span class="pre">weather_Clear</span></code>, <code class="docutils literal notranslate"><span class="pre">weather_Rain</span></code> and <code class="docutils literal notranslate"><span class="pre">weather_Unknown</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trips</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"minutes"</span><span class="p">:</span> <span class="p">[</span><span class="mf">25.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">40.0</span><span class="p">,</span> <span class="mf">31.0</span><span class="p">],</span>
+    <span class="s2">"weather"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Clear"</span><span class="p">,</span> <span class="s2">"Rain"</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">"Clear"</span><span class="p">],</span>
+<span class="p">})</span>
+<span class="n">trips</span><span class="p">[</span><span class="s2">"minutes"</span><span class="p">]</span> <span class="o">=</span> <span class="n">trips</span><span class="p">[</span><span class="s2">"minutes"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">trips</span><span class="p">[</span><span class="s2">"minutes"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+<span class="n">trips</span><span class="p">[</span><span class="s2">"weather"</span><span class="p">]</span> <span class="o">=</span> <span class="n">trips</span><span class="p">[</span><span class="s2">"weather"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">"Unknown"</span><span class="p">)</span>
+<span class="n">trips</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">trips</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"weather"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">trips</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-hard">
+<h3><span class="section-number">13.15.7. </span>Question 7 (Hard)<a class="headerlink" href="#question-7-hard" title="Link to this heading">#</a></h3>
+<p>Prepare <code class="docutils literal notranslate"><span class="pre">customers.csv</span></code> again, but this time <strong>drop</strong> the rows with missing values instead of filling them. Make
+the dummies, choose <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, print their shapes, and fit a <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>After <code class="docutils literal notranslate"><span class="pre">dropna()</span></code>, 475 customers remain, so <code class="docutils literal notranslate"><span class="pre">X</span></code> has the shape (475, 8) and <code class="docutils literal notranslate"><span class="pre">y</span></code> the shape (475,). <code class="docutils literal notranslate"><span class="pre">fit</span></code> works,
+because nothing is missing and every column is a number.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dropped</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"customers.csv"</span><span class="p">)</span>
+<span class="n">dropped</span> <span class="o">=</span> <span class="n">dropped</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">dropped</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">dropped</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"region"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">X_dropped</span> <span class="o">=</span> <span class="n">dropped</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"annual_spend"</span><span class="p">)</span>
+<span class="n">y_dropped</span> <span class="o">=</span> <span class="n">dropped</span><span class="p">[</span><span class="s2">"annual_spend"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_dropped</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_dropped</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">model_dropped</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model_dropped</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_dropped</span><span class="p">,</span> <span class="n">y_dropped</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-challenge">
+<h3><span class="section-number">13.15.8. </span>Question 8 (Challenge)<a class="headerlink" href="#question-8-challenge" title="Link to this heading">#</a></h3>
+<p>Write a function <code class="docutils literal notranslate"><span class="pre">prepare(df)</span></code> that does all the steps of this chapter on a freshly read <code class="docutils literal notranslate"><span class="pre">customers.csv</span></code>
+(fill both number columns with their medians, make the region dummies, choose <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>) and returns <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.
+Test it, and check that the result has no missing value.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>A function can return two values, and we unpack them as <code class="docutils literal notranslate"><span class="pre">X2,</span> <span class="pre">y2</span> <span class="pre">=</span> <span class="pre">...</span></code>. <code class="docutils literal notranslate"><span class="pre">df.copy()</span></code> makes the function work on a
+copy, so that it does not change the DataFrame that it gets. The shapes are (500, 8) and (500,), and the check
+prints <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">prepare</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"age"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"age"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"age"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"avg_basket"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"avg_basket"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"avg_basket"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"region"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"annual_spend"</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"annual_spend"</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+
+
+<span class="n">X2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">prepare</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"customers.csv"</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X2</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X2</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="12-grouping-and-summarizing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">12. </span>Grouping and summarizing</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="14-guided-project.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">14. </span>Guided project: delivery times</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-first-fit-failed">13.1. Why the first fit failed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-missing-values">13.2. Finding missing values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rows-with-a-missing-value">13.3. Rows with a missing value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-rows-with-dropna">13.4. Dropping rows with dropna()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filling-missing-numbers-with-fillna">13.5. Filling missing numbers with fillna()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filling-missing-text-with-unknown">13.6. Filling missing text with “Unknown”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-drop-and-when-to-fill">13.7. When to drop and when to fill</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-to-numbers-with-get-dummies">13.8. Text to numbers with get_dummies()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-x-and-y">13.9. Choosing X and y</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-that-x-is-ready">13.10. Checking that X is ready</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-numpy-array-inside">13.11. The NumPy array inside</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-the-model-fits">13.12. Now the model fits</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">13.13. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">13.14. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">13.15. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">13.15.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">13.15.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">13.15.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">13.15.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">13.15.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-medium">13.15.6. Question 6 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">13.15.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">13.15.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

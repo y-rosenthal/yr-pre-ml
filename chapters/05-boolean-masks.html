@@ -1,0 +1,1213 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5. Comparisons and Boolean masks &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/05-boolean-masks';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/05-boolean-masks.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. Two-dimensional arrays" href="06-two-dimensional-arrays.html" />
+    <link rel="prev" title="4. Indexing, slicing and arithmetic" href="04-indexing-and-arithmetic.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/05-boolean-masks.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/05-boolean-masks.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Comparisons and Boolean masks</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-comparison-gives-true-or-false-for-each-value">5.1. A comparison gives True or False for each value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-keeping-the-values-where-the-mask-is-true">5.2. Filtering: keeping the values where the mask is True</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-conditions-with-and">5.3. Combining conditions with &amp;, | and ~</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-not-and-why-the-parentheses">5.4. Why not <code class="docutils literal notranslate"><span class="pre">and</span></code>? Why the parentheses?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summaries-one-number-from-many-values">5.5. Summaries: one number from many values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-is-the-largest-value-argmax">5.6. Where is the largest value? argmax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-with-a-mask">5.7. Counting with a mask</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-customers">5.8. 500 real customers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-and-comparing-groups-of-customers">5.9. Counting and comparing groups of customers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">5.10. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">5.11. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">5.11.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">5.11.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">5.11.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">5.11.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">5.11.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">5.11.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">5.11.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">5.11.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="comparisons-and-boolean-masks">
+<h1><span class="section-number">5. </span>Comparisons and Boolean masks<a class="headerlink" href="#comparisons-and-boolean-masks" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/05-boolean-masks.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>Many business questions start with a condition. Which products cost more than $50? How many customers visit more
+than six times a month, and what share of all customers is that? In this chapter, we answer such questions with
+NumPy. A comparison on an array gives an array of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values, and that array lets us choose, count
+and summarize values without writing a loop.</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>compare an array with a number, and get an array of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values: a <strong>Boolean mask</strong>;</p></li>
+<li><p>keep only the values you want with a mask, as in <code class="docutils literal notranslate"><span class="pre">prices[prices</span> <span class="pre">&gt;</span> <span class="pre">50]</span></code>;</p></li>
+<li><p>combine conditions with <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (and), <code class="docutils literal notranslate"><span class="pre">|</span></code> (or) and <code class="docutils literal notranslate"><span class="pre">~</span></code> (not), and know why the parentheses are needed;</p></li>
+<li><p>summarize an array with <code class="docutils literal notranslate"><span class="pre">sum</span></code>, <code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code> and <code class="docutils literal notranslate"><span class="pre">np.median</span></code>, and find the position of the largest value
+with <code class="docutils literal notranslate"><span class="pre">argmax</span></code>;</p></li>
+<li><p>count the values that meet a condition with <code class="docutils literal notranslate"><span class="pre">mask.sum()</span></code>, and compute their share with <code class="docutils literal notranslate"><span class="pre">mask.mean()</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">DATA_URL</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/"</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We use NumPy in the whole chapter. pandas only reads a data file, near the end.</p>
+<section id="a-comparison-gives-true-or-false-for-each-value">
+<h2><span class="section-number">5.1. </span>A comparison gives True or False for each value<a class="headerlink" href="#a-comparison-gives-true-or-false-for-each-value" title="Link to this heading">#</a></h2>
+<p>An online shop sells eight products. Here are their prices, in dollars, and the units of each product that the
+shop sold last week, in the same order:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">48.0</span><span class="p">,</span> <span class="mf">75.0</span><span class="p">,</span> <span class="mf">19.99</span><span class="p">,</span> <span class="mf">120.0</span><span class="p">,</span> <span class="mf">55.5</span><span class="p">,</span> <span class="mf">8.75</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">])</span>
+<span class="n">units</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">30</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+<span class="n">prices</span> <span class="o">&gt;</span> <span class="mi">50</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([False, False,  True, False,  True,  True, False,  True])
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>In Thonny:</strong> wrap the last line in <code class="docutils literal notranslate"><span class="pre">print()</span></code>: <code class="docutils literal notranslate"><span class="pre">print(prices</span> <span class="pre">&gt;</span> <span class="pre">50)</span></code>. <code class="docutils literal notranslate"><span class="pre">print()</span></code> shows the same values without
+<code class="docutils literal notranslate"><span class="pre">array(...)</span></code> and without commas: <code class="docutils literal notranslate"><span class="pre">[False</span> <span class="pre">False</span>&#160; <span class="pre">True</span> <span class="pre">False</span>&#160; <span class="pre">True</span>&#160; <span class="pre">True</span> <span class="pre">False</span>&#160; <span class="pre">True]</span></code>.</p>
+</div></blockquote>
+<p>Arithmetic on an array, such as <code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">*</span> <span class="pre">2</span></code>, works on every value at once. A comparison works the same way:
+<code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">&gt;</span> <span class="pre">50</span></code> compares <strong>every</strong> price with 50, and gives one answer for each price. The first price, 12.5, is not
+above 50, so the first answer is <code class="docutils literal notranslate"><span class="pre">False</span></code>. The third price, 75.0, is above 50, so the third answer is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> are Python’s two <strong>Boolean</strong> values (named after the mathematician George Boole). Let’s keep the
+answers in a variable, and look at its dtype:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expensive</span> <span class="o">=</span> <span class="n">prices</span> <span class="o">&gt;</span> <span class="mi">50</span>
+<span class="n">expensive</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype('bool')
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dtype is <code class="docutils literal notranslate"><span class="pre">bool</span></code>: the array holds Boolean values. Such an array is called a <strong>Boolean mask</strong>, or simply a
+<strong>mask</strong>. It has one <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code> for each product, in the same order as <code class="docutils literal notranslate"><span class="pre">prices</span></code>. Like a painter’s mask, it
+covers some values and lets the others through, as we see next.</p>
+<p>All of Python’s comparison operators work on arrays: <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">==</span></code> (equal) and <code class="docutils literal notranslate"><span class="pre">!=</span></code> (not equal).</p>
+</section>
+<section id="filtering-keeping-the-values-where-the-mask-is-true">
+<h2><span class="section-number">5.2. </span>Filtering: keeping the values where the mask is True<a class="headerlink" href="#filtering-keeping-the-values-where-the-mask-is-true" title="Link to this heading">#</a></h2>
+<p>Put a mask in square brackets after an array, and NumPy keeps the values where the mask is <code class="docutils literal notranslate"><span class="pre">True</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="p">[</span><span class="n">expensive</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 75. , 120. ,  55.5,  64. ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Four of the eight prices are above $50 (NumPy shows <code class="docutils literal notranslate"><span class="pre">75.</span></code> for 75.0). This is called <strong>filtering</strong>: the mask chooses
+the values, and the result is a new, shorter array. The array <code class="docutils literal notranslate"><span class="pre">prices</span></code> itself does not change.</p>
+<p>Usually, we write the comparison directly inside the brackets: <code class="docutils literal notranslate"><span class="pre">prices[prices</span> <span class="pre">&gt;</span> <span class="pre">50]</span></code>, which reads “prices, where
+prices are above 50”. And the mask can choose values from <strong>another</strong> array of the same length. The positions
+match: the first value of <code class="docutils literal notranslate"><span class="pre">units</span></code> belongs to the first product, and so on. So how many units did the expensive
+products sell?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[</span><span class="n">prices</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 5,  2,  9, 15])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The four products above $50 sold only 5, 2, 9 and 15 units. The mask was made from <code class="docutils literal notranslate"><span class="pre">prices</span></code>, but it chooses values
+from <code class="docutils literal notranslate"><span class="pre">units</span></code>. A condition on one column chooses the values of another column: that is also how pandas filters the
+rows of a table, in the chapter <em>Filtering rows</em>.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> change <code class="docutils literal notranslate"><span class="pre">50</span></code> to <code class="docutils literal notranslate"><span class="pre">100</span></code> in the cell above, and run it again. Which units remain?</p>
+</div></blockquote>
+</section>
+<section id="combining-conditions-with-and">
+<h2><span class="section-number">5.3. </span>Combining conditions with &amp;, | and ~<a class="headerlink" href="#combining-conditions-with-and" title="Link to this heading">#</a></h2>
+<p>Which products cost between <span class="math notranslate nohighlight">\(20 and \)</span>70? Two conditions must both be true. For masks, <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> means “and”:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="p">[(</span><span class="n">prices</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">prices</span> <span class="o">&lt;</span> <span class="mi">70</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([48. , 55.5, 64. ])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&amp;</span></code> combines the two masks position by position: the result is <code class="docutils literal notranslate"><span class="pre">True</span></code> only where <strong>both</strong> masks are <code class="docutils literal notranslate"><span class="pre">True</span></code>. The
+price 19.99 is not above 20, and 75.0 is not below 70, so they are left out.</p>
+<p>Two more operators work the same way. <code class="docutils literal notranslate"><span class="pre">|</span></code> (the vertical bar) means “or”: <code class="docutils literal notranslate"><span class="pre">True</span></code> where <strong>at least one</strong> of the masks
+is <code class="docutils literal notranslate"><span class="pre">True</span></code>. <code class="docutils literal notranslate"><span class="pre">~</span></code> (the tilde) means “not”: it turns every <code class="docutils literal notranslate"><span class="pre">True</span></code> into <code class="docutils literal notranslate"><span class="pre">False</span></code>, and every <code class="docutils literal notranslate"><span class="pre">False</span></code> into <code class="docutils literal notranslate"><span class="pre">True</span></code>. Here are
+the very cheap or very expensive products, and then the products that are <em>not</em> expensive:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">prices</span><span class="p">[(</span><span class="n">prices</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">prices</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prices</span><span class="p">[</span><span class="o">~</span><span class="n">expensive</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[120.     8.75]
+[12.5  48.   19.99  8.75]
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(8.75 is below 10 and \)</span>120 is above 100. The second line gives the same prices as <code class="docutils literal notranslate"><span class="pre">prices[prices</span> <span class="pre">&lt;=</span> <span class="pre">50]</span></code>. In short:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&amp;</span> <span class="pre">b</span></code> (and) is <code class="docutils literal notranslate"><span class="pre">True</span></code> where both <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are <code class="docutils literal notranslate"><span class="pre">True</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">|</span> <span class="pre">b</span></code> (or) is <code class="docutils literal notranslate"><span class="pre">True</span></code> where at least one of them is <code class="docutils literal notranslate"><span class="pre">True</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~a</span></code> (not) is <code class="docutils literal notranslate"><span class="pre">True</span></code> where <code class="docutils literal notranslate"><span class="pre">a</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</section>
+<section id="why-not-and-why-the-parentheses">
+<h2><span class="section-number">5.4. </span>Why not <code class="docutils literal notranslate"><span class="pre">and</span></code>? Why the parentheses?<a class="headerlink" href="#why-not-and-why-the-parentheses" title="Link to this heading">#</a></h2>
+<p>Python’s words <code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span></code> work on <strong>one</strong> <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>, as in an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement. They do not work
+on a whole mask:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="p">[(</span><span class="n">prices</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">prices</span> <span class="o">&lt;</span> <span class="mi">70</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">prices</span><span class="p">[(</span><span class="n">prices</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">prices</span> <span class="o">&lt;</span> <span class="mi">70</span><span class="p">)]</span>
+
+<span class="ne">ValueError</span>: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+</pre></div>
+</div>
+</div>
+</div>
+<p>The last line says <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">The</span> <span class="pre">truth</span> <span class="pre">value</span> <span class="pre">of</span> <span class="pre">an</span> <span class="pre">array</span> <span class="pre">with</span> <span class="pre">more</span> <span class="pre">than</span> <span class="pre">one</span> <span class="pre">element</span> <span class="pre">is</span> <span class="pre">ambiguous</span></code>. To use
+<code class="docutils literal notranslate"><span class="pre">and</span></code>, Python must know whether the whole mask <code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">&gt;</span> <span class="pre">20</span></code> is true or false. But some of its values are <code class="docutils literal notranslate"><span class="pre">True</span></code>
+and some are <code class="docutils literal notranslate"><span class="pre">False</span></code>, so NumPy refuses to guess (“ambiguous” means that it could mean more than one thing). The
+message suggests <code class="docutils literal notranslate"><span class="pre">a.any()</span></code> (is <em>any</em> value <code class="docutils literal notranslate"><span class="pre">True</span></code>?) or <code class="docutils literal notranslate"><span class="pre">a.all()</span></code> (are <em>all</em> values <code class="docutils literal notranslate"><span class="pre">True</span></code>?), but that is not what we
+want here. For masks, use <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">|</span></code> and <code class="docutils literal notranslate"><span class="pre">~</span></code> instead of <code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span></code>.</p>
+<p>The parentheses matter too, because Python computes <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> <strong>before</strong> <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>. Without parentheses,
+<code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">&gt;</span> <span class="pre">20</span> <span class="pre">&amp;</span> <span class="pre">prices</span> <span class="pre">&lt;</span> <span class="pre">70</span></code> starts with <code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">&amp;</span> <span class="pre">prices</span></code>, which is not what we mean, and it gives an error.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> leaving out the parentheses, as in <code class="docutils literal notranslate"><span class="pre">prices[prices</span> <span class="pre">&gt;</span> <span class="pre">20</span> <span class="pre">&amp;</span> <span class="pre">prices</span> <span class="pre">&lt;</span> <span class="pre">70]</span></code>. Put each comparison
+in its own parentheses: <code class="docutils literal notranslate"><span class="pre">prices[(prices</span> <span class="pre">&gt;</span> <span class="pre">20)</span> <span class="pre">&amp;</span> <span class="pre">(prices</span> <span class="pre">&lt;</span> <span class="pre">70)]</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="summaries-one-number-from-many-values">
+<h2><span class="section-number">5.5. </span>Summaries: one number from many values<a class="headerlink" href="#summaries-one-number-from-many-values" title="Link to this heading">#</a></h2>
+<p>A manager often wants one number instead of eight: the total, the average, the smallest, the largest. Arrays have
+methods for these. We print them, to see several values from one cell:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"total:  "</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"average:"</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"lowest: "</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"highest:"</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"median: "</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">units</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total:   174
+average: 21.75
+lowest:  2
+highest: 60
+median:  13.5
+</pre></div>
+</div>
+</div>
+</div>
+<p>The shop sold 174 units in all, 21.75 per product on average. The fewest units of one product were 2, and the most
+were 60. (Without <code class="docutils literal notranslate"><span class="pre">print()</span></code>, Colab shows such a result as <code class="docutils literal notranslate"><span class="pre">np.int64(174)</span></code> or <code class="docutils literal notranslate"><span class="pre">np.float64(21.75)</span></code>, as in the
+chapter <em>Indexing, slicing and arithmetic</em>: it is simply the number.)</p>
+<p>The <strong>median</strong> is the middle value: sort the values, and take the one in the middle. With an even number of
+values, two values are in the middle, and the median is their average. Sorted, our units are 2, 5, 9, 12, 15, 30,
+41, 60. The middle two are 12 and 15, so the median is 13.5: half of the products sold fewer than 13.5 units, and
+half sold more.</p>
+<p>Why is the average (21.75) so much bigger than the median (13.5)? Two products sold a lot (41 and 60 units), and
+they pull the average up. The median does not care how big the biggest values are. When a few values are very
+large, as with sales or incomes, the median often describes a typical value better than the average.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> writing <code class="docutils literal notranslate"><span class="pre">units.median()</span></code>. Arrays have no <code class="docutils literal notranslate"><span class="pre">median</span></code> method, so this gives an
+<code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>. Write <code class="docutils literal notranslate"><span class="pre">np.median(units)</span></code>: the median is a NumPy <em>function</em>.</p>
+</div></blockquote>
+</section>
+<section id="where-is-the-largest-value-argmax">
+<h2><span class="section-number">5.6. </span>Where is the largest value? argmax<a class="headerlink" href="#where-is-the-largest-value-argmax" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">max()</span></code> gives the largest value, but not <em>which</em> product it belongs to. <code class="docutils literal notranslate"><span class="pre">argmax()</span></code> gives the <strong>position</strong> of the
+largest value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(4)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The most expensive product is at position 4: the fifth product, because positions start at 0. With the position,
+we can look up anything else about that product, in any list or array in the same order. Here are the names of
+the products, as a Python list:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">products</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"mug"</span><span class="p">,</span> <span class="s2">"backpack"</span><span class="p">,</span> <span class="s2">"desk lamp"</span><span class="p">,</span> <span class="s2">"notebooks"</span><span class="p">,</span> <span class="s2">"headphones"</span><span class="p">,</span> <span class="s2">"keyboard"</span><span class="p">,</span> <span class="s2">"pens"</span><span class="p">,</span> <span class="s2">"stand"</span><span class="p">]</span>
+<span class="n">top</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">products</span><span class="p">[</span><span class="n">top</span><span class="p">],</span> <span class="s2">"cost"</span><span class="p">,</span> <span class="n">prices</span><span class="p">[</span><span class="n">top</span><span class="p">],</span> <span class="s2">"dollars and sold"</span><span class="p">,</span> <span class="n">units</span><span class="p">[</span><span class="n">top</span><span class="p">],</span> <span class="s2">"units"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>headphones cost 120.0 dollars and sold 2 units
+</pre></div>
+</div>
+</div>
+</div>
+<p>The most expensive product, the headphones, sold only 2 units last week. There is also <code class="docutils literal notranslate"><span class="pre">argmin()</span></code>, the position of
+the smallest value. If the largest value appears more than once, <code class="docutils literal notranslate"><span class="pre">argmax()</span></code> gives the first of its positions.</p>
+</section>
+<section id="counting-with-a-mask">
+<h2><span class="section-number">5.7. </span>Counting with a mask<a class="headerlink" href="#counting-with-a-mask" title="Link to this heading">#</a></h2>
+<p>How many products cost more than $50, and what share of all products is that? We could count the <code class="docutils literal notranslate"><span class="pre">True</span></code> values by
+eye, but NumPy can do it for us:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"count:"</span><span class="p">,</span> <span class="n">expensive</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"share:"</span><span class="p">,</span> <span class="n">expensive</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count: 4
+share: 0.5
+</pre></div>
+</div>
+</div>
+</div>
+<p>In arithmetic, <code class="docutils literal notranslate"><span class="pre">True</span></code> counts as 1 and <code class="docutils literal notranslate"><span class="pre">False</span></code> as 0. So <strong>the sum of a mask is the number of <code class="docutils literal notranslate"><span class="pre">True</span></code> values</strong>: 4
+products cost more than <span class="math notranslate nohighlight">\(50. And **the mean of a mask is their share**: 4 out of 8 is 0.5, so 50% of the products
+cost more than \)</span>50. (Multiply a share by 100 to get a percentage.)</p>
+</section>
+<section id="real-customers">
+<h2><span class="section-number">5.8. </span>500 real customers<a class="headerlink" href="#real-customers" title="Link to this heading">#</a></h2>
+<p>Eight products are easy to check by eye. Let’s use the same tools on 500 values: the customers of the chapter
+<em>A first machine-learning example</em>. For each member of a store chain’s loyalty program, <code class="docutils literal notranslate"><span class="pre">visits_per_month</span></code> is how
+often the member visits a store, on average, each month.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"customers.csv"</span><span class="p">)</span>
+<span class="n">visits</span> <span class="o">=</span> <span class="n">customers</span><span class="p">[</span><span class="s2">"visits_per_month"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">visits</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 5.6,  2.4,  3.1, 11.9,  1.5,  3.8,  4.4,  4. ,  3.6,  6.7])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first line reads the data file into a table. The second line takes the column <code class="docutils literal notranslate"><span class="pre">visits_per_month</span></code> from the
+table, and <code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code> turns it into a NumPy array. The chapters <em>Series and DataFrames</em> and <em>Reading and
+describing data</em> explain these two lines. For now, all we need is that <code class="docutils literal notranslate"><span class="pre">visits</span></code> is an ordinary NumPy array. The
+slice <code class="docutils literal notranslate"><span class="pre">[:10]</span></code> shows its first ten values: the first customer visits 5.6 times a month, the fourth 11.9 times.</p>
+<p>What does a typical customer do?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"customers:"</span><span class="p">,</span> <span class="n">visits</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"average:  "</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">visits</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"median:   "</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">visits</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"lowest:   "</span><span class="p">,</span> <span class="n">visits</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"highest:  "</span><span class="p">,</span> <span class="n">visits</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>customers: 500
+average:   3.65
+median:    3.3
+lowest:    0.6
+highest:   12.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are 500 customers. <code class="docutils literal notranslate"><span class="pre">np.round(...,</span> <span class="pre">2)</span></code> rounds the average to two decimals: 3.65 visits a month. The median is
+3.3, a little lower than the average: a few customers visit very often, up to 12 times a month, and they pull the
+average up.</p>
+<blockquote>
+<div><p><strong>Note:</strong> two columns of <code class="docutils literal notranslate"><span class="pre">customers.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">avg_basket</span></code>, have missing values. In a NumPy array, a
+missing value is <code class="docutils literal notranslate"><span class="pre">nan</span></code> (“not a number”), and the sum or the mean of an array with a <code class="docutils literal notranslate"><span class="pre">nan</span></code> in it is <code class="docutils literal notranslate"><span class="pre">nan</span></code> too. That
+is why this chapter uses <code class="docutils literal notranslate"><span class="pre">visits_per_month</span></code> and <code class="docutils literal notranslate"><span class="pre">annual_spend</span></code>, which have no missing values. The chapter
+<em>Preparing data for machine learning</em> shows what to do with missing values.</p>
+</div></blockquote>
+</section>
+<section id="counting-and-comparing-groups-of-customers">
+<h2><span class="section-number">5.9. </span>Counting and comparing groups of customers<a class="headerlink" href="#counting-and-comparing-groups-of-customers" title="Link to this heading">#</a></h2>
+<p>The marketing team calls the customers who visit more than six times a month <em>frequent visitors</em>. How many are
+there, and what share of all customers are they?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frequent</span> <span class="o">=</span> <span class="n">visits</span> <span class="o">&gt;</span> <span class="mi">6</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"frequent visitors:"</span><span class="p">,</span> <span class="n">frequent</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"share:"</span><span class="p">,</span> <span class="n">frequent</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>frequent visitors: 64
+share: 0.128
+</pre></div>
+</div>
+</div>
+</div>
+<p>64 of the 500 customers are frequent visitors: a share of 0.128, or 12.8%.</p>
+<p>Do frequent visitors spend more? The column <code class="docutils literal notranslate"><span class="pre">annual_spend</span></code> holds what each customer spent last year, in dollars,
+in the same order as <code class="docutils literal notranslate"><span class="pre">visits</span></code>. We turn it into an array too, and use the mask <code class="docutils literal notranslate"><span class="pre">frequent</span></code> (made from <code class="docutils literal notranslate"><span class="pre">visits</span></code>) to
+choose values from <code class="docutils literal notranslate"><span class="pre">spend</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spend</span> <span class="o">=</span> <span class="n">customers</span><span class="p">[</span><span class="s2">"annual_spend"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"frequent visitors:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">spend</span><span class="p">[</span><span class="n">frequent</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"other customers:  "</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">spend</span><span class="p">[</span><span class="o">~</span><span class="n">frequent</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>frequent visitors: 5985.77
+other customers:   2326.06
+</pre></div>
+</div>
+</div>
+</div>
+<p>Frequent visitors spent <span class="math notranslate nohighlight">\(5,985.77 on average, more than two and a half times the \)</span>2,326.06 of the other customers.
+With one mask, and <code class="docutils literal notranslate"><span class="pre">~</span></code> for the other group, we compared two groups of customers in two lines. The models of the
+chapter <em>A first machine-learning example</em> learned exactly this kind of connection between visits and spending.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> change <code class="docutils literal notranslate"><span class="pre">6</span></code> to <code class="docutils literal notranslate"><span class="pre">3</span></code> in <code class="docutils literal notranslate"><span class="pre">frequent</span> <span class="pre">=</span> <span class="pre">visits</span> <span class="pre">&gt;</span> <span class="pre">6</span></code>, and run the two cells again. How do the count, the
+share and the two averages change?</p>
+</div></blockquote>
+</section>
+<section id="summary">
+<h2><span class="section-number">5.10. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A comparison on an array, such as <code class="docutils literal notranslate"><span class="pre">prices</span> <span class="pre">&gt;</span> <span class="pre">50</span></code>, compares every value and gives an array of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>
+values (dtype <code class="docutils literal notranslate"><span class="pre">bool</span></code>): a <strong>Boolean mask</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a[mask]</span></code> keeps the values of <code class="docutils literal notranslate"><span class="pre">a</span></code> where the mask is <code class="docutils literal notranslate"><span class="pre">True</span></code>: <code class="docutils literal notranslate"><span class="pre">prices[prices</span> <span class="pre">&gt;</span> <span class="pre">50]</span></code>. The mask may come from
+another array of the same length: <code class="docutils literal notranslate"><span class="pre">units[prices</span> <span class="pre">&gt;</span> <span class="pre">50]</span></code>.</p></li>
+<li><p>Combine masks with <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (and), <code class="docutils literal notranslate"><span class="pre">|</span></code> (or) and <code class="docutils literal notranslate"><span class="pre">~</span></code> (not), and put each comparison in parentheses:
+<code class="docutils literal notranslate"><span class="pre">(prices</span> <span class="pre">&gt;</span> <span class="pre">20)</span> <span class="pre">&amp;</span> <span class="pre">(prices</span> <span class="pre">&lt;</span> <span class="pre">70)</span></code>. The words <code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span></code> give a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> on arrays.</p></li>
+<li><p>Summaries: <code class="docutils literal notranslate"><span class="pre">a.sum()</span></code>, <code class="docutils literal notranslate"><span class="pre">a.mean()</span></code>, <code class="docutils literal notranslate"><span class="pre">a.min()</span></code>, <code class="docutils literal notranslate"><span class="pre">a.max()</span></code>, <code class="docutils literal notranslate"><span class="pre">np.median(a)</span></code>. <code class="docutils literal notranslate"><span class="pre">a.argmax()</span></code> and <code class="docutils literal notranslate"><span class="pre">a.argmin()</span></code> give the
+position of the largest and the smallest value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code> counts as 1: <code class="docutils literal notranslate"><span class="pre">mask.sum()</span></code> counts the values that meet a condition, and <code class="docutils literal notranslate"><span class="pre">mask.mean()</span></code> gives their share.</p></li>
+</ul>
+</section>
+<section id="practice-questions">
+<h2><span class="section-number">5.11. </span>Practice questions<a class="headerlink" href="#practice-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">5.11.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>What does <code class="docutils literal notranslate"><span class="pre">np.array([4,</span> <span class="pre">9,</span> <span class="pre">2,</span> <span class="pre">7])</span> <span class="pre">&gt;=</span> <span class="pre">7</span></code> give? What is the dtype of the result? Check your answer with Python.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>It compares each value with 7 and gives the mask <code class="docutils literal notranslate"><span class="pre">[False</span>&#160; <span class="pre">True</span> <span class="pre">False</span>&#160; <span class="pre">True]</span></code> (as <code class="docutils literal notranslate"><span class="pre">print()</span></code> shows it): 9 and 7
+are at least 7. The dtype is <code class="docutils literal notranslate"><span class="pre">bool</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">7</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">check</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-easy">
+<h3><span class="section-number">5.11.2. </span>Question 2 (Easy)<a class="headerlink" href="#question-2-easy" title="Link to this heading">#</a></h3>
+<p>Show the units sold of the products that cost less than $20. What do you notice?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Make the mask from <code class="docutils literal notranslate"><span class="pre">prices</span></code>, and use it on <code class="docutils literal notranslate"><span class="pre">units</span></code>. The three cheap products sold 30, 41 and 60 units: many more
+than the expensive ones.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[</span><span class="n">prices</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-easy">
+<h3><span class="section-number">5.11.3. </span>Question 3 (Easy)<a class="headerlink" href="#question-3-easy" title="Link to this heading">#</a></h3>
+<p>How many customers visit a store <strong>less than once</strong> a month? What percentage of all customers is that?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>13 customers, a share of 0.026, which is 2.6%. The sum of a mask counts its <code class="docutils literal notranslate"><span class="pre">True</span></code> values, and the mean gives
+their share.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rare</span> <span class="o">=</span> <span class="n">visits</span> <span class="o">&lt;</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rare</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rare</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-medium">
+<h3><span class="section-number">5.11.4. </span>Question 4 (Medium)<a class="headerlink" href="#question-4-medium" title="Link to this heading">#</a></h3>
+<p>This line should show the units between 10 and 40, but it fails. Why? Fix it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[</span><span class="n">units</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="ow">and</span> <span class="n">units</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">]</span>
+</pre></div>
+</div>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">and</span></code> works on one <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>, not on a whole mask, so it gives a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Use <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, and put each
+comparison in parentheses. The result is 30, 12 and 15.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[(</span><span class="n">units</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">units</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">)]</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-medium">
+<h3><span class="section-number">5.11.5. </span>Question 5 (Medium)<a class="headerlink" href="#question-5-medium" title="Link to this heading">#</a></h3>
+<p>The revenue of each product is its units times its price. What was the total revenue of the products that cost
+more than $50?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Compute the revenue of each product, keep the revenue of the expensive products with a mask, and add it up:
+$2,074.50.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">revenue</span> <span class="o">=</span> <span class="n">units</span> <span class="o">*</span> <span class="n">prices</span>
+<span class="n">revenue</span><span class="p">[</span><span class="n">prices</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-hard">
+<h3><span class="section-number">5.11.6. </span>Question 6 (Hard)<a class="headerlink" href="#question-6-hard" title="Link to this heading">#</a></h3>
+<p>Which customer spent the most last year? Give the position, the amount, and how often that customer visits a
+store.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">argmax()</span></code> gives the position, 353. That customer spent $11,507.86 and visits 12 times a month, the most visits of
+any customer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">best</span> <span class="o">=</span> <span class="n">spend</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">spend</span><span class="p">[</span><span class="n">best</span><span class="p">],</span> <span class="n">visits</span><span class="p">[</span><span class="n">best</span><span class="p">])</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-hard">
+<h3><span class="section-number">5.11.7. </span>Question 7 (Hard)<a class="headerlink" href="#question-7-hard" title="Link to this heading">#</a></h3>
+<p>The marketing team wants to call the frequent visitors (more than 6 visits a month) who spent <strong>less than</strong>
+$3,000 last year. How many are there? Show their visits and their spending.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Combine the two conditions with <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>. The masks come from two different arrays, of the same length. Only 4 of the
+64 frequent visitors spent less than $3,000.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calls</span> <span class="o">=</span> <span class="p">(</span><span class="n">visits</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">spend</span> <span class="o">&lt;</span> <span class="mi">3000</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">calls</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">visits</span><span class="p">[</span><span class="n">calls</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spend</span><span class="p">[</span><span class="n">calls</span><span class="p">])</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-challenge">
+<h3><span class="section-number">5.11.8. </span>Question 8 (Challenge)<a class="headerlink" href="#question-8-challenge" title="Link to this heading">#</a></h3>
+<p>What share of the customers spent <strong>more than the average</strong> spending? Is it more or less than half? Use the
+median to explain why.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The share is 0.412: less than half of the customers spent more than the average of <span class="math notranslate nohighlight">\(2,794.51. The median,
+\)</span>2,322.54, is lower than the average, because a few customers spent a lot (up to $11,507.86) and pull the average
+up. Half of the customers spent more than the median, so fewer than half spent more than the higher average.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">above</span> <span class="o">=</span> <span class="n">spend</span> <span class="o">&gt;</span> <span class="n">spend</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">above</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">spend</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">spend</span><span class="p">))</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04-indexing-and-arithmetic.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Indexing, slicing and arithmetic</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="06-two-dimensional-arrays.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Two-dimensional arrays</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-comparison-gives-true-or-false-for-each-value">5.1. A comparison gives True or False for each value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-keeping-the-values-where-the-mask-is-true">5.2. Filtering: keeping the values where the mask is True</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-conditions-with-and">5.3. Combining conditions with &amp;, | and ~</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-not-and-why-the-parentheses">5.4. Why not <code class="docutils literal notranslate"><span class="pre">and</span></code>? Why the parentheses?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summaries-one-number-from-many-values">5.5. Summaries: one number from many values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-is-the-largest-value-argmax">5.6. Where is the largest value? argmax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-with-a-mask">5.7. Counting with a mask</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-customers">5.8. 500 real customers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-and-comparing-groups-of-customers">5.9. Counting and comparing groups of customers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">5.10. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">5.11. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">5.11.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">5.11.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">5.11.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">5.11.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">5.11.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">5.11.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">5.11.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">5.11.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

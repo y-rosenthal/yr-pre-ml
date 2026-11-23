@@ -1,0 +1,1831 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>11. New columns and sorting &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/11-new-columns-and-sorting';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/11-new-columns-and-sorting.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="12. Grouping and summarizing" href="12-grouping-and-summarizing.html" />
+    <link rel="prev" title="10. Filtering rows" href="10-filtering-rows.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/11-new-columns-and-sorting.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/11-new-columns-and-sorting.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>New columns and sorting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-new-column-from-other-columns">11.1. A new column from other columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rounding-a-column">11.2. Rounding a column</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-column-from-text-str">11.3. A column from text: <code class="docutils literal notranslate"><span class="pre">.str</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-column-from-a-condition">11.4. A column from a condition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">11.5. Renaming columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-columns">11.6. Dropping columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-the-rows">11.7. Sorting the rows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-top-5">11.8. The top 5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-by-two-columns">11.9. Sorting by two columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-fresh-index-reset-index">11.10. A fresh index: <code class="docutils literal notranslate"><span class="pre">reset_index</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-shortcut-nlargest">11.11. A shortcut: <code class="docutils literal notranslate"><span class="pre">nlargest</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">11.12. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">11.13. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">11.13.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">11.13.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">11.13.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">11.13.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">11.13.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">11.13.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">11.13.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">11.13.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="new-columns-and-sorting">
+<h1><span class="section-number">11. </span>New columns and sorting<a class="headerlink" href="#new-columns-and-sorting" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/11-new-columns-and-sorting.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>A data file rarely has every column that we need. The sales file has the units, the price and the discount of
+each sale, but not the money that the sale brought in. In this chapter, we compute new columns from the old ones,
+tidy up the column names, and sort the rows to answer questions such as “Which were our five biggest sales?”</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>add a column computed from other columns, and round it;</p></li>
+<li><p>make a column from a part of a text column, with <code class="docutils literal notranslate"><span class="pre">.str[:7]</span></code>;</p></li>
+<li><p>make a column from a condition, with the <code class="docutils literal notranslate"><span class="pre">loc</span></code> rule;</p></li>
+<li><p>rename and drop columns;</p></li>
+<li><p>sort the rows by one or two columns, find the top rows, give them a fresh index, and use <code class="docutils literal notranslate"><span class="pre">nlargest</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">DATA_URL</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/"</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We use the sales of a store chain again: 2,000 sales in one year, one row for each sale.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"sales.csv"</span><span class="p">)</span>
+<span class="n">sales</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>region</th>
+      <th>category</th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>S1</td>
+      <td>North</td>
+      <td>Clothing</td>
+      <td>3</td>
+      <td>46.99</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>2.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>S2</td>
+      <td>North</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>5.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>11.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Grocery</td>
+      <td>13</td>
+      <td>3.99</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="a-new-column-from-other-columns">
+<h2><span class="section-number">11.1. </span>A new column from other columns<a class="headerlink" href="#a-new-column-from-other-columns" title="Link to this heading">#</a></h2>
+<p>The <strong>revenue</strong> of a sale is the money it brought in: the units, times the price, minus the discount. A discount
+of 0.1 means 10% off, so the customer pays <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">0.1</span> <span class="pre">=</span> <span class="pre">0.9</span></code> of the price. We compute it for every row at once, and
+store it in a new column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"revenue"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">*</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"price"</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">])</span>
+<span class="n">sales</span><span class="p">[[</span><span class="s2">"units"</span><span class="p">,</span> <span class="s2">"price"</span><span class="p">,</span> <span class="s2">"discount"</span><span class="p">,</span> <span class="s2">"revenue"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+      <th>revenue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>46.99</td>
+      <td>0.1</td>
+      <td>126.873</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9</td>
+      <td>2.99</td>
+      <td>0.0</td>
+      <td>26.910</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11</td>
+      <td>5.99</td>
+      <td>0.0</td>
+      <td>65.890</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9</td>
+      <td>11.99</td>
+      <td>0.0</td>
+      <td>107.910</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>13</td>
+      <td>3.99</td>
+      <td>0.2</td>
+      <td>41.496</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The new column <code class="docutils literal notranslate"><span class="pre">revenue</span></code> appears at the right end of the table. Check row 0: 3 units at $46.99 with a discount of
+0.1 give 3 × 46.99 × 0.9 = 126.873.</p>
+<p>The arithmetic works row by row, as it does for arrays of the same length: pandas multiplies the units of row 0 by
+the price of row 0, and so on, for all 2,000 rows, with no loop. The rule:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df[&quot;new&quot;]</span> <span class="pre">=</span> <span class="pre">...</span></code> with a new name <strong>adds</strong> a column;</p></li>
+<li><p>with the name of a column that exists, it <strong>replaces</strong> that column.</p></li>
+</ul>
+</section>
+<section id="rounding-a-column">
+<h2><span class="section-number">11.2. </span>Rounding a column<a class="headerlink" href="#rounding-a-column" title="Link to this heading">#</a></h2>
+<p>Money has two decimal places. <code class="docutils literal notranslate"><span class="pre">round(2)</span></code> rounds every value of a column, and we put the result back in the same
+column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"revenue"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sales</span><span class="p">[[</span><span class="s2">"units"</span><span class="p">,</span> <span class="s2">"price"</span><span class="p">,</span> <span class="s2">"discount"</span><span class="p">,</span> <span class="s2">"revenue"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+      <th>revenue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>46.99</td>
+      <td>0.1</td>
+      <td>126.87</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9</td>
+      <td>2.99</td>
+      <td>0.0</td>
+      <td>26.91</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11</td>
+      <td>5.99</td>
+      <td>0.0</td>
+      <td>65.89</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9</td>
+      <td>11.99</td>
+      <td>0.0</td>
+      <td>107.91</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>13</td>
+      <td>3.99</td>
+      <td>0.2</td>
+      <td>41.50</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>126.873 became 126.87, and 41.496 (row 4) became 41.50. The name <code class="docutils literal notranslate"><span class="pre">revenue</span></code> is on both sides of <code class="docutils literal notranslate"><span class="pre">=</span></code>, so the
+rounded column replaces the old one.</p>
+</section>
+<section id="a-column-from-text-str">
+<h2><span class="section-number">11.3. </span>A column from text: <code class="docutils literal notranslate"><span class="pre">.str</span></code><a class="headerlink" href="#a-column-from-text-str" title="Link to this heading">#</a></h2>
+<p>The column <code class="docutils literal notranslate"><span class="pre">date</span></code> holds text such as <code class="docutils literal notranslate"><span class="pre">&quot;2025-03-14&quot;</span></code>. To compare months, we want just the year and the month,
+<code class="docutils literal notranslate"><span class="pre">&quot;2025-03&quot;</span></code>: the first seven characters. For one Python string, we would write <code class="docutils literal notranslate"><span class="pre">date[:7]</span></code>. For a whole column, we
+put <code class="docutils literal notranslate"><span class="pre">.str</span></code> before the slice:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span>
+<span class="n">sales</span><span class="p">[[</span><span class="s2">"date"</span><span class="p">,</span> <span class="s2">"month"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>month</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>2025-01</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-01</td>
+      <td>2025-01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>2025-01</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-01</td>
+      <td>2025-01</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>2025-01</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">.str</span></code> tells pandas to do a text operation on <strong>each</strong> value of the column, here the slice <code class="docutils literal notranslate"><span class="pre">[:7]</span></code>. Every date of
+January now has the month <code class="docutils literal notranslate"><span class="pre">2025-01</span></code>. (pandas has many other text operations after <code class="docutils literal notranslate"><span class="pre">.str</span></code>; we need only this one.)</p>
+<blockquote>
+<div><p><strong>Try it:</strong> <code class="docutils literal notranslate"><span class="pre">sales[&quot;month&quot;].nunique()</span></code> counts the different months. Is the answer what you expect?</p>
+</div></blockquote>
+</section>
+<section id="a-column-from-a-condition">
+<h2><span class="section-number">11.4. </span>A column from a condition<a class="headerlink" href="#a-column-from-a-condition" title="Link to this heading">#</a></h2>
+<p>Let’s label each sale “small” or “large”: large when it has 8 units or more. We do it in two steps. First, every row
+gets <code class="docutils literal notranslate"><span class="pre">&quot;small&quot;</span></code>: one value on the right of <code class="docutils literal notranslate"><span class="pre">=</span></code> fills the whole column. Then the <code class="docutils literal notranslate"><span class="pre">loc</span></code> rule of the chapter
+<em>Filtering rows</em> changes the rows that match the condition:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"size"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"small"</span>
+<span class="n">sales</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">"size"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"large"</span>
+<span class="n">sales</span><span class="p">[[</span><span class="s2">"units"</span><span class="p">,</span> <span class="s2">"size"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>units</th>
+      <th>size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9</td>
+      <td>large</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11</td>
+      <td>large</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9</td>
+      <td>large</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>13</td>
+      <td>large</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Row 0 has 3 units, so it stays <code class="docutils literal notranslate"><span class="pre">small</span></code>. The rows 1 to 4 have 8 or more units, so they became <code class="docutils literal notranslate"><span class="pre">large</span></code>.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> count the large sales with <code class="docutils literal notranslate"><span class="pre">(sales[&quot;size&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;large&quot;).sum()</span></code>. What share of the 2,000 sales is
+that?</p>
+</div></blockquote>
+</section>
+<section id="renaming-columns">
+<h2><span class="section-number">11.5. </span>Renaming columns<a class="headerlink" href="#renaming-columns" title="Link to this heading">#</a></h2>
+<p>The name <code class="docutils literal notranslate"><span class="pre">size</span></code> is short, but it is not very clear, and a DataFrame also has an attribute <code class="docutils literal notranslate"><span class="pre">sales.size</span></code> (the number
+of values in the table, as for arrays). Let’s call the column <code class="docutils literal notranslate"><span class="pre">order_size</span></code>. <code class="docutils literal notranslate"><span class="pre">rename</span></code> takes a dictionary from the
+old names to the new names:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"size"</span><span class="p">:</span> <span class="s2">"order_size"</span><span class="p">})</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">sales</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>['date',
+ 'store',
+ 'region',
+ 'category',
+ 'units',
+ 'price',
+ 'discount',
+ 'revenue',
+ 'month',
+ 'order_size']
+</pre></div>
+</div>
+</div>
+</div>
+<p>The column is now called <code class="docutils literal notranslate"><span class="pre">order_size</span></code>. Like most pandas methods, <code class="docutils literal notranslate"><span class="pre">rename</span></code> does not change the table itself: it
+returns a new one, so we assign it back to <code class="docutils literal notranslate"><span class="pre">sales</span></code>. <code class="docutils literal notranslate"><span class="pre">list(...)</span></code> turns the column names into a plain Python list,
+which is easy to read.</p>
+<p>The dictionary can hold several names at once, for example <code class="docutils literal notranslate"><span class="pre">{&quot;units&quot;:</span> <span class="pre">&quot;quantity&quot;,</span> <span class="pre">&quot;category&quot;:</span> <span class="pre">&quot;product_type&quot;}</span></code>.</p>
+</section>
+<section id="dropping-columns">
+<h2><span class="section-number">11.6. </span>Dropping columns<a class="headerlink" href="#dropping-columns" title="Link to this heading">#</a></h2>
+<p>Our table now has 10 columns. For a report about revenue, we do not need all of them. <code class="docutils literal notranslate"><span class="pre">drop(columns=[...])</span></code>
+returns the table without the columns in the list:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">report</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"date"</span><span class="p">,</span> <span class="s2">"region"</span><span class="p">,</span> <span class="s2">"price"</span><span class="p">,</span> <span class="s2">"discount"</span><span class="p">])</span>
+<span class="n">report</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>category</th>
+      <th>units</th>
+      <th>revenue</th>
+      <th>month</th>
+      <th>order_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S1</td>
+      <td>Clothing</td>
+      <td>3</td>
+      <td>126.87</td>
+      <td>2025-01</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S8</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>26.91</td>
+      <td>2025-01</td>
+      <td>large</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S2</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>65.89</td>
+      <td>2025-01</td>
+      <td>large</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S8</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>107.91</td>
+      <td>2025-01</td>
+      <td>large</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S5</td>
+      <td>Grocery</td>
+      <td>13</td>
+      <td>41.50</td>
+      <td>2025-01</td>
+      <td>large</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">report</span></code> has six columns: <code class="docutils literal notranslate"><span class="pre">store</span></code>, <code class="docutils literal notranslate"><span class="pre">category</span></code>, <code class="docutils literal notranslate"><span class="pre">units</span></code>, <code class="docutils literal notranslate"><span class="pre">revenue</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code> and <code class="docutils literal notranslate"><span class="pre">order_size</span></code>. The table <code class="docutils literal notranslate"><span class="pre">sales</span></code>
+still has all ten, because we assigned the result to a new name.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> writing <code class="docutils literal notranslate"><span class="pre">sales.drop(columns=[&quot;date&quot;])</span></code> alone on a line and expecting <code class="docutils literal notranslate"><span class="pre">sales</span></code> to change. The
+line shows a table without <code class="docutils literal notranslate"><span class="pre">date</span></code>, but <code class="docutils literal notranslate"><span class="pre">sales</span></code> keeps it. To keep the change, assign it:
+<code class="docutils literal notranslate"><span class="pre">sales</span> <span class="pre">=</span> <span class="pre">sales.drop(columns=[&quot;date&quot;])</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="sorting-the-rows">
+<h2><span class="section-number">11.7. </span>Sorting the rows<a class="headerlink" href="#sorting-the-rows" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sort_values(&quot;revenue&quot;)</span></code> returns the rows in order of their revenue, from the smallest:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">report</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>category</th>
+      <th>units</th>
+      <th>revenue</th>
+      <th>month</th>
+      <th>order_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>110</th>
+      <td>S4</td>
+      <td>Grocery</td>
+      <td>1</td>
+      <td>2.84</td>
+      <td>2025-01</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1080</th>
+      <td>S2</td>
+      <td>Grocery</td>
+      <td>1</td>
+      <td>2.99</td>
+      <td>2025-07</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>815</th>
+      <td>S5</td>
+      <td>Grocery</td>
+      <td>2</td>
+      <td>3.58</td>
+      <td>2025-05</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>S7</td>
+      <td>Home</td>
+      <td>1</td>
+      <td>4.74</td>
+      <td>2025-01</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1661</th>
+      <td>S2</td>
+      <td>Grocery</td>
+      <td>2</td>
+      <td>4.78</td>
+      <td>2025-10</td>
+      <td>small</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The smallest sale brought in $2.84: one Grocery unit. Look at the index: 110, 1080, 815, … Each row kept its
+label, as we saw in the chapter <em>Selecting with loc and iloc</em>.</p>
+</section>
+<section id="the-top-5">
+<h2><span class="section-number">11.8. </span>The top 5<a class="headerlink" href="#the-top-5" title="Link to this heading">#</a></h2>
+<p>For the biggest sales first, add <code class="docutils literal notranslate"><span class="pre">ascending=False</span></code>. Then <code class="docutils literal notranslate"><span class="pre">head()</span></code> gives the top 5:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">report</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>category</th>
+      <th>units</th>
+      <th>revenue</th>
+      <th>month</th>
+      <th>order_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>732</th>
+      <td>S7</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1697.97</td>
+      <td>2025-05</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <td>S3</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1679.97</td>
+      <td>2025-02</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1343</th>
+      <td>S1</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1514.97</td>
+      <td>2025-09</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1281</th>
+      <td>S7</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1388.97</td>
+      <td>2025-08</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1212</th>
+      <td>S5</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1373.97</td>
+      <td>2025-08</td>
+      <td>small</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The five biggest sales were all Electronics sales of 3 units, between about <span class="math notranslate nohighlight">\(1,374 and \)</span>1,698. Note their
+<code class="docutils literal notranslate"><span class="pre">order_size</span></code>: our rule called them <code class="docutils literal notranslate"><span class="pre">small</span></code>, because it looked at the units, not the money. Which column we sort by
+decides what “big” means.</p>
+<p>This “sort, then <code class="docutils literal notranslate"><span class="pre">head()</span></code>” pattern answers many business questions: the top 5 customers, the 10 slowest
+deliveries, the cheapest products.</p>
+</section>
+<section id="sorting-by-two-columns">
+<h2><span class="section-number">11.9. </span>Sorting by two columns<a class="headerlink" href="#sorting-by-two-columns" title="Link to this heading">#</a></h2>
+<p>To sort by two columns, give a list of names. The rows are sorted by the first column, and rows with the same value
+there are sorted by the second. <code class="docutils literal notranslate"><span class="pre">ascending</span></code> can take a list too, one <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code> for each column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">report</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">"store"</span><span class="p">,</span> <span class="s2">"revenue"</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>category</th>
+      <th>units</th>
+      <th>revenue</th>
+      <th>month</th>
+      <th>order_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1343</th>
+      <td>S1</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1514.97</td>
+      <td>2025-09</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>489</th>
+      <td>S1</td>
+      <td>Electronics</td>
+      <td>2</td>
+      <td>1079.98</td>
+      <td>2025-04</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1345</th>
+      <td>S1</td>
+      <td>Electronics</td>
+      <td>2</td>
+      <td>991.78</td>
+      <td>2025-09</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1324</th>
+      <td>S1</td>
+      <td>Electronics</td>
+      <td>2</td>
+      <td>905.98</td>
+      <td>2025-08</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1269</th>
+      <td>S1</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>878.97</td>
+      <td>2025-08</td>
+      <td>small</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The stores are in order from <code class="docutils literal notranslate"><span class="pre">S1</span></code>, and within store S1, the biggest sale comes first. So the first row is the
+biggest sale of store S1: $1,514.97.</p>
+</section>
+<section id="a-fresh-index-reset-index">
+<h2><span class="section-number">11.10. </span>A fresh index: <code class="docutils literal notranslate"><span class="pre">reset_index</span></code><a class="headerlink" href="#a-fresh-index-reset-index" title="Link to this heading">#</a></h2>
+<p>After sorting, the labels are mixed up. For a report, the labels 0, 1, 2, … often read better.
+<code class="docutils literal notranslate"><span class="pre">reset_index(drop=True)</span></code> gives the rows new labels from 0, and throws away the old ones:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top5</span> <span class="o">=</span> <span class="n">report</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">top5</span> <span class="o">=</span> <span class="n">top5</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">top5</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>category</th>
+      <th>units</th>
+      <th>revenue</th>
+      <th>month</th>
+      <th>order_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S7</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1697.97</td>
+      <td>2025-05</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S3</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1679.97</td>
+      <td>2025-02</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S1</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1514.97</td>
+      <td>2025-09</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S7</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1388.97</td>
+      <td>2025-08</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S5</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1373.97</td>
+      <td>2025-08</td>
+      <td>small</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The same five sales, now labelled 0 to 4. Without <code class="docutils literal notranslate"><span class="pre">drop=True</span></code>, pandas would keep the old labels in a new column
+named <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+</section>
+<section id="a-shortcut-nlargest">
+<h2><span class="section-number">11.11. </span>A shortcut: <code class="docutils literal notranslate"><span class="pre">nlargest</span></code><a class="headerlink" href="#a-shortcut-nlargest" title="Link to this heading">#</a></h2>
+<p>“Sort from the largest, then take the first rows” is so common that pandas has a shortcut, <code class="docutils literal notranslate"><span class="pre">nlargest</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">report</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">"revenue"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>category</th>
+      <th>units</th>
+      <th>revenue</th>
+      <th>month</th>
+      <th>order_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>732</th>
+      <td>S7</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1697.97</td>
+      <td>2025-05</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <td>S3</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1679.97</td>
+      <td>2025-02</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1343</th>
+      <td>S1</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1514.97</td>
+      <td>2025-09</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1281</th>
+      <td>S7</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1388.97</td>
+      <td>2025-08</td>
+      <td>small</td>
+    </tr>
+    <tr>
+      <th>1212</th>
+      <td>S5</td>
+      <td>Electronics</td>
+      <td>3</td>
+      <td>1373.97</td>
+      <td>2025-08</td>
+      <td>small</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The same five sales as the top 5 above, with their original labels. <code class="docutils literal notranslate"><span class="pre">nlargest(5,</span> <span class="pre">&quot;revenue&quot;)</span></code> reads “the 5 rows
+with the largest revenue”. <code class="docutils literal notranslate"><span class="pre">nsmallest</span></code> does the opposite.</p>
+</section>
+<section id="summary">
+<h2><span class="section-number">11.12. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df[&quot;new&quot;]</span> <span class="pre">=</span> <span class="pre">...</span></code> adds a column (or replaces one with that name):
+<code class="docutils literal notranslate"><span class="pre">sales[&quot;revenue&quot;]</span> <span class="pre">=</span> <span class="pre">sales[&quot;units&quot;]</span> <span class="pre">*</span> <span class="pre">sales[&quot;price&quot;]</span> <span class="pre">*</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">sales[&quot;discount&quot;])</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;revenue&quot;].round(2)</span></code> rounds every value; assign it back to keep it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sales[&quot;date&quot;].str[:7]</span></code> takes the first seven characters of each text value.</p></li>
+<li><p>A column from a condition: <code class="docutils literal notranslate"><span class="pre">sales[&quot;size&quot;]</span> <span class="pre">=</span> <span class="pre">&quot;small&quot;</span></code>, then <code class="docutils literal notranslate"><span class="pre">sales.loc[sales[&quot;units&quot;]</span> <span class="pre">&gt;=</span> <span class="pre">8,</span> <span class="pre">&quot;size&quot;]</span> <span class="pre">=</span> <span class="pre">&quot;large&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.rename(columns={&quot;old&quot;:</span> <span class="pre">&quot;new&quot;})</span></code> and <code class="docutils literal notranslate"><span class="pre">df.drop(columns=[...])</span></code> return a new table; assign the result.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.sort_values(&quot;col&quot;)</span></code> sorts from the smallest; <code class="docutils literal notranslate"><span class="pre">ascending=False</span></code> from the largest; a list of columns sorts by
+several. <code class="docutils literal notranslate"><span class="pre">head()</span></code> after sorting gives a top 5.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reset_index(drop=True)</span></code> gives the labels 0, 1, 2, …; <code class="docutils literal notranslate"><span class="pre">df.nlargest(5,</span> <span class="pre">&quot;col&quot;)</span></code> gives the 5 largest rows.</p></li>
+</ul>
+</section>
+<section id="practice-questions">
+<h2><span class="section-number">11.13. </span>Practice questions<a class="headerlink" href="#practice-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">11.13.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>Add a column <code class="docutils literal notranslate"><span class="pre">price_after_discount</span></code>: the price of one unit after the discount, rounded to two decimals. Show the
+first rows of <code class="docutils literal notranslate"><span class="pre">price</span></code>, <code class="docutils literal notranslate"><span class="pre">discount</span></code> and <code class="docutils literal notranslate"><span class="pre">price_after_discount</span></code>.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The customer pays <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">discount</span></code> of the price. Row 0: 46.99 × 0.9 = 42.29 (rounded).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"price_after_discount"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"price"</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">]))</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sales</span><span class="p">[[</span><span class="s2">"price"</span><span class="p">,</span> <span class="s2">"discount"</span><span class="p">,</span> <span class="s2">"price_after_discount"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-easy">
+<h3><span class="section-number">11.13.2. </span>Question 2 (Easy)<a class="headerlink" href="#question-2-easy" title="Link to this heading">#</a></h3>
+<p>Which three sales brought in the least revenue? Show them, using <code class="docutils literal notranslate"><span class="pre">report</span></code>.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Sort from the smallest (the default), then take the first three rows. They are all Grocery sales of one or two
+units.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">report</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-easy">
+<h3><span class="section-number">11.13.3. </span>Question 3 (Easy)<a class="headerlink" href="#question-3-easy" title="Link to this heading">#</a></h3>
+<p>Add a column <code class="docutils literal notranslate"><span class="pre">day</span></code> with the day of the month: the last two characters of <code class="docutils literal notranslate"><span class="pre">date</span></code>. Show <code class="docutils literal notranslate"><span class="pre">date</span></code> and <code class="docutils literal notranslate"><span class="pre">day</span></code> for the
+first rows.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>In <code class="docutils literal notranslate"><span class="pre">&quot;2025-03-14&quot;</span></code>, the day is at the positions 8 and 9, so <code class="docutils literal notranslate"><span class="pre">.str[8:]</span></code> takes it. <code class="docutils literal notranslate"><span class="pre">.str[-2:]</span></code> (the last two
+characters) works too.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"day"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span>
+<span class="n">sales</span><span class="p">[[</span><span class="s2">"date"</span><span class="p">,</span> <span class="s2">"day"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-medium">
+<h3><span class="section-number">11.13.4. </span>Question 4 (Medium)<a class="headerlink" href="#question-4-medium" title="Link to this heading">#</a></h3>
+<p>Add a column <code class="docutils literal notranslate"><span class="pre">discounted</span></code> that is <code class="docutils literal notranslate"><span class="pre">&quot;yes&quot;</span></code> for the sales with a discount and <code class="docutils literal notranslate"><span class="pre">&quot;no&quot;</span></code> for the others. How many sales
+had a discount?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Fill the column with <code class="docutils literal notranslate"><span class="pre">&quot;no&quot;</span></code>, then change the matching rows with <code class="docutils literal notranslate"><span class="pre">loc</span></code>. 982 sales had a discount.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"discounted"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"no"</span>
+<span class="n">sales</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"discounted"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"yes"</span>
+<span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"discounted"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"yes"</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-medium">
+<h3><span class="section-number">11.13.5. </span>Question 5 (Medium)<a class="headerlink" href="#question-5-medium" title="Link to this heading">#</a></h3>
+<p>Show the three biggest sales (by revenue) of store S5. Use <code class="docutils literal notranslate"><span class="pre">nlargest</span></code>.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Keep the sales of store S5 first (the chapter <em>Filtering rows</em>), then take the three largest revenues.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s5</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="n">report</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"S5"</span><span class="p">]</span>
+<span class="n">s5</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">"revenue"</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-hard">
+<h3><span class="section-number">11.13.6. </span>Question 6 (Hard)<a class="headerlink" href="#question-6-hard" title="Link to this heading">#</a></h3>
+<p>Make a table of the five biggest <strong>Grocery</strong> sales by revenue, with the labels 0 to 4.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Filter, sort from the largest, take five rows, and reset the index. Each step works on the result of the step
+before.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">grocery</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="n">report</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Grocery"</span><span class="p">]</span>
+<span class="n">top_grocery</span> <span class="o">=</span> <span class="n">grocery</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">top_grocery</span> <span class="o">=</span> <span class="n">top_grocery</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">top_grocery</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-hard">
+<h3><span class="section-number">11.13.7. </span>Question 7 (Hard)<a class="headerlink" href="#question-7-hard" title="Link to this heading">#</a></h3>
+<p>Sort <code class="docutils literal notranslate"><span class="pre">report</span></code> by month (from January) and, within each month, by revenue from the largest. Show the first three
+rows. What do they tell you?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Two columns, with a list for <code class="docutils literal notranslate"><span class="pre">ascending</span></code>. The first three rows are the three biggest sales of January. The text
+months such as <code class="docutils literal notranslate"><span class="pre">&quot;2025-01&quot;</span></code> sort in time order, because the year comes first and the month has two digits.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">report</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">"month"</span><span class="p">,</span> <span class="s2">"revenue"</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-challenge">
+<h3><span class="section-number">11.13.8. </span>Question 8 (Challenge)<a class="headerlink" href="#question-8-challenge" title="Link to this heading">#</a></h3>
+<p>Replace the two sizes with three: <code class="docutils literal notranslate"><span class="pre">&quot;small&quot;</span></code> for fewer than 4 units, <code class="docutils literal notranslate"><span class="pre">&quot;medium&quot;</span></code> for 4 to 7 units, and <code class="docutils literal notranslate"><span class="pre">&quot;large&quot;</span></code> for
+8 units or more. Put them in a new column <code class="docutils literal notranslate"><span class="pre">size3</span></code> and count the sales of each size.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Start with <code class="docutils literal notranslate"><span class="pre">&quot;small&quot;</span></code> everywhere, then use <code class="docutils literal notranslate"><span class="pre">loc</span></code> once for each other size. The medium sales need two conditions.
+Most sales are small: 900 small, 785 medium and 315 large.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"size3"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"small"</span>
+<span class="n">sales</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">),</span> <span class="s2">"size3"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"medium"</span>
+<span class="n">sales</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">"size3"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"large"</span>
+<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"small"</span><span class="p">,</span> <span class="s2">"medium"</span><span class="p">,</span> <span class="s2">"large"</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"size3"</span><span class="p">]</span> <span class="o">==</span> <span class="n">size</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="10-filtering-rows.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">10. </span>Filtering rows</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="12-grouping-and-summarizing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">12. </span>Grouping and summarizing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-new-column-from-other-columns">11.1. A new column from other columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rounding-a-column">11.2. Rounding a column</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-column-from-text-str">11.3. A column from text: <code class="docutils literal notranslate"><span class="pre">.str</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-column-from-a-condition">11.4. A column from a condition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">11.5. Renaming columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-columns">11.6. Dropping columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-the-rows">11.7. Sorting the rows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-top-5">11.8. The top 5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-by-two-columns">11.9. Sorting by two columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-fresh-index-reset-index">11.10. A fresh index: <code class="docutils literal notranslate"><span class="pre">reset_index</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-shortcut-nlargest">11.11. A shortcut: <code class="docutils literal notranslate"><span class="pre">nlargest</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">11.12. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">11.13. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">11.13.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">11.13.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">11.13.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">11.13.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">11.13.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">11.13.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">11.13.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">11.13.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

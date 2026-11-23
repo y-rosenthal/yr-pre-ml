@@ -1,0 +1,1674 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>12. Grouping and summarizing &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/12-grouping-and-summarizing';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/12-grouping-and-summarizing.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="13. Preparing data for machine learning" href="13-preparing-data-for-ml.html" />
+    <link rel="prev" title="11. New columns and sorting" href="11-new-columns-and-sorting.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/12-grouping-and-summarizing.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/12-grouping-and-summarizing.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Grouping and summarizing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data">12.1. The data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-values-with-value-counts">12.2. Counting values with value_counts()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-one-number-for-each-group">12.3. Grouping: one number for each group</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-summaries-mean-count-and-size">12.4. Other summaries: mean, count and size</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-the-number-columns-first">12.5. Choose the number columns first</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-a-grouped-result">12.6. Sorting a grouped result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-by-two-columns">12.7. Grouping by two columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-summaries-at-once-with-agg">12.8. Several summaries at once with agg()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-a-dataframe-with-reset-index">12.9. Back to a DataFrame with reset_index()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-bar-chart">12.10. A bar chart</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-line-chart">12.11. A line chart</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">12.12. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">12.13. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">12.14. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">12.14.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">12.14.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-medium">12.14.3. Question 3 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">12.14.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">12.14.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">12.14.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">12.14.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">12.14.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="grouping-and-summarizing">
+<h1><span class="section-number">12. </span>Grouping and summarizing<a class="headerlink" href="#grouping-and-summarizing" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/12-grouping-and-summarizing.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>A table of 2,000 sales is too long to read. A manager asks short questions instead: Which store sells the most?
+Which product category brings in the most money? Which month was the best? In this chapter, we answer such
+questions with one line of pandas each: we put the rows into groups and compute one number for each group. Then we
+draw our first charts.</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>count how often each value of a column appears, with <code class="docutils literal notranslate"><span class="pre">value_counts()</span></code>;</p></li>
+<li><p>compute a total, an average or a count for each group, with <code class="docutils literal notranslate"><span class="pre">groupby()</span></code>;</p></li>
+<li><p>group by two columns, compute several summaries at once with <code class="docutils literal notranslate"><span class="pre">agg()</span></code>, and turn a result back into a DataFrame;</p></li>
+<li><p>draw a bar chart and a line chart of a summary, with matplotlib.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">DATA_URL</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/"</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Besides pandas, the first cell imports <strong>matplotlib</strong>, the most widely used Python package for charts.
+<code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> is the part of it that draws charts, and <code class="docutils literal notranslate"><span class="pre">plt</span></code> is its usual short name. We use it at the end
+of the chapter.</p>
+<section id="the-data">
+<h2><span class="section-number">12.1. </span>The data<a class="headerlink" href="#the-data" title="Link to this heading">#</a></h2>
+<p>We use the sales of the chain’s eight stores again (the appendix <em>The datasets</em> describes the file). Each chapter
+runs on its own, so we first add the two columns that we made in the chapter <em>New columns and sorting</em>: the
+revenue of each sale, and its month.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"sales.csv"</span><span class="p">)</span>
+<span class="n">sales</span><span class="p">[</span><span class="s2">"revenue"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">*</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"price"</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">]))</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sales</span><span class="p">[</span><span class="s2">"month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span>
+<span class="n">sales</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>region</th>
+      <th>category</th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+      <th>revenue</th>
+      <th>month</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>S1</td>
+      <td>North</td>
+      <td>Clothing</td>
+      <td>3</td>
+      <td>46.99</td>
+      <td>0.1</td>
+      <td>126.87</td>
+      <td>2025-01</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>2.99</td>
+      <td>0.0</td>
+      <td>26.91</td>
+      <td>2025-01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>S2</td>
+      <td>North</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>5.99</td>
+      <td>0.0</td>
+      <td>65.89</td>
+      <td>2025-01</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>11.99</td>
+      <td>0.0</td>
+      <td>107.91</td>
+      <td>2025-01</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Grocery</td>
+      <td>13</td>
+      <td>3.99</td>
+      <td>0.2</td>
+      <td>41.50</td>
+      <td>2025-01</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Each row is one sale: the day, the store and its region, the product category, the number of units, the price of
+one unit and the discount. <code class="docutils literal notranslate"><span class="pre">revenue</span></code> is the money that the store received, in dollars, and <code class="docutils literal notranslate"><span class="pre">month</span></code> holds the first
+seven characters of the date, such as <code class="docutils literal notranslate"><span class="pre">2025-01</span></code>.</p>
+</section>
+<section id="counting-values-with-value-counts">
+<h2><span class="section-number">12.2. </span>Counting values with value_counts()<a class="headerlink" href="#counting-values-with-value-counts" title="Link to this heading">#</a></h2>
+<p>The simplest summary is a count. How many sales did each store make?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>store
+S1    287
+S2    269
+S5    261
+S3    247
+S4    240
+S6    239
+S7    231
+S8    226
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">value_counts()</span></code> counts how often each value of a column appears. The result is a Series: its index holds the
+values (here, the stores), and its values are the counts, from the largest to the smallest. Store S1 made the most
+sales, 287, and store S8 the fewest, 226. Together, the eight counts add up to the 2,000 rows. (<code class="docutils literal notranslate"><span class="pre">count</span></code> under the
+result is the name of the Series.)</p>
+<p>Often we want shares instead of counts: what fraction of the sales is in each category? The option
+<code class="docutils literal notranslate"><span class="pre">normalize=True</span></code> divides each count by the total:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>category
+Grocery        0.3970
+Clothing       0.2635
+Home           0.1960
+Electronics    0.1435
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The shares add up to 1. About 40% of the sales (0.397) are grocery sales, and only about 14% (0.1435) are
+electronics sales. This time the name of the Series is <code class="docutils literal notranslate"><span class="pre">proportion</span></code>, another word for a share.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> count the sales of each <code class="docutils literal notranslate"><span class="pre">region</span></code>. Which region has the most sales?</p>
+</div></blockquote>
+</section>
+<section id="grouping-one-number-for-each-group">
+<h2><span class="section-number">12.3. </span>Grouping: one number for each group<a class="headerlink" href="#grouping-one-number-for-each-group" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">value_counts()</span></code> can only count. A manager also wants totals: how much <strong>revenue</strong> did each store make? For that,
+we must put the rows of each store together, and add up their revenue. Let’s start with a table so small that we
+can check the result by hand:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">small</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"store"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"S1"</span><span class="p">,</span> <span class="s2">"S2"</span><span class="p">,</span> <span class="s2">"S1"</span><span class="p">,</span> <span class="s2">"S2"</span><span class="p">,</span> <span class="s2">"S1"</span><span class="p">],</span>
+    <span class="s2">"revenue"</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+<span class="p">})</span>
+<span class="n">small</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"store"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>store
+S1    180
+S2    100
+Name: revenue, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Read the last line from left to right:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">small.groupby(&quot;store&quot;)</span></code> puts the rows into <strong>groups</strong>, one group for each store: the rows of S1 (revenue 100,
+50 and 30) and the rows of S2 (40 and 60).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[&quot;revenue&quot;]</span></code> chooses the column to summarize.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.sum()</span></code> adds up the revenue in each group: 180 for S1 and 100 for S2.</p></li>
+</ol>
+<p>The result is a Series with one value for each group, and the groups as its index, in alphabetical order. This
+pattern, <em>split</em> the rows into groups, <em>apply</em> a summary to each group, and <em>combine</em> the results, is often called
+<strong>split-apply-combine</strong>.</p>
+<p>Now the same line on the real data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"store"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>store
+S1    42520.57
+S2    43254.78
+S3    41889.24
+S4    36059.84
+S5    47128.05
+S6    33606.35
+S7    41093.03
+S8    32674.68
+Name: revenue, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>2,000 rows became 8 numbers. Store S5 made the most revenue, about <span class="math notranslate nohighlight">\(47,128, and store S8 the least, about \)</span>32,675.
+Notice that S1, which made the most sales, does not have the most revenue: the number of sales is not the whole
+story.</p>
+</section>
+<section id="other-summaries-mean-count-and-size">
+<h2><span class="section-number">12.4. </span>Other summaries: mean, count and size<a class="headerlink" href="#other-summaries-mean-count-and-size" title="Link to this heading">#</a></h2>
+<p>Instead of <code class="docutils literal notranslate"><span class="pre">sum()</span></code>, we can use the other summaries that we know from the chapter <em>Comparisons and Boolean masks</em>,
+such as <code class="docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="docutils literal notranslate"><span class="pre">min()</span></code> and <code class="docutils literal notranslate"><span class="pre">max()</span></code>. Here is the average revenue of one sale in each store, rounded to cents:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"store"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>store
+S1    148.16
+S2    160.80
+S3    169.59
+S4    150.25
+S5    180.57
+S6    140.61
+S7    177.89
+S8    144.58
+Name: revenue, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Store S5 has the largest average sale, <span class="math notranslate nohighlight">\(180.57, and store S6 the smallest, \)</span>140.61. So S5 is first in total revenue
+because its sales are bigger: it made fewer sales than S1 and S2.</p>
+<p>To count the rows of each group, we use <code class="docutils literal notranslate"><span class="pre">size()</span></code>. It needs no column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"store"</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>store
+S1    287
+S2    269
+S3    247
+S4    240
+S5    261
+S6    239
+S7    231
+S8    226
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are the same numbers as <code class="docutils literal notranslate"><span class="pre">value_counts()</span></code> gave above, but in the order of the stores. <code class="docutils literal notranslate"><span class="pre">count()</span></code>, as in
+<code class="docutils literal notranslate"><span class="pre">sales.groupby(&quot;store&quot;)[&quot;revenue&quot;].count()</span></code>, is almost the same: it counts the values of the chosen column in each
+group, but it skips missing values. <code class="docutils literal notranslate"><span class="pre">sales.csv</span></code> has no missing values, so here <code class="docutils literal notranslate"><span class="pre">count()</span></code> and <code class="docutils literal notranslate"><span class="pre">size()</span></code> agree. The
+next chapter is about data with missing values.</p>
+</section>
+<section id="choose-the-number-columns-first">
+<h2><span class="section-number">12.5. </span>Choose the number columns first<a class="headerlink" href="#choose-the-number-columns-first" title="Link to this heading">#</a></h2>
+<p>What happens if we forget to choose a column?</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"store"</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/groupby/groupby.py:1942,</span> in <span class="ni">GroupBy._agg_py_fallback</span><span class="nt">(self, how, values, ndim, alt)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1941</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1942</span>     <span class="n">res_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grouper</span><span class="o">.</span><span class="n">agg_series</span><span class="p">(</span><span class="n">ser</span><span class="p">,</span> <span class="n">alt</span><span class="p">,</span> <span class="n">preserve_dtype</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1943</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/groupby/ops.py:864,</span> in <span class="ni">BaseGrouper.agg_series</span><span class="nt">(self, obj, func, preserve_dtype)</span>
+<span class="g g-Whitespace">    </span><span class="mi">862</span>     <span class="n">preserve_dtype</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="ne">--&gt; </span><span class="mi">864</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_series_pure_python</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">866</span> <span class="n">npvalues</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">maybe_convert_objects</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">try_float</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/groupby/ops.py:885,</span> in <span class="ni">BaseGrouper._aggregate_series_pure_python</span><span class="nt">(self, obj, func)</span>
+<span class="g g-Whitespace">    </span><span class="mi">884</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">splitter</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">885</span>     <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">886</span>     <span class="n">res</span> <span class="o">=</span> <span class="n">extract_result</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/groupby/groupby.py:2454,</span> in <span class="ni">GroupBy.mean.&lt;locals&gt;.&lt;lambda&gt;</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2451</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2452</span>     <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cython_agg_general</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2453</span>         <span class="s2">"mean"</span><span class="p">,</span>
+<span class="ne">-&gt; </span><span class="mi">2454</span>         <span class="n">alt</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="n">numeric_only</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">2455</span>         <span class="n">numeric_only</span><span class="o">=</span><span class="n">numeric_only</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2456</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2457</span>     <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">__finalize__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"groupby"</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/series.py:6549,</span> in <span class="ni">Series.mean</span><span class="nt">(self, axis, skipna, numeric_only, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6541</span> <span class="nd">@doc</span><span class="p">(</span><span class="n">make_doc</span><span class="p">(</span><span class="s2">"mean"</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">6542</span> <span class="k">def</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">6543</span>     <span class="bp">self</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">6547</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">6548</span> <span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">6549</span>     <span class="k">return</span> <span class="n">NDFrame</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">skipna</span><span class="p">,</span> <span class="n">numeric_only</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/generic.py:12420,</span> in <span class="ni">NDFrame.mean</span><span class="nt">(self, axis, skipna, numeric_only, **kwargs)</span>
+<span class="g g-Whitespace">  </span><span class="mi">12418</span>         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">12419</span>     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Series</span> <span class="o">|</span> <span class="nb">float</span><span class="p">:</span>
+<span class="ne">&gt; </span><span class="mi">12420</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stat_function</span><span class="p">(</span>
+<span class="g g-Whitespace">  </span><span class="mi">12421</span>             <span class="s2">"mean"</span><span class="p">,</span> <span class="n">nanops</span><span class="o">.</span><span class="n">nanmean</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">skipna</span><span class="p">,</span> <span class="n">numeric_only</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/generic.py:12377,</span> in <span class="ni">NDFrame._stat_function</span><span class="nt">(self, name, func, axis, skipna, numeric_only, **kwargs)</span>
+<span class="g g-Whitespace">  </span><span class="mi">12375</span>         <span class="n">validate_bool_kwarg</span><span class="p">(</span><span class="n">skipna</span><span class="p">,</span> <span class="s2">"skipna"</span><span class="p">,</span> <span class="n">none_allowed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">  </span><span class="mi">12376</span> 
+<span class="ne">&gt; </span><span class="mi">12377</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reduce</span><span class="p">(</span>
+<span class="g g-Whitespace">  </span><span class="mi">12378</span>             <span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="n">numeric_only</span><span class="o">=</span><span class="n">numeric_only</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/series.py:6457,</span> in <span class="ni">Series._reduce</span><span class="nt">(self, op, name, axis, skipna, numeric_only, filter_type, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6453</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">6454</span>         <span class="sa">f</span><span class="s2">"Series.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not allow </span><span class="si">{</span><span class="n">kwd_name</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">numeric_only</span><span class="si">}</span><span class="s2"> "</span>
+<span class="g g-Whitespace">   </span><span class="mi">6455</span>         <span class="s2">"with non-numeric dtypes."</span>
+<span class="g g-Whitespace">   </span><span class="mi">6456</span>     <span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">6457</span> <span class="k">return</span> <span class="n">op</span><span class="p">(</span><span class="n">delegate</span><span class="p">,</span> <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/nanops.py:147,</span> in <span class="ni">bottleneck_switch.__call__.&lt;locals&gt;.f</span><span class="nt">(values, axis, skipna, **kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">147</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">alt</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">149</span> <span class="k">return</span> <span class="n">result</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/nanops.py:404,</span> in <span class="ni">_datetimelike_compat.&lt;locals&gt;.new_func</span><span class="nt">(values, axis, skipna, mask, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">402</span>     <span class="n">mask</span> <span class="o">=</span> <span class="n">isna</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">404</span> <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">406</span> <span class="k">if</span> <span class="n">datetimelike</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/nanops.py:720,</span> in <span class="ni">nanmean</span><span class="nt">(values, axis, skipna, mask)</span>
+<span class="g g-Whitespace">    </span><span class="mi">719</span> <span class="n">the_sum</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype_sum</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">720</span> <span class="n">the_sum</span> <span class="o">=</span> <span class="n">_ensure_numeric</span><span class="p">(</span><span class="n">the_sum</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">722</span> <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">the_sum</span><span class="p">,</span> <span class="s2">"ndim"</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/nanops.py:1701,</span> in <span class="ni">_ensure_numeric</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1699</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1700</span>     <span class="c1"># GH#44008, GH#36703 avoid casting e.g. strings to numeric</span>
+<span class="ne">-&gt; </span><span class="mi">1701</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not convert string '</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">' to numeric"</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1702</span> <span class="k">try</span><span class="p">:</span>
+
+<span class="ne">TypeError</span>: Could not convert string '2025-01-012025-01-032025-01-052025-01-122025-01-122025-01-132025-01-142025-01-152025-01-162025-01-202025-01-202025-01-202025-01-202025-01-212025-01-212025-01-212025-01-222025-01-222025-01-222025-01-232025-01-242025-01-262025-01-302025-01-302025-01-312025-02-012025-02-032025-02-032025-02-052025-02-052025-02-062025-02-072025-02-072025-02-082025-02-102025-02-122025-02-152025-02-172025-02-182025-02-192025-02-202025-02-202025-02-212025-02-222025-02-232025-02-232025-02-242025-02-262025-03-022025-03-022025-03-032025-03-042025-03-092025-03-102025-03-112025-03-112025-03-132025-03-132025-03-152025-03-152025-03-162025-03-162025-03-222025-03-222025-03-252025-03-262025-03-272025-03-282025-03-282025-03-292025-03-312025-03-312025-03-312025-04-012025-04-012025-04-012025-04-022025-04-032025-04-052025-04-082025-04-092025-04-122025-04-152025-04-172025-04-192025-04-212025-04-212025-04-222025-04-232025-04-262025-04-262025-04-292025-04-292025-04-302025-05-022025-05-022025-05-022025-05-032025-05-052025-05-062025-05-072025-05-082025-05-082025-05-092025-05-102025-05-112025-05-122025-05-142025-05-172025-05-172025-05-202025-05-212025-05-212025-05-222025-05-222025-05-222025-05-222025-05-232025-05-232025-05-232025-05-252025-05-262025-05-282025-05-292025-05-302025-05-312025-05-312025-05-312025-06-012025-06-042025-06-042025-06-042025-06-042025-06-052025-06-062025-06-062025-06-062025-06-072025-06-092025-06-092025-06-122025-06-132025-06-132025-06-132025-06-142025-06-152025-06-152025-06-152025-06-172025-06-252025-06-292025-06-302025-07-012025-07-022025-07-022025-07-062025-07-062025-07-072025-07-082025-07-092025-07-092025-07-112025-07-122025-07-122025-07-142025-07-142025-07-172025-07-172025-07-192025-07-202025-07-202025-07-222025-07-232025-07-252025-07-262025-07-282025-07-302025-07-312025-08-012025-08-042025-08-062025-08-062025-08-072025-08-082025-08-082025-08-102025-08-112025-08-122025-08-132025-08-142025-08-142025-08-162025-08-172025-08-222025-08-232025-08-232025-08-242025-08-252025-08-272025-08-282025-08-292025-08-292025-08-302025-08-312025-08-312025-09-022025-09-032025-09-032025-09-072025-09-082025-09-102025-09-112025-09-172025-09-192025-09-192025-09-212025-09-252025-09-252025-09-262025-09-282025-09-292025-09-302025-09-302025-09-302025-09-302025-10-022025-10-022025-10-022025-10-042025-10-052025-10-052025-10-082025-10-092025-10-132025-10-142025-10-162025-10-172025-10-202025-10-252025-10-272025-10-292025-11-012025-11-042025-11-052025-11-062025-11-072025-11-112025-11-122025-11-142025-11-152025-11-172025-11-182025-11-192025-11-202025-11-222025-11-242025-11-252025-11-262025-11-292025-11-292025-11-302025-11-302025-12-012025-12-042025-12-052025-12-062025-12-072025-12-072025-12-092025-12-092025-12-092025-12-102025-12-102025-12-112025-12-152025-12-152025-12-162025-12-192025-12-212025-12-212025-12-222025-12-232025-12-232025-12-242025-12-282025-12-302025-12-30' to numeric
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"store"</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/groupby/groupby.py:2452,</span> in <span class="ni">GroupBy.mean</span><span class="nt">(self, numeric_only, engine, engine_kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2445</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numba_agg_general</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2446</span>         <span class="n">grouped_mean</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2447</span>         <span class="n">executor</span><span class="o">.</span><span class="n">float_dtype_mapping</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2448</span>         <span class="n">engine_kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2449</span>         <span class="n">min_periods</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2450</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2451</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2452</span>     <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cython_agg_general</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2453</span>         <span class="s2">"mean"</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2454</span>         <span class="n">alt</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="n">numeric_only</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">2455</span>         <span class="n">numeric_only</span><span class="o">=</span><span class="n">numeric_only</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2456</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2457</span>     <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">__finalize__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"groupby"</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/groupby/groupby.py:1998,</span> in <span class="ni">GroupBy._cython_agg_general</span><span class="nt">(self, how, alt, numeric_only, min_count, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1995</span>     <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_agg_py_fallback</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="n">alt</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1996</span>     <span class="k">return</span> <span class="n">result</span>
+<span class="ne">-&gt; </span><span class="mi">1998</span> <span class="n">new_mgr</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">grouped_reduce</span><span class="p">(</span><span class="n">array_func</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1999</span> <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrap_agged_manager</span><span class="p">(</span><span class="n">new_mgr</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2000</span> <span class="k">if</span> <span class="n">how</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"idxmin"</span><span class="p">,</span> <span class="s2">"idxmax"</span><span class="p">]:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/internals/managers.py:1469,</span> in <span class="ni">BlockManager.grouped_reduce</span><span class="nt">(self, func)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1465</span> <span class="k">if</span> <span class="n">blk</span><span class="o">.</span><span class="n">is_object</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1466</span>     <span class="c1"># split on object-dtype blocks bc some columns may raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">1467</span>     <span class="c1">#  while others do not.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1468</span>     <span class="k">for</span> <span class="n">sb</span> <span class="ow">in</span> <span class="n">blk</span><span class="o">.</span><span class="n">_split</span><span class="p">():</span>
+<span class="ne">-&gt; </span><span class="mi">1469</span>         <span class="n">applied</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1470</span>         <span class="n">result_blocks</span> <span class="o">=</span> <span class="n">extend_blocks</span><span class="p">(</span><span class="n">applied</span><span class="p">,</span> <span class="n">result_blocks</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1471</span> <span class="k">else</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/internals/blocks.py:393,</span> in <span class="ni">Block.apply</span><span class="nt">(self, func, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">387</span> <span class="nd">@final</span>
+<span class="g g-Whitespace">    </span><span class="mi">388</span> <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Block</span><span class="p">]:</span>
+<span class="g g-Whitespace">    </span><span class="mi">389</span><span class="w">     </span><span class="sd">"""</span>
+<span class="g g-Whitespace">    </span><span class="mi">390</span><span class="sd">     apply the function to my values; return a block if we are not</span>
+<span class="g g-Whitespace">    </span><span class="mi">391</span><span class="sd">     one</span>
+<span class="g g-Whitespace">    </span><span class="mi">392</span><span class="sd">     """</span>
+<span class="ne">--&gt; </span><span class="mi">393</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">395</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">maybe_coerce_values</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">396</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_op_result</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/groupby/groupby.py:1995,</span> in <span class="ni">GroupBy._cython_agg_general.&lt;locals&gt;.array_func</span><span class="nt">(values)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1992</span>     <span class="k">return</span> <span class="n">result</span>
+<span class="g g-Whitespace">   </span><span class="mi">1994</span> <span class="k">assert</span> <span class="n">alt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="ne">-&gt; </span><span class="mi">1995</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_agg_py_fallback</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="n">alt</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1996</span> <span class="k">return</span> <span class="n">result</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/groupby/groupby.py:1946,</span> in <span class="ni">GroupBy._agg_py_fallback</span><span class="nt">(self, how, values, ndim, alt)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1944</span>     <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"agg function failed [how-&gt;</span><span class="si">{</span><span class="n">how</span><span class="si">}</span><span class="s2">,dtype-&gt;</span><span class="si">{</span><span class="n">ser</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">]"</span>
+<span class="g g-Whitespace">   </span><span class="mi">1945</span>     <span class="c1"># preserve the kind of exception that raised</span>
+<span class="ne">-&gt; </span><span class="mi">1946</span>     <span class="k">raise</span> <span class="nb">type</span><span class="p">(</span><span class="n">err</span><span class="p">)(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
+<span class="g g-Whitespace">   </span><span class="mi">1948</span> <span class="k">if</span> <span class="n">ser</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1949</span>     <span class="n">res_values</span> <span class="o">=</span> <span class="n">res_values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="ne">TypeError</span>: agg function failed [how-&gt;mean,dtype-&gt;object]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Without a column, <code class="docutils literal notranslate"><span class="pre">groupby</span></code> tries to average <strong>every</strong> column, and some columns hold text. The last line of the
+error says so. In Colab (pandas 2) it is <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">agg</span> <span class="pre">function</span> <span class="pre">failed</span> <span class="pre">[how-&gt;mean,dtype-&gt;object]</span></code>: the <code class="docutils literal notranslate"><span class="pre">mean</span></code>
+failed on a column of the dtype <code class="docutils literal notranslate"><span class="pre">object</span></code>, which is text. In pandas 3 it reads <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">dtype</span> <span class="pre">'str'</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">support</span> <span class="pre">operation</span> <span class="pre">'mean'</span></code>. The average of a date or of a store name makes no sense.</p>
+<p>The fix is to choose the number columns before the summary. One column takes single brackets, as above. Several
+columns take double brackets, and give a DataFrame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"store"</span><span class="p">)[[</span><span class="s2">"units"</span><span class="p">,</span> <span class="s2">"revenue"</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>units</th>
+      <th>revenue</th>
+    </tr>
+    <tr>
+      <th>store</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>S1</th>
+      <td>1346</td>
+      <td>42520.57</td>
+    </tr>
+    <tr>
+      <th>S2</th>
+      <td>1220</td>
+      <td>43254.78</td>
+    </tr>
+    <tr>
+      <th>S3</th>
+      <td>1110</td>
+      <td>41889.24</td>
+    </tr>
+    <tr>
+      <th>S4</th>
+      <td>1073</td>
+      <td>36059.84</td>
+    </tr>
+    <tr>
+      <th>S5</th>
+      <td>1114</td>
+      <td>47128.05</td>
+    </tr>
+    <tr>
+      <th>S6</th>
+      <td>1039</td>
+      <td>33606.35</td>
+    </tr>
+    <tr>
+      <th>S7</th>
+      <td>1004</td>
+      <td>41093.03</td>
+    </tr>
+    <tr>
+      <th>S8</th>
+      <td>1043</td>
+      <td>32674.68</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now each store has two totals: the units it sold and its revenue. Store S1 sold the most units, 1,346.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> <code class="docutils literal notranslate"><span class="pre">sales.groupby(&quot;store&quot;).sum()</span></code> gives <strong>no</strong> error, but its result is useless. pandas “adds”
+text by gluing it together, so the <code class="docutils literal notranslate"><span class="pre">date</span></code> column becomes one very long piece of text for each store. Always
+choose the columns before <code class="docutils literal notranslate"><span class="pre">sum()</span></code> or <code class="docutils literal notranslate"><span class="pre">mean()</span></code>. (Another way is <code class="docutils literal notranslate"><span class="pre">numeric_only=True</span></code>, as in
+<code class="docutils literal notranslate"><span class="pre">sales.groupby(&quot;store&quot;).sum(numeric_only=True)</span></code>, which keeps only the number columns.)</p>
+</div></blockquote>
+</section>
+<section id="sorting-a-grouped-result">
+<h2><span class="section-number">12.6. </span>Sorting a grouped result<a class="headerlink" href="#sorting-a-grouped-result" title="Link to this heading">#</a></h2>
+<p>A grouped result comes in the order of the groups. To see the best stores first, we sort it by its values. A
+Series has <code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> too, and needs no column name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">store_revenue</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"store"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">store_revenue</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>store
+S5    47128.05
+S2    43254.78
+S1    42520.57
+S3    41889.24
+S7    41093.03
+S4    36059.84
+S6    33606.35
+S8    32674.68
+Name: revenue, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We kept the result in a variable, <code class="docutils literal notranslate"><span class="pre">store_revenue</span></code>, because we use it again for a chart. Sorted, the ranking is
+clear: S5, then S2 and S1, and S6 and S8 at the bottom.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> add <code class="docutils literal notranslate"><span class="pre">.head(3)</span></code> at the end of the second line to see only the top 3 stores.</p>
+</div></blockquote>
+</section>
+<section id="grouping-by-two-columns">
+<h2><span class="section-number">12.7. </span>Grouping by two columns<a class="headerlink" href="#grouping-by-two-columns" title="Link to this heading">#</a></h2>
+<p>Is the best category the same in every region? To answer, we need one group for each <strong>combination</strong> of a region
+and a category. We pass a list of two columns to <code class="docutils literal notranslate"><span class="pre">groupby</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"region"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">])[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>region  category   
+East    Clothing       21966.38
+        Electronics    32974.98
+        Grocery        10031.32
+        Home           15761.72
+North   Clothing       21956.87
+        Electronics    34094.31
+        Grocery        13197.92
+        Home           16526.25
+South   Clothing       20763.25
+        Electronics    30274.90
+        Grocery        10848.77
+        Home           16062.16
+West    Clothing       15724.36
+        Electronics    32547.47
+        Grocery        10720.85
+        Home           14775.03
+Name: revenue, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are 4 regions and 4 categories, so there are 16 groups. The index now has two levels: the region, and the
+category inside it. pandas writes each region only once, on the first of its four rows.</p>
+<p>In every region, Electronics brings in the most revenue and Grocery the least. That is a surprise only at first:
+we saw that about 40% of the sales are grocery sales. Grocery sales are many but small, and electronics sales are
+few but big.</p>
+</section>
+<section id="several-summaries-at-once-with-agg">
+<h2><span class="section-number">12.8. </span>Several summaries at once with agg()<a class="headerlink" href="#several-summaries-at-once-with-agg" title="Link to this heading">#</a></h2>
+<p>To see both sides at once (how many sales, how big, and the total), we can ask for several summaries in one step.
+<code class="docutils literal notranslate"><span class="pre">agg()</span></code> takes a list of summary names, as text:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"category"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">"sum"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"count"</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sum</th>
+      <th>mean</th>
+      <th>count</th>
+    </tr>
+    <tr>
+      <th>category</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Clothing</th>
+      <td>80410.86</td>
+      <td>152.58</td>
+      <td>527</td>
+    </tr>
+    <tr>
+      <th>Electronics</th>
+      <td>129891.66</td>
+      <td>452.58</td>
+      <td>287</td>
+    </tr>
+    <tr>
+      <th>Grocery</th>
+      <td>44798.86</td>
+      <td>56.42</td>
+      <td>794</td>
+    </tr>
+    <tr>
+      <th>Home</th>
+      <td>63125.16</td>
+      <td>161.03</td>
+      <td>392</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The result is a DataFrame with one column for each summary. Electronics has the fewest sales (287), but by far the
+largest average sale (<span class="math notranslate nohighlight">\(452.58) and the largest total (\)</span>129,891.66). Grocery has the most sales (794) and the
+smallest average ($56.42).</p>
+</section>
+<section id="back-to-a-dataframe-with-reset-index">
+<h2><span class="section-number">12.9. </span>Back to a DataFrame with reset_index()<a class="headerlink" href="#back-to-a-dataframe-with-reset-index" title="Link to this heading">#</a></h2>
+<p>A grouped result has the groups as its index. Sometimes we want an ordinary table instead, with the groups in a
+column, for example to filter it as in the chapter <em>Filtering rows</em>. <code class="docutils literal notranslate"><span class="pre">reset_index()</span></code> moves the index into a
+column. Here we use it, and then keep the stores that made more than $40,000:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">by_store</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"store"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">by_store</span><span class="p">[</span><span class="n">by_store</span><span class="p">[</span><span class="s2">"revenue"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">40000</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>revenue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S1</td>
+      <td>42520.57</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S2</td>
+      <td>43254.78</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S3</td>
+      <td>41889.24</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S5</td>
+      <td>47128.05</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>S7</td>
+      <td>41093.03</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">by_store</span></code> is a DataFrame with two columns, <code class="docutils literal notranslate"><span class="pre">store</span></code> and <code class="docutils literal notranslate"><span class="pre">revenue</span></code>, and the index 0 to 7, so a filter works on
+it as usual. Five of the eight stores made more than $40,000: S1, S2, S3, S5 and S7. (The
+index of the result skips 3, 5 and 7: those rows, S4, S6 and S8, were filtered out.)</p>
+<blockquote>
+<div><p><strong>Try it:</strong> add <code class="docutils literal notranslate"><span class="pre">.reset_index()</span></code> to the grouping by region and category above. How many rows and columns does
+the result have?</p>
+</div></blockquote>
+</section>
+<section id="a-bar-chart">
+<h2><span class="section-number">12.10. </span>A bar chart<a class="headerlink" href="#a-bar-chart" title="Link to this heading">#</a></h2>
+<p>A chart shows a summary at a glance. A Series has a <code class="docutils literal notranslate"><span class="pre">plot()</span></code> method, which draws it with matplotlib. Here are the
+stores’ revenues, sorted, as a <strong>bar chart</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">store_revenue</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">"bar"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Revenue by store"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Store"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Revenue ($)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/209baf05b0684fd4d96cc5131fa5ee704e31ec7811d8c5741c5d7cbb3ffdbd7a.png" src="../_images/209baf05b0684fd4d96cc5131fa5ee704e31ec7811d8c5741c5d7cbb3ffdbd7a.png" />
+</div>
+</div>
+<p>Line by line:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.plot(kind=&quot;bar&quot;)</span></code> draws one bar for each value of the Series. The index (the stores) gives the labels under
+the bars.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plt.title</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.xlabel</span></code> and <code class="docutils literal notranslate"><span class="pre">plt.ylabel</span></code> add a title, and a label to each axis: the horizontal axis (x) and
+the vertical axis (y).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> shows the chart.</p></li>
+</ul>
+<p>Because we sorted first, the bars go from the tallest to the shortest, and they are easy to compare: S5 is ahead,
+four stores follow close together, and S4, S6 and S8 are clearly behind.</p>
+<blockquote>
+<div><p><strong>In Thonny:</strong> <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> opens the chart in a new window, and the program waits until you close the window.
+Then it runs the rest of the script.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Note:</strong> end every chart cell with <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code>. Without it, Thonny may show no chart at all, and Colab shows
+an extra line of text above the chart: the value of the cell’s last line.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Try it:</strong> change <code class="docutils literal notranslate"><span class="pre">kind=&quot;bar&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">kind=&quot;barh&quot;</span></code> and run the cell again. What changes?</p>
+</div></blockquote>
+</section>
+<section id="a-line-chart">
+<h2><span class="section-number">12.11. </span>A line chart<a class="headerlink" href="#a-line-chart" title="Link to this heading">#</a></h2>
+<p>When the groups follow each other in time, such as months, a <strong>line chart</strong> shows how the summary changes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monthly</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"month"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">monthly</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">"line"</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Revenue by month"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Month"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Revenue ($)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/fef0e0da0498db60fad123545b95b916be958321420606c96e69d1a5f4ba537a.png" src="../_images/fef0e0da0498db60fad123545b95b916be958321420606c96e69d1a5f4ba537a.png" />
+</div>
+</div>
+<p>The months are text such as <code class="docutils literal notranslate"><span class="pre">2025-01</span></code>, and <code class="docutils literal notranslate"><span class="pre">groupby</span></code> puts them in alphabetical order, which here is also the
+order in time. <code class="docutils literal notranslate"><span class="pre">marker=&quot;o&quot;</span></code> draws a dot for each month, and the line joins the dots. The monthly revenue moves
+between about <span class="math notranslate nohighlight">\(22,000 and \)</span>30,500: it is highest in March and lowest in November. (Under the axis, matplotlib
+writes only every second month, to leave room.)</p>
+<p>Look at the vertical axis: it starts at about 22,000, not at 0. matplotlib does this for a line chart, so that the
+changes are easy to see, but it also makes them look bigger than they are. The best month brought in less than
+40% more than the worst.</p>
+</section>
+<section id="summary">
+<h2><span class="section-number">12.12. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df[&quot;col&quot;].value_counts()</span></code> counts how often each value appears, the largest count first. With
+<code class="docutils literal notranslate"><span class="pre">normalize=True</span></code>, it gives shares.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.groupby(&quot;key&quot;)[&quot;col&quot;].sum()</span></code> puts the rows into groups by the column <code class="docutils literal notranslate"><span class="pre">key</span></code>, and computes one value for each
+group. <code class="docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="docutils literal notranslate"><span class="pre">count()</span></code>, <code class="docutils literal notranslate"><span class="pre">min()</span></code> and <code class="docutils literal notranslate"><span class="pre">max()</span></code> work the same way. <code class="docutils literal notranslate"><span class="pre">df.groupby(&quot;key&quot;).size()</span></code> counts the rows of
+each group.</p></li>
+<li><p>Choose the number columns (<code class="docutils literal notranslate"><span class="pre">[&quot;col&quot;]</span></code> or <code class="docutils literal notranslate"><span class="pre">[[&quot;a&quot;,</span> <span class="pre">&quot;b&quot;]]</span></code>) before <code class="docutils literal notranslate"><span class="pre">sum()</span></code> or <code class="docutils literal notranslate"><span class="pre">mean()</span></code>.</p></li>
+<li><p>A grouped result is a Series: sort it with <code class="docutils literal notranslate"><span class="pre">sort_values(ascending=False)</span></code>, and take the top with <code class="docutils literal notranslate"><span class="pre">head()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.groupby([&quot;a&quot;,</span> <span class="pre">&quot;b&quot;])</span></code> makes one group for each combination of two columns.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.agg([&quot;sum&quot;,</span> <span class="pre">&quot;mean&quot;,</span> <span class="pre">&quot;count&quot;])</span></code> computes several summaries at once, and gives a DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reset_index()</span></code> turns the groups back into a column, so the result is an ordinary DataFrame.</p></li>
+<li><p>A chart: <code class="docutils literal notranslate"><span class="pre">series.plot(kind=&quot;bar&quot;)</span></code> (or <code class="docutils literal notranslate"><span class="pre">kind=&quot;line&quot;</span></code>), then <code class="docutils literal notranslate"><span class="pre">plt.title(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.xlabel(...)</span></code>,
+<code class="docutils literal notranslate"><span class="pre">plt.ylabel(...)</span></code>, and always <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> at the end.</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2><span class="section-number">12.13. </span>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The pandas tutorials “How to calculate summary statistics”
+(<a class="reference external" href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/06_calculate_statistics.html">https://pandas.pydata.org/docs/getting_started/intro_tutorials/06_calculate_statistics.html</a>) and “How do I
+create plots in pandas?” (<a class="reference external" href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/04_plotting.html">https://pandas.pydata.org/docs/getting_started/intro_tutorials/04_plotting.html</a>).</p></li>
+</ul>
+</section>
+<section id="practice-questions">
+<h2><span class="section-number">12.14. </span>Practice questions<a class="headerlink" href="#practice-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">12.14.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>What share of the sales had no discount (a <code class="docutils literal notranslate"><span class="pre">discount</span></code> of <code class="docutils literal notranslate"><span class="pre">0.0</span></code>)?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">value_counts(normalize=True)</span></code> gives the share of each discount. About half of the sales (0.509) had no discount.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-easy">
+<h3><span class="section-number">12.14.2. </span>Question 2 (Easy)<a class="headerlink" href="#question-2-easy" title="Link to this heading">#</a></h3>
+<p>How many units were sold in each category? Which category sold the most units?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Group by <code class="docutils literal notranslate"><span class="pre">category</span></code>, choose <code class="docutils literal notranslate"><span class="pre">units</span></code>, and add up. Grocery sold by far the most units: 5,577.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"category"</span><span class="p">)[</span><span class="s2">"units"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-medium">
+<h3><span class="section-number">12.14.3. </span>Question 3 (Medium)<a class="headerlink" href="#question-3-medium" title="Link to this heading">#</a></h3>
+<p>What is the average price of one unit in each category? Round to cents, and show the most expensive category
+first.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Electronics is the most expensive category, with an average price of <span class="math notranslate nohighlight">\(315.46, and Grocery the cheapest, with
+\)</span>8.43.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"category"</span><span class="p">)[</span><span class="s2">"price"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-medium">
+<h3><span class="section-number">12.14.4. </span>Question 4 (Medium)<a class="headerlink" href="#question-4-medium" title="Link to this heading">#</a></h3>
+<p>Make a DataFrame <code class="docutils literal notranslate"><span class="pre">by_region</span></code> with two columns, <code class="docutils literal notranslate"><span class="pre">region</span></code> and <code class="docutils literal notranslate"><span class="pre">revenue</span></code> (the total revenue of the region), sorted
+from the largest revenue to the smallest.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Group and sum, then <code class="docutils literal notranslate"><span class="pre">reset_index()</span></code> gives a DataFrame, which we sort by its <code class="docutils literal notranslate"><span class="pre">revenue</span></code> column. North comes first,
+with $85,775.35, and West last.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">by_region</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">by_region</span> <span class="o">=</span> <span class="n">by_region</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"revenue"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">by_region</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-medium">
+<h3><span class="section-number">12.14.5. </span>Question 5 (Medium)<a class="headerlink" href="#question-5-medium" title="Link to this heading">#</a></h3>
+<p>Run <code class="docutils literal notranslate"><span class="pre">sales.groupby([&quot;region&quot;,</span> <span class="pre">&quot;store&quot;]).size()</span></code>. Why does the result have only 8 rows, and not 4 × 8 = 32?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">groupby</span></code> makes a group only for the combinations that appear in the data. Each store is in one region (S1 and S2
+are in the North, and so on), so there are only 8 combinations of a region and a store.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"region"</span><span class="p">,</span> <span class="s2">"store"</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-hard">
+<h3><span class="section-number">12.14.6. </span>Question 6 (Hard)<a class="headerlink" href="#question-6-hard" title="Link to this heading">#</a></h3>
+<p>Do bigger discounts come with more units per sale? Compute the average number of units of a sale for each
+discount level, and say what you see.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Group by <code class="docutils literal notranslate"><span class="pre">discount</span></code> and average <code class="docutils literal notranslate"><span class="pre">units</span></code>. The averages are all between 4 and 5 units, and the biggest discount
+(0.2) has the smallest average, 4.05. In this data, bigger discounts do not come with more units per sale.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"discount"</span><span class="p">)[</span><span class="s2">"units"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-hard">
+<h3><span class="section-number">12.14.7. </span>Question 7 (Hard)<a class="headerlink" href="#question-7-hard" title="Link to this heading">#</a></h3>
+<p>Draw a bar chart of the total revenue of each category, from the largest to the smallest, with a title and labels
+on both axes.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Group, sum, sort, and plot. Electronics has the tallest bar and Grocery the shortest.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">category_revenue</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"category"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">category_revenue</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">"bar"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Revenue by category"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Category"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Revenue ($)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-challenge">
+<h3><span class="section-number">12.14.8. </span>Question 8 (Challenge)<a class="headerlink" href="#question-8-challenge" title="Link to this heading">#</a></h3>
+<p>In each region, what share of the revenue comes from Electronics? In which region is that share the largest?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Compute two Series with the regions as their index: the total revenue of each region, and the electronics revenue
+of each region (filter the rows first). Dividing one by the other divides region by region. The share is largest
+in the West: 0.441, or about 44%.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">region_revenue</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">electronics</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Electronics"</span><span class="p">]</span>
+<span class="n">electronics_revenue</span> <span class="o">=</span> <span class="n">electronics</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)[</span><span class="s2">"revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">(</span><span class="n">electronics_revenue</span> <span class="o">/</span> <span class="n">region_revenue</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="11-new-columns-and-sorting.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>New columns and sorting</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="13-preparing-data-for-ml.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">13. </span>Preparing data for machine learning</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data">12.1. The data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-values-with-value-counts">12.2. Counting values with value_counts()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-one-number-for-each-group">12.3. Grouping: one number for each group</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-summaries-mean-count-and-size">12.4. Other summaries: mean, count and size</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-the-number-columns-first">12.5. Choose the number columns first</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-a-grouped-result">12.6. Sorting a grouped result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-by-two-columns">12.7. Grouping by two columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-summaries-at-once-with-agg">12.8. Several summaries at once with agg()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-a-dataframe-with-reset-index">12.9. Back to a DataFrame with reset_index()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-bar-chart">12.10. A bar chart</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-line-chart">12.11. A line chart</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">12.12. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">12.13. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">12.14. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">12.14.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">12.14.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-medium">12.14.3. Question 3 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">12.14.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">12.14.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">12.14.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">12.14.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">12.14.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

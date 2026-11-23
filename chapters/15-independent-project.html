@@ -1,0 +1,1127 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>15. Independent project: advertising and sales &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/15-independent-project';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/15-independent-project.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Common errors and how to fix them" href="16-common-errors.html" />
+    <link rel="prev" title="14. Guided project: delivery times" href="14-guided-project.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/15-independent-project.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/15-independent-project.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Independent project: advertising and sales</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-business-question">15.1. The business question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data">15.2. The data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-work">15.3. How to work</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-inspect-the-data">15.4. Step 1: inspect the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-explore-the-data">15.5. Step 2: explore the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-clean-the-data">15.6. Step 3: clean the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-turn-text-into-numbers">15.7. Step 4: turn text into numbers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-choose-x-and-y">15.8. Step 5: choose X and y</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-split-the-data">15.9. Step 6: split the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-train-three-models">15.10. Step 7: train three models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-8-measure-and-compare">15.11. Step 8: measure and compare</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-9-which-advertising-matters">15.12. Step 9: which advertising matters?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-10-write-the-interpretation">15.13. Step 10: write the interpretation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">15.14. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection-questions">15.15. Reflection questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">15.15.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-medium">15.15.2. Question 2 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-hard">15.15.3. Question 3 (Hard)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-model-solution">15.16. A model solution</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="independent-project-advertising-and-sales">
+<h1><span class="section-number">15. </span>Independent project: advertising and sales<a class="headerlink" href="#independent-project-advertising-and-sales" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/15-independent-project.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>In the guided project, we did every step together. Now it is your turn: you do the whole workflow alone, on new
+data, from reading the file to a short report for a manager. A checklist tells you what to do at each step, but
+not how. A model solution is at the end of the page, for when you are done.</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>inspect, explore and clean a new data file on your own, and decide how to handle its missing values;</p></li>
+<li><p>prepare <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, train three models, and compare their errors;</p></li>
+<li><p>find out which kind of advertising seems to matter, by training a model without it;</p></li>
+<li><p>write a short interpretation of your results for a marketing director.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span>
+
+<span class="n">DATA_URL</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/"</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first cell imports everything that the project needs. It is given, and so is the next cell, which reads the
+data. Run both before you start.</p>
+<section id="the-business-question">
+<h2><span class="section-number">15.1. </span>The business question<a class="headerlink" href="#the-business-question" title="Link to this heading">#</a></h2>
+<p>A company sells one product in four regions. Every week, in each region, it decides how much money to spend on TV
+advertising and on online advertising, sets the price, and sometimes runs a promotion in the stores. Then it counts
+the units sold.</p>
+<p>The marketing director asks two questions:</p>
+<ol class="arabic simple">
+<li><p><strong>Can we predict the units sold in a week</strong> from the advertising, the price, the promotion and the region? A
+good prediction helps to plan stock and budgets.</p></li>
+<li><p><strong>Which kind of advertising seems to matter</strong>, TV or online?</p></li>
+</ol>
+</section>
+<section id="the-data">
+<h2><span class="section-number">15.2. </span>The data<a class="headerlink" href="#the-data" title="Link to this heading">#</a></h2>
+<p>The file <code class="docutils literal notranslate"><span class="pre">marketing.csv</span></code> has one row for each week and region, 520 rows in all (130 weeks in four regions). The
+appendix <em>The datasets</em> describes it:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">region</span></code>: <code class="docutils literal notranslate"><span class="pre">North</span></code>, <code class="docutils literal notranslate"><span class="pre">South</span></code>, <code class="docutils literal notranslate"><span class="pre">East</span></code> or <code class="docutils literal notranslate"><span class="pre">West</span></code> (text);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tv_spend</span></code> and <code class="docutils literal notranslate"><span class="pre">online_spend</span></code>: the money spent on TV and online advertising that week, in <strong>thousands</strong> of
+dollars;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">price</span></code>: the price of the product that week, in dollars;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">promotion</span></code>: <code class="docutils literal notranslate"><span class="pre">Yes</span></code> or <code class="docutils literal notranslate"><span class="pre">No</span></code> (text): whether a store promotion ran that week;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units_sold</span></code>: the number of units sold that week. This is the <strong>target</strong>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">marketing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"marketing.csv"</span><span class="p">)</span>
+<span class="n">marketing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>region</th>
+      <th>tv_spend</th>
+      <th>online_spend</th>
+      <th>price</th>
+      <th>promotion</th>
+      <th>units_sold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>North</td>
+      <td>33.4</td>
+      <td>8.1</td>
+      <td>11.57</td>
+      <td>No</td>
+      <td>503</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>North</td>
+      <td>17.5</td>
+      <td>2.9</td>
+      <td>9.03</td>
+      <td>No</td>
+      <td>280</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>North</td>
+      <td>44.7</td>
+      <td>13.5</td>
+      <td>9.84</td>
+      <td>No</td>
+      <td>621</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>North</td>
+      <td>13.9</td>
+      <td>14.8</td>
+      <td>8.05</td>
+      <td>Yes</td>
+      <td>564</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>North</td>
+      <td>2.6</td>
+      <td>18.4</td>
+      <td>10.93</td>
+      <td>No</td>
+      <td>437</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="how-to-work">
+<h2><span class="section-number">15.3. </span>How to work<a class="headerlink" href="#how-to-work" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Use the chapter <em>Guided project: delivery times</em> as your model.
+Each step here matches a step there, and the same code forms work with other names.</p></li>
+<li><p>Under each step, there is an empty code cell for your code. Add more cells when you need them (in Colab: the
+<strong>+ Code</strong> button). When one cell should show several results, <code class="docutils literal notranslate"><span class="pre">print()</span></code> each of them.</p></li>
+<li><p>Split the data with <code class="docutils literal notranslate"><span class="pre">test_size=0.25</span></code> and <code class="docutils literal notranslate"><span class="pre">random_state=42</span></code>, and give the models the same settings as in the
+guided project. Then your numbers can be compared with the model solution.</p></li>
+<li><p>Do every step yourself before you open the model solution. Getting stuck and finding the way out is how you
+learn.</p></li>
+</ul>
+<p><strong>The checklist:</strong></p>
+<ol class="arabic simple">
+<li><p>Inspect the data.</p></li>
+<li><p>Explore it: counts, averages by group, one chart.</p></li>
+<li><p>Clean it: decide what to do with the missing values.</p></li>
+<li><p>Turn the text columns into numbers.</p></li>
+<li><p>Choose <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
+<li><p>Split into a training set and a test set.</p></li>
+<li><p>Train three models.</p></li>
+<li><p>Measure their MAE, and choose the best model.</p></li>
+<li><p>Find out which advertising seems to matter.</p></li>
+<li><p>Write a short interpretation, 4 to 6 sentences.</p></li>
+</ol>
+</section>
+<section id="step-1-inspect-the-data">
+<h2><span class="section-number">15.4. </span>Step 1: inspect the data<a class="headerlink" href="#step-1-inspect-the-data" title="Link to this heading">#</a></h2>
+<p>How many rows and columns are there? Which columns have missing values, and how many? Which columns hold text?
+What are the smallest, average and largest weekly units sold? (Use <code class="docutils literal notranslate"><span class="pre">shape</span></code>, <code class="docutils literal notranslate"><span class="pre">info()</span></code> and <code class="docutils literal notranslate"><span class="pre">describe()</span></code>.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-explore-the-data">
+<h2><span class="section-number">15.5. </span>Step 2: explore the data<a class="headerlink" href="#step-2-explore-the-data" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Count the weeks in each region and the weeks with and without a promotion (<code class="docutils literal notranslate"><span class="pre">value_counts()</span></code>).</p></li>
+<li><p>Compute the average <code class="docutils literal notranslate"><span class="pre">units_sold</span></code> for each region and for each value of <code class="docutils literal notranslate"><span class="pre">promotion</span></code> (<code class="docutils literal notranslate"><span class="pre">groupby</span></code>). Which region
+sells the most? How much more does a promotion week sell?</p></li>
+<li><p>Draw one bar chart, for example the average units sold by region. Give it a title and axis labels.</p></li>
+<li><p>Compare the average <code class="docutils literal notranslate"><span class="pre">units_sold</span></code> of the weeks with more than 25 thousand dollars of TV advertising and of the
+other weeks. Do the same for online advertising above 10 thousand dollars. Hint: use two masks,
+<code class="docutils literal notranslate"><span class="pre">marketing[&quot;tv_spend&quot;]</span> <span class="pre">&gt;</span> <span class="pre">25</span></code> and <code class="docutils literal notranslate"><span class="pre">marketing[&quot;tv_spend&quot;]</span> <span class="pre">&lt;=</span> <span class="pre">25</span></code>, with <code class="docutils literal notranslate"><span class="pre">loc</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-clean-the-data">
+<h2><span class="section-number">15.6. </span>Step 3: clean the data<a class="headerlink" href="#step-3-clean-the-data" title="Link to this heading">#</a></h2>
+<p>Count the missing values again. Then decide: <strong>fill or drop?</strong> In the guided project, we filled them, because a new
+order can arrive with unknown weather. Think about this company: when it plans a future week, will it know that
+week’s advertising, price and promotion? Make your choice, write the reason in a comment (a line that starts with
+<code class="docutils literal notranslate"><span class="pre">#</span></code>), and check that no value is missing afterwards.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-turn-text-into-numbers">
+<h2><span class="section-number">15.7. </span>Step 4: turn text into numbers<a class="headerlink" href="#step-4-turn-text-into-numbers" title="Link to this heading">#</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">pd.get_dummies</span></code> with <code class="docutils literal notranslate"><span class="pre">dtype=int</span></code> for the two text columns. Look at the names of the new columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-5-choose-x-and-y">
+<h2><span class="section-number">15.8. </span>Step 5: choose X and y<a class="headerlink" href="#step-5-choose-x-and-y" title="Link to this heading">#</a></h2>
+<p>The target <code class="docutils literal notranslate"><span class="pre">y</span></code> is <code class="docutils literal notranslate"><span class="pre">units_sold</span></code>. The predictors <code class="docutils literal notranslate"><span class="pre">X</span></code> are all the other columns. Check that <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> have the same
+number of rows.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-6-split-the-data">
+<h2><span class="section-number">15.9. </span>Step 6: split the data<a class="headerlink" href="#step-6-split-the-data" title="Link to this heading">#</a></h2>
+<p>Split <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> into a training set and a test set, with <code class="docutils literal notranslate"><span class="pre">test_size=0.25</span></code> and <code class="docutils literal notranslate"><span class="pre">random_state=42</span></code>. How many weeks
+are in each set?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-7-train-three-models">
+<h2><span class="section-number">15.10. </span>Step 7: train three models<a class="headerlink" href="#step-7-train-three-models" title="Link to this heading">#</a></h2>
+<p>Train a <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>, a <code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor(max_depth=5,</span> <span class="pre">random_state=42)</span></code> and a
+<code class="docutils literal notranslate"><span class="pre">RandomForestRegressor(n_estimators=200,</span> <span class="pre">random_state=42)</span></code> on the training set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-8-measure-and-compare">
+<h2><span class="section-number">15.11. </span>Step 8: measure and compare<a class="headerlink" href="#step-8-measure-and-compare" title="Link to this heading">#</a></h2>
+<p>Compute the MAE of each model on the test set, in units. Which model is best? Compare its MAE with the average
+number of units sold in a week: is the error small or large?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-9-which-advertising-matters">
+<h2><span class="section-number">15.12. </span>Step 9: which advertising matters?<a class="headerlink" href="#step-9-which-advertising-matters" title="Link to this heading">#</a></h2>
+<p>Train your best model again <strong>without</strong> <code class="docutils literal notranslate"><span class="pre">tv_spend</span></code> (drop the column from the training and the test predictors), and
+compute its MAE. Then do the same without <code class="docutils literal notranslate"><span class="pre">online_spend</span></code>. The more the error grows, the more the model needed that
+column. If your best model is linear regression, also look at its numbers for each predictor, as in Question 7 of
+the guided project: how many extra units does each thousand dollars of TV advertising bring, and each thousand
+dollars online?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-10-write-the-interpretation">
+<h2><span class="section-number">15.13. </span>Step 10: write the interpretation<a class="headerlink" href="#step-10-write-the-interpretation" title="Link to this heading">#</a></h2>
+<p>Write 4 to 6 sentences for the marketing director, in plain words, with numbers from your results:</p>
+<ul class="simple">
+<li><p>which model you recommend, and what its MAE means for planning;</p></li>
+<li><p>which kind of advertising seems to matter, and how you know;</p></li>
+<li><p>one more fact from your exploration (the promotion, the price or the regions).</p></li>
+</ul>
+<p>Write your text in the cell below (in Colab, double-click it to edit it). In Thonny, write it as comments, lines
+that start with <code class="docutils literal notranslate"><span class="pre">#</span></code>.</p>
+<p><em>Write your interpretation here.</em></p>
+</section>
+<section id="summary">
+<h2><span class="section-number">15.14. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>In this project, you did the whole workflow alone:</p>
+<ul class="simple">
+<li><p>inspected and explored new data with <code class="docutils literal notranslate"><span class="pre">info()</span></code>, <code class="docutils literal notranslate"><span class="pre">describe()</span></code>, <code class="docutils literal notranslate"><span class="pre">value_counts()</span></code>, <code class="docutils literal notranslate"><span class="pre">groupby</span></code> and a chart;</p></li>
+<li><p>decided how to handle the missing values, and why;</p></li>
+<li><p>prepared the data with <code class="docutils literal notranslate"><span class="pre">pd.get_dummies</span></code>, and chose <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>;</p></li>
+<li><p>split the data, trained three models, and compared their MAE;</p></li>
+<li><p>removed one predictor at a time to see which advertising matters;</p></li>
+<li><p>explained the results in a few sentences that a manager can use.</p></li>
+</ul>
+<p>This is the core of every machine-learning project. Later, you will learn more models and better ways to test
+them, but the pandas and NumPy work that prepares the data stays the same.</p>
+</section>
+<section id="reflection-questions">
+<h2><span class="section-number">15.15. </span>Reflection questions<a class="headerlink" href="#reflection-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">15.15.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>In the chapter <em>A first machine-learning example</em>, the random forest predicted best. In the guided project, linear
+regression did. What does that teach you about choosing a model?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>No kind of model is best for every problem. Which one works best depends on the data: linear regression does well
+when the target is roughly a sum of parts, and a forest can follow more complicated patterns. So we train several
+models and let the test set decide.</p>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-medium">
+<h3><span class="section-number">15.15.2. </span>Question 2 (Medium)<a class="headerlink" href="#question-2-medium" title="Link to this heading">#</a></h3>
+<p>Whatever you chose in step 3, try the other way: if you dropped the rows with missing values, fill them instead
+(<code class="docutils literal notranslate"><span class="pre">online_spend</span></code> with its median, <code class="docutils literal notranslate"><span class="pre">promotion</span></code> with <code class="docutils literal notranslate"><span class="pre">&quot;Unknown&quot;</span></code>), or the other way round. Then compute the three MAEs
+again. Are the results very different?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The model solution below drops the rows. Filling instead keeps all 520 weeks, and linear regression is still the
+best model, with an MAE of 32.1 units (the model solution gets 28.6). A filled <code class="docutils literal notranslate"><span class="pre">online_spend</span></code> is only a guess, and
+that column matters a lot, so filling it adds some error. The test weeks are not the same in the two cases, so the
+numbers are not exactly comparable.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">filled</span> <span class="o">=</span> <span class="n">marketing</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">filled</span><span class="p">[</span><span class="s2">"online_spend"</span><span class="p">]</span> <span class="o">=</span> <span class="n">filled</span><span class="p">[</span><span class="s2">"online_spend"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">filled</span><span class="p">[</span><span class="s2">"online_spend"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+<span class="n">filled</span><span class="p">[</span><span class="s2">"promotion"</span><span class="p">]</span> <span class="o">=</span> <span class="n">filled</span><span class="p">[</span><span class="s2">"promotion"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">"Unknown"</span><span class="p">)</span>
+<span class="n">filled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">filled</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"region"</span><span class="p">,</span> <span class="s2">"promotion"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">X_f</span> <span class="o">=</span> <span class="n">filled</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"units_sold"</span><span class="p">)</span>
+<span class="n">y_f</span> <span class="o">=</span> <span class="n">filled</span><span class="p">[</span><span class="s2">"units_sold"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_f</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">X_f_train</span><span class="p">,</span> <span class="n">X_f_test</span><span class="p">,</span> <span class="n">y_f_train</span><span class="p">,</span> <span class="n">y_f_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_f</span><span class="p">,</span> <span class="n">y_f</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">"linear regression"</span><span class="p">,</span> <span class="n">LinearRegression</span><span class="p">()),</span>
+          <span class="p">(</span><span class="s2">"decision tree"</span><span class="p">,</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)),</span>
+          <span class="p">(</span><span class="s2">"random forest"</span><span class="p">,</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))]</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_f_train</span><span class="p">,</span> <span class="n">y_f_train</span><span class="p">)</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_f_test</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_f_test</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">18</span><span class="si">}</span><span class="s2"> MAE: </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> units"</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-hard">
+<h3><span class="section-number">15.15.3. </span>Question 3 (Hard)<a class="headerlink" href="#question-3-hard" title="Link to this heading">#</a></h3>
+<p>Suppose the linear model brings more extra units for each thousand dollars of online advertising than for each
+thousand dollars of TV advertising. Should the company move its whole TV budget to online advertising? Give two
+reasons to be careful.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Not at once. First, the data has no week with more than about 20 thousand dollars of online advertising
+(<code class="docutils literal notranslate"><span class="pre">describe()</span></code> shows a maximum of 19.9). The model knows nothing about much larger amounts, and the effect may get
+smaller as the spending grows. Second, the model found a pattern in past weeks, not a proof that one thing causes
+the other. And TV clearly matters too: without it, the error grows a lot. A careful step is to move a part of the
+TV budget for a few weeks, and to measure what happens.</p>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="a-model-solution">
+<h2><span class="section-number">15.16. </span>A model solution<a class="headerlink" href="#a-model-solution" title="Link to this heading">#</a></h2>
+<p>Open the solution only after you have tried every step. It is one possible solution: other choices (filling instead
+of dropping, another chart) can be just as good, if you can explain them. The code is complete: it runs on its own
+in a new notebook or in Thonny.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span>
+
+<span class="n">DATA_URL</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/"</span>
+
+<span class="c1"># Step 1: read and inspect</span>
+<span class="n">marketing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"marketing.csv"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marketing</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">marketing</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marketing</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Step 2: explore</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marketing</span><span class="p">[</span><span class="s2">"region"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marketing</span><span class="p">[</span><span class="s2">"promotion"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="n">by_region</span> <span class="o">=</span> <span class="n">marketing</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)[</span><span class="s2">"units_sold"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">by_region</span><span class="o">.</span><span class="n">sort_values</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marketing</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"promotion"</span><span class="p">)[</span><span class="s2">"units_sold"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">cut</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"tv_spend"</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="p">(</span><span class="s2">"online_spend"</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]:</span>
+    <span class="n">high</span> <span class="o">=</span> <span class="n">marketing</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">marketing</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">cut</span><span class="p">,</span> <span class="s2">"units_sold"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="n">marketing</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">marketing</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">cut</span><span class="p">,</span> <span class="s2">"units_sold"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2"> above </span><span class="si">{</span><span class="n">cut</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">high</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> units; </span><span class="si">{</span><span class="n">cut</span><span class="si">}</span><span class="s2"> or less: </span><span class="si">{</span><span class="n">low</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> units"</span><span class="p">)</span>
+
+<span class="n">by_region</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">"bar"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Average weekly units sold by region"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"average units sold"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Step 3: clean. The company sets its advertising, price and promotion itself,</span>
+<span class="c1"># so a future week has all its values. The missing values are only gaps in the</span>
+<span class="c1"># records of past weeks, and dropping them keeps most of the weeks.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marketing</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="n">clean</span> <span class="o">=</span> <span class="n">marketing</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"weeks left:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">clean</span><span class="p">))</span>
+
+<span class="c1"># Step 4: text to numbers</span>
+<span class="n">clean</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">clean</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"region"</span><span class="p">,</span> <span class="s2">"promotion"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Step 5: X and y</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">clean</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"units_sold"</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">clean</span><span class="p">[</span><span class="s2">"units_sold"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"average units sold per week:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Step 6: split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Steps 7 and 8: three models and their MAE</span>
+<span class="n">linear</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">linear</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">forest</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"linear regression"</span><span class="p">,</span> <span class="n">linear</span><span class="p">),</span> <span class="p">(</span><span class="s2">"decision tree"</span><span class="p">,</span> <span class="n">tree</span><span class="p">),</span> <span class="p">(</span><span class="s2">"random forest"</span><span class="p">,</span> <span class="n">forest</span><span class="p">)]:</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">18</span><span class="si">}</span><span class="s2"> MAE: </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> units"</span><span class="p">)</span>
+
+<span class="c1"># Step 9: which advertising matters? Train the best model without each one.</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"tv_spend"</span><span class="p">,</span> <span class="s2">"online_spend"</span><span class="p">]:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column</span><span class="p">),</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"without </span><span class="si">{</span><span class="n">column</span><span class="si">:</span><span class="s2">13</span><span class="si">}</span><span class="s2"> MAE: </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> units"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">linear</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</details>
+<p>A sample interpretation, with the numbers that this code prints:</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Linear regression predicts the weekly units sold best: on the test weeks, it is off by 28.6 units on average, about
+7% of an average week (426.7 units), which is precise enough to plan stock. The random forest (39.1 units) and the
+decision tree (62.3 units) are clearly worse. Both kinds of advertising matter: without TV spending, the error of
+linear regression grows to 80.2 units, and without online spending to 70.6 units. For each thousand dollars,
+online advertising seems to bring more: 14.32 extra units a week, against 5.84 for TV. Promotions help too (466.4
+units on average in promotion weeks, against 409.7), and each extra dollar of price costs about 17 units (the
+model’s number is -17.13). These are patterns in past weeks, not proof, so we suggest moving a part of the TV
+budget to online advertising for a few weeks and measuring the result.</p>
+</details></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="14-guided-project.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">14. </span>Guided project: delivery times</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="16-common-errors.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Common errors and how to fix them</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-business-question">15.1. The business question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data">15.2. The data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-work">15.3. How to work</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-inspect-the-data">15.4. Step 1: inspect the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-explore-the-data">15.5. Step 2: explore the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-clean-the-data">15.6. Step 3: clean the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-turn-text-into-numbers">15.7. Step 4: turn text into numbers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-choose-x-and-y">15.8. Step 5: choose X and y</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-split-the-data">15.9. Step 6: split the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-train-three-models">15.10. Step 7: train three models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-8-measure-and-compare">15.11. Step 8: measure and compare</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-9-which-advertising-matters">15.12. Step 9: which advertising matters?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-10-write-the-interpretation">15.13. Step 10: write the interpretation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">15.14. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection-questions">15.15. Reflection questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">15.15.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-medium">15.15.2. Question 2 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-hard">15.15.3. Question 3 (Hard)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-model-solution">15.16. A model solution</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

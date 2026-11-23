@@ -1,0 +1,1569 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7. Series and DataFrames &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/07-series-and-dataframes';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/07-series-and-dataframes.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8. Reading and describing data" href="08-reading-and-describing-data.html" />
+    <link rel="prev" title="6. Two-dimensional arrays" href="06-two-dimensional-arrays.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Series and DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-reading-and-describing-data.html">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/07-series-and-dataframes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/07-series-and-dataframes.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Series and DataFrames</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numbers-need-labels">7.1. Numbers need labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-series-values-with-labels">7.2. A Series: values with labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-values-and-the-index">7.3. The values and the index</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-works-as-with-arrays">7.4. Arithmetic works as with arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-a-value-by-its-label">7.5. Selecting a value by its label</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-dataframe-a-table-of-columns">7.6. A DataFrame: a table of columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-column-is-a-series">7.7. One column is a Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-columns-double-brackets">7.8. Several columns: double brackets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-size-and-the-parts-of-a-table">7.9. The size and the parts of a table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-type-of-each-column">7.10. The type of each column</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-column">7.11. Adding a column</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">7.12. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7.13. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">7.14. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">7.14.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">7.14.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-medium">7.14.3. Question 3 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">7.14.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">7.14.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">7.14.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-challenge">7.14.7. Question 7 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="series-and-dataframes">
+<h1><span class="section-number">7. </span>Series and DataFrames<a class="headerlink" href="#series-and-dataframes" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/07-series-and-dataframes.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>A NumPy array keeps its values by position: the first value, the second value, and so on. Business data has
+names: store S3, the column <code class="docutils literal notranslate"><span class="pre">sales</span></code>, the region <code class="docutils literal notranslate"><span class="pre">West</span></code>. <strong>pandas</strong> is the Python package for tables of data with
+such names. In this chapter, we meet its two building blocks: the <strong>Series</strong> (one column) and the <strong>DataFrame</strong> (a
+table).</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>create a Series with labels, and get its values and its labels;</p></li>
+<li><p>compute with a Series as with an array, and select a value by its label;</p></li>
+<li><p>create a DataFrame from a dictionary of lists;</p></li>
+<li><p>select one column (a Series) or several columns (a DataFrame);</p></li>
+<li><p>describe a DataFrame with <code class="docutils literal notranslate"><span class="pre">.shape</span></code>, <code class="docutils literal notranslate"><span class="pre">len()</span></code>, <code class="docutils literal notranslate"><span class="pre">.columns</span></code>, <code class="docutils literal notranslate"><span class="pre">.index</span></code> and <code class="docutils literal notranslate"><span class="pre">.dtypes</span></code>;</p></li>
+<li><p>add a new column to a DataFrame.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>By custom, pandas is imported as <code class="docutils literal notranslate"><span class="pre">pd</span></code>, just as NumPy is imported as <code class="docutils literal notranslate"><span class="pre">np</span></code>. pandas is built on NumPy: a pandas column
+of numbers keeps its values in a NumPy array.</p>
+<section id="numbers-need-labels">
+<h2><span class="section-number">7.1. </span>Numbers need labels<a class="headerlink" href="#numbers-need-labels" title="Link to this heading">#</a></h2>
+<p>A chain has six stores, S1 to S6. We know last month’s sales of each store, in thousands of dollars. As a NumPy
+array, the sales are six numbers: <code class="docutils literal notranslate"><span class="pre">[52.3,</span> <span class="pre">48.1,</span> <span class="pre">61.7,</span> <span class="pre">39.5,</span> <span class="pre">45.0,</span> <span class="pre">53.4]</span></code>. Which number belongs to store S4? We
+have to remember that the stores are in order, and count. With hundreds of stores, that is easy to get wrong.</p>
+<p>pandas keeps a <strong>label</strong> with every value, so that we can ask for “the sales of S4” by name.</p>
+</section>
+<section id="a-series-values-with-labels">
+<h2><span class="section-number">7.2. </span>A Series: values with labels<a class="headerlink" href="#a-series-values-with-labels" title="Link to this heading">#</a></h2>
+<p>The simplest pandas object is a <strong>Series</strong>: a sequence of values, each with a label. We can make one from a list:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monthly_sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">52.3</span><span class="p">,</span> <span class="mf">48.1</span><span class="p">,</span> <span class="mf">61.7</span><span class="p">,</span> <span class="mf">39.5</span><span class="p">,</span> <span class="mf">45.0</span><span class="p">,</span> <span class="mf">53.4</span><span class="p">])</span>
+<span class="n">monthly_sales</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    52.3
+1    48.1
+2    61.7
+3    39.5
+4    45.0
+5    53.4
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>In Thonny:</strong> a last reminder. In a Thonny script, wrap the last line of a cell in <code class="docutils literal notranslate"><span class="pre">print()</span></code> to see its value,
+here <code class="docutils literal notranslate"><span class="pre">print(monthly_sales)</span></code>. From now on, the book takes this for granted.</p>
+</div></blockquote>
+<p>pandas shows the Series in two columns. The right column holds the <strong>values</strong>. The left column, 0 to 5, is the
+<strong>index</strong>: the labels of the values. We gave no labels, so pandas numbered the values from 0, like the positions
+of an array. The last line, <code class="docutils literal notranslate"><span class="pre">dtype:</span> <span class="pre">float64</span></code>, is the type of the values, as for a NumPy array.</p>
+<p>Now let’s give the values better labels, and give the Series a name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monthly_sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="p">[</span><span class="mf">52.3</span><span class="p">,</span> <span class="mf">48.1</span><span class="p">,</span> <span class="mf">61.7</span><span class="p">,</span> <span class="mf">39.5</span><span class="p">,</span> <span class="mf">45.0</span><span class="p">,</span> <span class="mf">53.4</span><span class="p">],</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"S1"</span><span class="p">,</span> <span class="s2">"S2"</span><span class="p">,</span> <span class="s2">"S3"</span><span class="p">,</span> <span class="s2">"S4"</span><span class="p">,</span> <span class="s2">"S5"</span><span class="p">,</span> <span class="s2">"S6"</span><span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"sales"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">monthly_sales</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S1    52.3
+S2    48.1
+S3    61.7
+S4    39.5
+S5    45.0
+S6    53.4
+Name: sales, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now the index holds the store names, and the last line also shows the name of the Series, <code class="docutils literal notranslate"><span class="pre">sales</span></code>. <code class="docutils literal notranslate"><span class="pre">index=</span></code> takes
+a list of labels, one for each value, in the same order. <code class="docutils literal notranslate"><span class="pre">name=</span></code> is optional. It becomes the column name when a
+Series is part of a table.</p>
+<p><strong>The rule:</strong> a Series is a column of values with an <strong>index</strong> of labels. All its values have one dtype, as in a
+NumPy array.</p>
+</section>
+<section id="the-values-and-the-index">
+<h2><span class="section-number">7.3. </span>The values and the index<a class="headerlink" href="#the-values-and-the-index" title="Link to this heading">#</a></h2>
+<p>A Series has two parts, and we can get each one. <code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code> gives the values as a NumPy array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monthly_sales</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([52.3, 48.1, 61.7, 39.5, 45. , 53.4])
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is the kind of array we used in the chapter <em>From lists to NumPy arrays</em>: the same six values, without the
+labels. You may also see <code class="docutils literal notranslate"><span class="pre">.values</span></code> in other code. For a column of numbers, it gives the same array. We use
+<code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code>, whose name says what it does.</p>
+<p><code class="docutils literal notranslate"><span class="pre">.index</span></code> gives the labels:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monthly_sales</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index(['S1', 'S2', 'S3', 'S4', 'S5', 'S6'], dtype='object')
+</pre></div>
+</div>
+</div>
+</div>
+<p>The labels form a pandas object of their own, an <code class="docutils literal notranslate"><span class="pre">Index</span></code>. Its dtype is <code class="docutils literal notranslate"><span class="pre">'object'</span></code>, which is how pandas 2 marks
+text. In pandas 3, the dtype is <code class="docutils literal notranslate"><span class="pre">'str'</span></code>. We come back to dtypes below.</p>
+</section>
+<section id="arithmetic-works-as-with-arrays">
+<h2><span class="section-number">7.4. </span>Arithmetic works as with arrays<a class="headerlink" href="#arithmetic-works-as-with-arrays" title="Link to this heading">#</a></h2>
+<p>A Series computes like a NumPy array: an operation with a number is done on every value. Say that each store must
+grow its sales by 10%. The target of each store is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monthly_sales</span> <span class="o">*</span> <span class="mf">1.10</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S1    57.53
+S2    52.91
+S3    67.87
+S4    43.45
+S5    49.50
+S6    58.74
+Name: sales, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each value was multiplied by 1.10, and <strong>the labels stayed</strong>: we can still see which target belongs to which store.
+The summaries of the chapter <em>Comparisons and Boolean masks</em>, such as <code class="docutils literal notranslate"><span class="pre">.sum()</span></code>, <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> and <code class="docutils literal notranslate"><span class="pre">.max()</span></code>, work too.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> run <code class="docutils literal notranslate"><span class="pre">monthly_sales</span> <span class="pre">&gt;</span> <span class="pre">50</span></code>. You get a Series of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>: a mask, with labels. Which stores
+sold more than 50 thousand dollars? (The chapter <em>Filtering rows</em> uses such masks to choose rows.)</p>
+</div></blockquote>
+</section>
+<section id="selecting-a-value-by-its-label">
+<h2><span class="section-number">7.5. </span>Selecting a value by its label<a class="headerlink" href="#selecting-a-value-by-its-label" title="Link to this heading">#</a></h2>
+<p>To get one value, we put its label in square brackets, as with a key in a dictionary:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monthly_sales</span><span class="p">[</span><span class="s2">"S3"</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(61.7)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Store S3 sold 61.7 thousand dollars. A Series is a little like a dictionary whose keys are the labels, but it can
+also compute like an array.</p>
+<blockquote>
+<div><p><strong>Note:</strong> Colab shows <code class="docutils literal notranslate"><span class="pre">np.float64(61.7)</span></code>: one number taken out of pandas is a NumPy number, as in the chapter
+<em>Indexing, slicing and arithmetic</em>.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Common mistake:</strong> writing <code class="docutils literal notranslate"><span class="pre">monthly_sales[0]</span></code> to get the first value. The square brackets of a Series look for a
+<strong>label</strong>, and <code class="docutils literal notranslate"><span class="pre">0</span></code> is not one of the labels here. Colab’s pandas 2 still gives the first value, with a
+<code class="docutils literal notranslate"><span class="pre">FutureWarning</span></code>; pandas 3 gives <code class="docutils literal notranslate"><span class="pre">KeyError:</span> <span class="pre">0</span></code>. To select by position, use <code class="docutils literal notranslate"><span class="pre">iloc</span></code>, which the chapter
+<em>Selecting with loc and iloc</em> explains.</p>
+</div></blockquote>
+</section>
+<section id="a-dataframe-a-table-of-columns">
+<h2><span class="section-number">7.6. </span>A DataFrame: a table of columns<a class="headerlink" href="#a-dataframe-a-table-of-columns" title="Link to this heading">#</a></h2>
+<p>Most business data is a table: one row for each store (or customer, or sale), and one column for each fact. pandas
+calls a table a <strong>DataFrame</strong>. The easiest way to make one is from a dictionary: each key is a column name, and
+each value is the list of the values in that column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"store"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"S1"</span><span class="p">,</span> <span class="s2">"S2"</span><span class="p">,</span> <span class="s2">"S3"</span><span class="p">,</span> <span class="s2">"S4"</span><span class="p">,</span> <span class="s2">"S5"</span><span class="p">,</span> <span class="s2">"S6"</span><span class="p">],</span>
+    <span class="s2">"city"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Boston"</span><span class="p">,</span> <span class="s2">"Atlanta"</span><span class="p">,</span> <span class="s2">"Chicago"</span><span class="p">,</span> <span class="s2">"Denver"</span><span class="p">,</span> <span class="s2">"Miami"</span><span class="p">,</span> <span class="s2">"Seattle"</span><span class="p">],</span>
+    <span class="s2">"region"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"East"</span><span class="p">,</span> <span class="s2">"South"</span><span class="p">,</span> <span class="s2">"North"</span><span class="p">,</span> <span class="s2">"West"</span><span class="p">,</span> <span class="s2">"South"</span><span class="p">,</span> <span class="s2">"West"</span><span class="p">],</span>
+    <span class="s2">"employees"</span><span class="p">:</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+    <span class="s2">"sales"</span><span class="p">:</span> <span class="p">[</span><span class="mf">52.3</span><span class="p">,</span> <span class="mf">48.1</span><span class="p">,</span> <span class="mf">61.7</span><span class="p">,</span> <span class="mf">39.5</span><span class="p">,</span> <span class="mf">45.0</span><span class="p">,</span> <span class="mf">53.4</span><span class="p">],</span>
+<span class="p">})</span>
+<span class="n">stores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>city</th>
+      <th>region</th>
+      <th>employees</th>
+      <th>sales</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S1</td>
+      <td>Boston</td>
+      <td>East</td>
+      <td>12</td>
+      <td>52.3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S2</td>
+      <td>Atlanta</td>
+      <td>South</td>
+      <td>8</td>
+      <td>48.1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S3</td>
+      <td>Chicago</td>
+      <td>North</td>
+      <td>15</td>
+      <td>61.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S4</td>
+      <td>Denver</td>
+      <td>West</td>
+      <td>6</td>
+      <td>39.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S5</td>
+      <td>Miami</td>
+      <td>South</td>
+      <td>9</td>
+      <td>45.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>S6</td>
+      <td>Seattle</td>
+      <td>West</td>
+      <td>10</td>
+      <td>53.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Each row is one store, and each column is one fact about it: its name, its city, its region, its number of
+employees, and its monthly sales in thousands of dollars. On the left is the index, 0 to 5. We gave no index, so
+pandas numbered the rows.</p>
+<p><strong>The rule:</strong> a DataFrame is a table of columns that <strong>share one index</strong>. Each column is a Series. Different
+columns can hold different types (text in one, numbers in another), but all the values in one column have one
+dtype. All the lists must have the same length: one value for each row.</p>
+<p>In general code, and in the summaries of this book, a DataFrame is often called <code class="docutils literal notranslate"><span class="pre">df</span></code>, and a Series <code class="docutils literal notranslate"><span class="pre">s</span></code>.</p>
+</section>
+<section id="one-column-is-a-series">
+<h2><span class="section-number">7.7. </span>One column is a Series<a class="headerlink" href="#one-column-is-a-series" title="Link to this heading">#</a></h2>
+<p>To select a column, we put its name in square brackets:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stores</span><span class="p">[</span><span class="s2">"sales"</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    52.3
+1    48.1
+2    61.7
+3    39.5
+4    45.0
+5    53.4
+Name: sales, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a <strong>Series</strong>: the values of the column, with the index of the DataFrame on the left, and the column
+name as the Series’ name. Everything we did with <code class="docutils literal notranslate"><span class="pre">monthly_sales</span></code> works here too: <code class="docutils literal notranslate"><span class="pre">stores[&quot;sales&quot;].mean()</span></code> is the
+average sales of a store, and <code class="docutils literal notranslate"><span class="pre">stores[&quot;employees&quot;].sum()</span></code> the number of employees of the whole chain.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> <code class="docutils literal notranslate"><span class="pre">stores[&quot;Sales&quot;]</span></code>, with a capital S, gives <code class="docutils literal notranslate"><span class="pre">KeyError:</span> <span class="pre">'Sales'</span></code>. Column names are
+case-sensitive: write them exactly as they are in the table.</p>
+</div></blockquote>
+</section>
+<section id="several-columns-double-brackets">
+<h2><span class="section-number">7.8. </span>Several columns: double brackets<a class="headerlink" href="#several-columns-double-brackets" title="Link to this heading">#</a></h2>
+<p>To select several columns, we put a <strong>list</strong> of column names inside the square brackets. That makes two pairs of
+brackets: the outer pair selects, and the inner pair makes the list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stores</span><span class="p">[[</span><span class="s2">"city"</span><span class="p">,</span> <span class="s2">"sales"</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>city</th>
+      <th>sales</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Boston</td>
+      <td>52.3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Atlanta</td>
+      <td>48.1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Chicago</td>
+      <td>61.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Denver</td>
+      <td>39.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Miami</td>
+      <td>45.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Seattle</td>
+      <td>53.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The result is a <strong>DataFrame</strong> with only these two columns, in the order of the list. Even a list with one name
+gives a DataFrame: <code class="docutils literal notranslate"><span class="pre">stores[[&quot;sales&quot;]]</span></code> is a table with one column, while <code class="docutils literal notranslate"><span class="pre">stores[&quot;sales&quot;]</span></code> is a Series. (The
+chapter <em>What does a model learn?</em> wrote <code class="docutils literal notranslate"><span class="pre">customers[[&quot;visits_per_month&quot;]]</span></code> for this reason: scikit-learn wants the
+predictors as a table.)</p>
+<p>What happens if we forget the inner brackets?</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stores</span><span class="p">[</span><span class="s2">"city"</span><span class="p">,</span> <span class="s2">"sales"</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/indexes/base.py:3805,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3804</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">3805</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3806</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+
+<span class="nn">File index.pyx:167,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+<span class="ne">--&gt; </span><span class="mi">167</span> <span class="s1">'Could not get source, probably due dynamically evaluated source code.'</span>
+
+<span class="nn">File index.pyx:196,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+<span class="ne">--&gt; </span><span class="mi">196</span> <span class="s1">'Could not get source, probably due dynamically evaluated source code.'</span>
+
+<span class="nn">File pandas/_libs/hashtable_class_helper.pxi:7081,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+<span class="ne">-&gt; </span><span class="mi">7081</span> <span class="s1">'Could not get source, probably due dynamically evaluated source code.'</span>
+
+<span class="nn">File pandas/_libs/hashtable_class_helper.pxi:7089,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+<span class="ne">-&gt; </span><span class="mi">7089</span> <span class="s1">'Could not get source, probably due dynamically evaluated source code.'</span>
+
+<span class="ne">KeyError</span>: ('city', 'sales')
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">stores</span><span class="p">[</span><span class="s2">"city"</span><span class="p">,</span> <span class="s2">"sales"</span><span class="p">]</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/frame.py:4102,</span> in <span class="ni">DataFrame.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4098</span> 
+<span class="g g-Whitespace">   </span><span class="mi">4099</span>         <span class="k">if</span> <span class="n">is_single_key</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">4100</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">4101</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">4102</span>             <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4103</span>             <span class="k">if</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">indexer</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">4104</span>                 <span class="n">indexer</span> <span class="o">=</span> <span class="p">[</span><span class="n">indexer</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">4105</span>         <span class="k">else</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.13.18/x64/lib/python3.13/site-packages/pandas/core/indexes/base.py:3812,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3807</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3808</span>         <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3809</span>         <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3810</span>     <span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">3811</span>         <span class="k">raise</span> <span class="n">InvalidIndexError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">3812</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
+<span class="g g-Whitespace">   </span><span class="mi">3813</span> <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3814</span>     <span class="c1"># If we have a listlike key, _check_indexing_error will raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3815</span>     <span class="c1">#  InvalidIndexError. Otherwise we fall through and re-raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3816</span>     <span class="c1">#  the TypeError.</span>
+<span class="g g-Whitespace">   </span><span class="mi">3817</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_check_indexing_error</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: ('city', 'sales')
+</pre></div>
+</div>
+</div>
+</div>
+<p>The last line of the message is <code class="docutils literal notranslate"><span class="pre">KeyError:</span> <span class="pre">('city',</span> <span class="pre">'sales')</span></code>. Without the inner brackets, Python passes the two
+names together as one tuple, and pandas looks for <strong>one</strong> column whose name is that tuple. There is no such column.
+The fix is <code class="docutils literal notranslate"><span class="pre">stores[[&quot;city&quot;,</span> <span class="pre">&quot;sales&quot;]]</span></code>.</p>
+</section>
+<section id="the-size-and-the-parts-of-a-table">
+<h2><span class="section-number">7.9. </span>The size and the parts of a table<a class="headerlink" href="#the-size-and-the-parts-of-a-table" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">.shape</span></code> gives the size of a DataFrame as (rows, columns), as for a 2-D array in the chapter
+<em>Two-dimensional arrays</em>. <code class="docutils literal notranslate"><span class="pre">len()</span></code> gives the number of rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">stores</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stores</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6, 5)
+6
+</pre></div>
+</div>
+</div>
+</div>
+<p>The table has 6 rows and 5 columns. For a DataFrame, <code class="docutils literal notranslate"><span class="pre">len</span></code> counts the <strong>rows</strong>, not the columns.</p>
+<p><code class="docutils literal notranslate"><span class="pre">.columns</span></code> gives the column names, and <code class="docutils literal notranslate"><span class="pre">.index</span></code> the row labels:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">stores</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stores</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index(['store', 'city', 'region', 'employees', 'sales'], dtype='object')
+RangeIndex(start=0, stop=6, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The column names are an <code class="docutils literal notranslate"><span class="pre">Index</span></code> of text, like the labels of <code class="docutils literal notranslate"><span class="pre">monthly_sales</span></code> (<code class="docutils literal notranslate"><span class="pre">dtype='object'</span></code>, or <code class="docutils literal notranslate"><span class="pre">dtype='str'</span></code> in
+pandas 3). We can loop over them, or make a list with <code class="docutils literal notranslate"><span class="pre">list(stores.columns)</span></code>.</p>
+<p>The row labels are a <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>: pandas’ short way to write the numbers 0, 1, …, 5. It starts at 0 and stops
+<strong>before</strong> 6, like <code class="docutils literal notranslate"><span class="pre">np.arange(6)</span></code>. When we read a data file in the next chapter, its rows get such an index too.</p>
+</section>
+<section id="the-type-of-each-column">
+<h2><span class="section-number">7.10. </span>The type of each column<a class="headerlink" href="#the-type-of-each-column" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">.dtypes</span></code> (with an <code class="docutils literal notranslate"><span class="pre">s</span></code>) gives the dtype of every column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stores</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>store         object
+city          object
+region        object
+employees      int64
+sales        float64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>The number columns have NumPy’s dtypes: <code class="docutils literal notranslate"><span class="pre">int64</span></code> for whole numbers (<code class="docutils literal notranslate"><span class="pre">employees</span></code>) and <code class="docutils literal notranslate"><span class="pre">float64</span></code> for numbers with
+decimals (<code class="docutils literal notranslate"><span class="pre">sales</span></code>). The text columns <code class="docutils literal notranslate"><span class="pre">store</span></code>, <code class="docutils literal notranslate"><span class="pre">city</span></code> and <code class="docutils literal notranslate"><span class="pre">region</span></code> have the dtype <code class="docutils literal notranslate"><span class="pre">object</span></code> (or <code class="docutils literal notranslate"><span class="pre">str</span></code> in pandas 3):
+that is how pandas marks text. Ignore the last line, <code class="docutils literal notranslate"><span class="pre">dtype:</span> <span class="pre">object</span></code>: it is the dtype of this list of dtypes
+itself, and it is the same in both versions.</p>
+<p>Why look at dtypes? Most arithmetic and summaries, such as <code class="docutils literal notranslate"><span class="pre">mean()</span></code>, make sense only for number columns. And
+machine-learning models accept only numbers: in the chapter <em>A first machine-learning example</em>, <code class="docutils literal notranslate"><span class="pre">fit</span></code> failed
+because of the text column <code class="docutils literal notranslate"><span class="pre">region</span></code>. <code class="docutils literal notranslate"><span class="pre">.dtypes</span></code> is the quickest way to find such columns.</p>
+</section>
+<section id="adding-a-column">
+<h2><span class="section-number">7.11. </span>Adding a column<a class="headerlink" href="#adding-a-column" title="Link to this heading">#</a></h2>
+<p>To add a column, we assign a list to a new column name. The list needs one value for each row. Here is the year in
+which each store opened:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stores</span><span class="p">[</span><span class="s2">"opened"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="mi">2009</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">2019</span><span class="p">]</span>
+<span class="n">stores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>city</th>
+      <th>region</th>
+      <th>employees</th>
+      <th>sales</th>
+      <th>opened</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S1</td>
+      <td>Boston</td>
+      <td>East</td>
+      <td>12</td>
+      <td>52.3</td>
+      <td>2012</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S2</td>
+      <td>Atlanta</td>
+      <td>South</td>
+      <td>8</td>
+      <td>48.1</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S3</td>
+      <td>Chicago</td>
+      <td>North</td>
+      <td>15</td>
+      <td>61.7</td>
+      <td>2009</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S4</td>
+      <td>Denver</td>
+      <td>West</td>
+      <td>6</td>
+      <td>39.5</td>
+      <td>2021</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S5</td>
+      <td>Miami</td>
+      <td>South</td>
+      <td>9</td>
+      <td>45.0</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>S6</td>
+      <td>Seattle</td>
+      <td>West</td>
+      <td>10</td>
+      <td>53.4</td>
+      <td>2019</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The new column appears at the right. (If a column with that name already exists, the assignment replaces its
+values.)</p>
+<p>More often, a new column is computed from other columns. The arithmetic works row by row, as for two arrays of the
+same length. Here are the sales of each store divided by its number of employees:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stores</span><span class="p">[</span><span class="s2">"sales_per_employee"</span><span class="p">]</span> <span class="o">=</span> <span class="n">stores</span><span class="p">[</span><span class="s2">"sales"</span><span class="p">]</span> <span class="o">/</span> <span class="n">stores</span><span class="p">[</span><span class="s2">"employees"</span><span class="p">]</span>
+<span class="n">stores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>store</th>
+      <th>city</th>
+      <th>region</th>
+      <th>employees</th>
+      <th>sales</th>
+      <th>opened</th>
+      <th>sales_per_employee</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S1</td>
+      <td>Boston</td>
+      <td>East</td>
+      <td>12</td>
+      <td>52.3</td>
+      <td>2012</td>
+      <td>4.358333</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S2</td>
+      <td>Atlanta</td>
+      <td>South</td>
+      <td>8</td>
+      <td>48.1</td>
+      <td>2018</td>
+      <td>6.012500</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S3</td>
+      <td>Chicago</td>
+      <td>North</td>
+      <td>15</td>
+      <td>61.7</td>
+      <td>2009</td>
+      <td>4.113333</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S4</td>
+      <td>Denver</td>
+      <td>West</td>
+      <td>6</td>
+      <td>39.5</td>
+      <td>2021</td>
+      <td>6.583333</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S5</td>
+      <td>Miami</td>
+      <td>South</td>
+      <td>9</td>
+      <td>45.0</td>
+      <td>2016</td>
+      <td>5.000000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>S6</td>
+      <td>Seattle</td>
+      <td>West</td>
+      <td>10</td>
+      <td>53.4</td>
+      <td>2019</td>
+      <td>5.340000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>For each row, pandas divided that row’s sales by that row’s employees. Store S3 in Chicago has the highest sales
+(61.7) and the most employees, but the lowest sales per employee: about 4.11 thousand dollars a month. Store S4 in
+Denver has the lowest sales and the fewest employees, but the highest sales per employee: about 6.58. The chapter
+<em>New columns and sorting</em> shows more ways to make columns.</p>
+<blockquote>
+<div><p><strong>Common mistake:</strong> a list with the wrong number of values. <code class="docutils literal notranslate"><span class="pre">stores[&quot;opened&quot;]</span> <span class="pre">=</span> <span class="pre">[2012,</span> <span class="pre">2018]</span></code> gives
+<code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">Length</span> <span class="pre">of</span> <span class="pre">values</span> <span class="pre">(2)</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">match</span> <span class="pre">length</span> <span class="pre">of</span> <span class="pre">index</span> <span class="pre">(6)</span></code>. The list must have exactly one value for
+each row.</p>
+</div></blockquote>
+</section>
+<section id="summary">
+<h2><span class="section-number">7.12. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>pandas</strong> (<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pandas</span> <span class="pre">as</span> <span class="pre">pd</span></code>) works with tables of data. It is built on NumPy.</p></li>
+<li><p>A <strong>Series</strong> is a column of values with an <strong>index</strong> of labels: <code class="docutils literal notranslate"><span class="pre">pd.Series([...],</span> <span class="pre">index=[...],</span> <span class="pre">name=&quot;...&quot;)</span></code>.
+<code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code> gives its values as a NumPy array, and <code class="docutils literal notranslate"><span class="pre">.index</span></code> its labels. Arithmetic and summaries work as for
+arrays, and <code class="docutils literal notranslate"><span class="pre">s[&quot;S3&quot;]</span></code> selects a value by its label.</p></li>
+<li><p>A <strong>DataFrame</strong> is a table of columns that share one index: <code class="docutils literal notranslate"><span class="pre">pd.DataFrame({&quot;col&quot;:</span> <span class="pre">[...],</span> <span class="pre">...})</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df[&quot;col&quot;]</span></code> gives one column, as a Series. <code class="docutils literal notranslate"><span class="pre">df[[&quot;a&quot;,</span> <span class="pre">&quot;b&quot;]]</span></code> (double brackets) gives a DataFrame with those
+columns.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.shape</span></code> is (rows, columns), <code class="docutils literal notranslate"><span class="pre">len(df)</span></code> is the number of rows, <code class="docutils literal notranslate"><span class="pre">df.columns</span></code> gives the column names, and
+<code class="docutils literal notranslate"><span class="pre">df.index</span></code> the row labels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.dtypes</span></code> gives the type of each column: <code class="docutils literal notranslate"><span class="pre">int64</span></code> and <code class="docutils literal notranslate"><span class="pre">float64</span></code> for numbers, <code class="docutils literal notranslate"><span class="pre">object</span></code> (or <code class="docutils literal notranslate"><span class="pre">str</span></code> in pandas 3) for
+text.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df[&quot;new&quot;]</span> <span class="pre">=</span> <span class="pre">[...]</span></code> or <code class="docutils literal notranslate"><span class="pre">df[&quot;new&quot;]</span> <span class="pre">=</span> <span class="pre">df[&quot;a&quot;]</span> <span class="pre">/</span> <span class="pre">df[&quot;b&quot;]</span></code> adds a column.</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2><span class="section-number">7.13. </span>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The pandas tutorial “What kind of data does pandas handle?”:
+<a class="reference external" href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/01_table_oriented.html">https://pandas.pydata.org/docs/getting_started/intro_tutorials/01_table_oriented.html</a>.</p></li>
+</ul>
+</section>
+<section id="practice-questions">
+<h2><span class="section-number">7.14. </span>Practice questions<a class="headerlink" href="#practice-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">7.14.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>A café counts its visitors: 120 on Monday, 95 on Tuesday, 143 on Wednesday, 110 on Thursday and 160 on Friday.
+Make a Series <code class="docutils literal notranslate"><span class="pre">visitors</span></code> with the labels <code class="docutils literal notranslate"><span class="pre">&quot;Mon&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">&quot;Fri&quot;</span></code> and the name <code class="docutils literal notranslate"><span class="pre">&quot;visitors&quot;</span></code>. Then show the number of
+visitors on Wednesday.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The list of values and the list of labels must be in the same order. Wednesday had 143 visitors.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">visitors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">143</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">160</span><span class="p">],</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"Mon"</span><span class="p">,</span> <span class="s2">"Tue"</span><span class="p">,</span> <span class="s2">"Wed"</span><span class="p">,</span> <span class="s2">"Thu"</span><span class="p">,</span> <span class="s2">"Fri"</span><span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"visitors"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">visitors</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">visitors</span><span class="p">[</span><span class="s2">"Wed"</span><span class="p">])</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-easy">
+<h3><span class="section-number">7.14.2. </span>Question 2 (Easy)<a class="headerlink" href="#question-2-easy" title="Link to this heading">#</a></h3>
+<p>Select the column <code class="docutils literal notranslate"><span class="pre">region</span></code> of <code class="docutils literal notranslate"><span class="pre">stores</span></code> twice: once as a Series, and once as a DataFrame with one column. How can
+you tell the two outputs apart?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>One pair of brackets gives a Series. Its output ends with the line <code class="docutils literal notranslate"><span class="pre">Name:</span> <span class="pre">region,</span> <span class="pre">dtype:</span> <span class="pre">object</span></code> (or <code class="docutils literal notranslate"><span class="pre">dtype:</span> <span class="pre">str</span></code>
+in pandas 3). Double brackets give a DataFrame: the column name <code class="docutils literal notranslate"><span class="pre">region</span></code> is at the top of the column, and there is
+no <code class="docutils literal notranslate"><span class="pre">Name:</span></code> line.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">stores</span><span class="p">[</span><span class="s2">"region"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stores</span><span class="p">[[</span><span class="s2">"region"</span><span class="p">]])</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-medium">
+<h3><span class="section-number">7.14.3. </span>Question 3 (Medium)<a class="headerlink" href="#question-3-medium" title="Link to this heading">#</a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">monthly_sales</span></code> to show the sales of store S5. Then show the sales of all six stores in dollars instead of
+thousands of dollars.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Store S5 sold 45.0 thousand dollars. Multiplying the Series by 1000 multiplies every value, and keeps the labels.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">monthly_sales</span><span class="p">[</span><span class="s2">"S5"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">monthly_sales</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-medium">
+<h3><span class="section-number">7.14.4. </span>Question 4 (Medium)<a class="headerlink" href="#question-4-medium" title="Link to this heading">#</a></h3>
+<p>What is the average number of employees of a store? And what are the highest monthly sales of a store? Use the
+columns of <code class="docutils literal notranslate"><span class="pre">stores</span></code>.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>Select the column, then use the summary. A store has 10 employees on average, and the highest sales are 61.7
+thousand dollars.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">stores</span><span class="p">[</span><span class="s2">"employees"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stores</span><span class="p">[</span><span class="s2">"sales"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-medium">
+<h3><span class="section-number">7.14.5. </span>Question 5 (Medium)<a class="headerlink" href="#question-5-medium" title="Link to this heading">#</a></h3>
+<p>The section <em>Adding a column</em> added two columns to <code class="docutils literal notranslate"><span class="pre">stores</span></code>. What is <code class="docutils literal notranslate"><span class="pre">stores.shape</span></code> now? And what is
+<code class="docutils literal notranslate"><span class="pre">stores[[&quot;city&quot;,</span> <span class="pre">&quot;sales&quot;]].shape</span></code>? Think first, then check.</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">stores</span></code> now has 6 rows and 7 columns: <code class="docutils literal notranslate"><span class="pre">(6,</span> <span class="pre">7)</span></code>. Selecting two columns keeps all the rows: <code class="docutils literal notranslate"><span class="pre">(6,</span> <span class="pre">2)</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">stores</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stores</span><span class="p">[[</span><span class="s2">"city"</span><span class="p">,</span> <span class="s2">"sales"</span><span class="p">]]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-hard">
+<h3><span class="section-number">7.14.6. </span>Question 6 (Hard)<a class="headerlink" href="#question-6-hard" title="Link to this heading">#</a></h3>
+<p>Make a DataFrame <code class="docutils literal notranslate"><span class="pre">products</span></code> with four products and three columns: <code class="docutils literal notranslate"><span class="pre">product</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;pen&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;notebook&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;stapler&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;lamp&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">price</span></code> (<code class="docutils literal notranslate"><span class="pre">1.50</span></code>, <code class="docutils literal notranslate"><span class="pre">3.25</span></code>, <code class="docutils literal notranslate"><span class="pre">8.99</span></code>, <code class="docutils literal notranslate"><span class="pre">24.00</span></code>) and <code class="docutils literal notranslate"><span class="pre">units</span></code> (<code class="docutils literal notranslate"><span class="pre">120</span></code>, <code class="docutils literal notranslate"><span class="pre">80</span></code>, <code class="docutils literal notranslate"><span class="pre">15</span></code>, <code class="docutils literal notranslate"><span class="pre">6</span></code>). Show its dtypes. Then
+add a column <code class="docutils literal notranslate"><span class="pre">revenue</span></code>, the price times the units, and show the table. Which product brings the most revenue?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">product</span></code> is text (<code class="docutils literal notranslate"><span class="pre">object</span></code>, or <code class="docutils literal notranslate"><span class="pre">str</span></code> in pandas 3), <code class="docutils literal notranslate"><span class="pre">price</span></code> is <code class="docutils literal notranslate"><span class="pre">float64</span></code> and <code class="docutils literal notranslate"><span class="pre">units</span></code> is <code class="docutils literal notranslate"><span class="pre">int64</span></code>. The notebook
+brings the most revenue: 260 dollars.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">products</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"product"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"pen"</span><span class="p">,</span> <span class="s2">"notebook"</span><span class="p">,</span> <span class="s2">"stapler"</span><span class="p">,</span> <span class="s2">"lamp"</span><span class="p">],</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.50</span><span class="p">,</span> <span class="mf">3.25</span><span class="p">,</span> <span class="mf">8.99</span><span class="p">,</span> <span class="mf">24.00</span><span class="p">],</span>
+    <span class="s2">"units"</span><span class="p">:</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">products</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="n">products</span><span class="p">[</span><span class="s2">"revenue"</span><span class="p">]</span> <span class="o">=</span> <span class="n">products</span><span class="p">[</span><span class="s2">"price"</span><span class="p">]</span> <span class="o">*</span> <span class="n">products</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span>
+<span class="n">products</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-challenge">
+<h3><span class="section-number">7.14.7. </span>Question 7 (Challenge)<a class="headerlink" href="#question-7-challenge" title="Link to this heading">#</a></h3>
+<p>A colleague types the number of employees of four new stores, but one value goes in as text:
+<code class="docutils literal notranslate"><span class="pre">new_employees</span> <span class="pre">=</span> <span class="pre">pd.Series([12,</span> <span class="pre">8,</span> <span class="pre">&quot;15&quot;,</span> <span class="pre">6])</span></code>. What is the dtype of this Series? What happens if you call
+<code class="docutils literal notranslate"><span class="pre">new_employees.sum()</span></code>, and why? How do you fix the data?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The dtype is <code class="docutils literal notranslate"><span class="pre">object</span></code>, in pandas 2 and in pandas 3: the Series mixes numbers and text, so it cannot be <code class="docutils literal notranslate"><span class="pre">int64</span></code>
+(and pandas 3 uses <code class="docutils literal notranslate"><span class="pre">str</span></code> only when every value is text). <code class="docutils literal notranslate"><span class="pre">.dtype</span></code> gives the dtype of one Series, as for an array.
+<code class="docutils literal notranslate"><span class="pre">new_employees.sum()</span></code> fails with <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">unsupported</span> <span class="pre">operand</span> <span class="pre">type(s)</span> <span class="pre">for</span> <span class="pre">+:</span> <span class="pre">'int'</span> <span class="pre">and</span> <span class="pre">'str'</span></code>: Python cannot add
+a number and a text. The fix is to write <code class="docutils literal notranslate"><span class="pre">15</span></code> without quotes. Then the dtype is <code class="docutils literal notranslate"><span class="pre">int64</span></code>, and the sum is 41.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_employees</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">"15"</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_employees</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="n">fixed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fixed</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fixed</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="06-two-dimensional-arrays.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Two-dimensional arrays</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="08-reading-and-describing-data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Reading and describing data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numbers-need-labels">7.1. Numbers need labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-series-values-with-labels">7.2. A Series: values with labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-values-and-the-index">7.3. The values and the index</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-works-as-with-arrays">7.4. Arithmetic works as with arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-a-value-by-its-label">7.5. Selecting a value by its label</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-dataframe-a-table-of-columns">7.6. A DataFrame: a table of columns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-column-is-a-series">7.7. One column is a Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-columns-double-brackets">7.8. Several columns: double brackets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-size-and-the-parts-of-a-table">7.9. The size and the parts of a table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-type-of-each-column">7.10. The type of each column</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-column">7.11. Adding a column</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">7.12. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7.13. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">7.14. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">7.14.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">7.14.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-medium">7.14.3. Question 3 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">7.14.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">7.14.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-hard">7.14.6. Question 6 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-challenge">7.14.7. Question 7 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

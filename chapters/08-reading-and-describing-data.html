@@ -1,0 +1,1661 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>8. Reading and describing data &#8212; What is Machine Learning?</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/08-reading-and-describing-data';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script data-package="y-rosenthal/pre-ml" defer="defer" src="https://subjexts.github.io/overlay/v1/yrS4.js"></script>
+    <link rel="canonical" href="https://y-rosenthal.github.io/yr-pre-ml/chapters/08-reading-and-describing-data.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="9. Selecting with loc and iloc" href="09-loc-and-iloc.html" />
+    <link rel="prev" title="7. Series and DataFrames" href="07-series-and-dataframes.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">What is Machine Learning?</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    What is Machine Learning?
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of contents by label</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../subjexts-labels.html">Table of contents by label</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Using this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-colab-thonny-ides.html">Colab, Thonny and other IDEs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why NumPy and pandas?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-first-ml-example.html">1. A first machine-learning example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-what-a-model-learns.html">2. What does a model learn?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NumPy arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-lists-and-arrays.html">3. From lists to NumPy arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-indexing-and-arithmetic.html">4. Indexing, slicing and arithmetic</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with arrays</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-boolean-masks.html">5. Comparisons and Boolean masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-two-dimensional-arrays.html">6. Two-dimensional arrays</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: first steps</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-series-and-dataframes.html">7. Series and DataFrames</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Reading and describing data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: selecting and changing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09-loc-and-iloc.html">9. Selecting with loc and iloc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-filtering-rows.html">10. Filtering rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-new-columns-and-sorting.html">11. New columns and sorting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">pandas: summarizing and preparing data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-grouping-and-summarizing.html">12. Grouping and summarizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-preparing-data-for-ml.html">13. Preparing data for machine learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Putting it together</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14-guided-project.html">14. Guided project: delivery times</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-independent-project.html">15. Independent project: advertising and sales</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-common-errors.html">Common errors and how to fix them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-cheat-sheet.html">Cheat sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-datasets.html">The datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19-further-reading.html">Further reading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/08-reading-and-describing-data.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/y-rosenthal/yr-pre-ml" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/08-reading-and-describing-data.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reading and describing data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-files">8.1. CSV files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-a-csv-file">8.2. Reading a CSV file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-first-and-the-last-rows">8.3. The first and the last rows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-size-the-columns-and-the-dtypes">8.4. The size, the columns and the dtypes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-report-on-the-table-info">8.5. A report on the table: <code class="docutils literal notranslate"><span class="pre">info()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-statistics-describe">8.6. Summary statistics: <code class="docutils literal notranslate"><span class="pre">describe()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-columns-unique-and-nunique">8.7. Text columns: <code class="docutils literal notranslate"><span class="pre">unique()</span></code> and <code class="docutils literal notranslate"><span class="pre">nunique()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-columns-a-recap">8.8. Selecting columns: a recap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-values-a-first-look">8.9. Missing values: a first look</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">8.10. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">8.11. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">8.12. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">8.12.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">8.12.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">8.12.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">8.12.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">8.12.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-medium">8.12.6. Question 6 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">8.12.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">8.12.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="reading-and-describing-data">
+<h1><span class="section-number">8. </span>Reading and describing data<a class="headerlink" href="#reading-and-describing-data" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/y-rosenthal/yr-pre-ml/blob/main/jb/chapters/08-reading-and-describing-data.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>So far, we typed our data by hand. Real business data comes in files, often with thousands of rows. In this
+chapter, we read a file of 2,000 sales into a DataFrame and take a first look at it: how big it is, what its
+columns hold, and what its numbers look like. This first look is the first step of every data project, machine
+learning included.</p>
+<p><strong>In this chapter, you will learn to:</strong></p>
+<ul class="simple">
+<li><p>read a CSV file into a DataFrame with <code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code>;</p></li>
+<li><p>look at the first and the last rows with <code class="docutils literal notranslate"><span class="pre">head()</span></code> and <code class="docutils literal notranslate"><span class="pre">tail()</span></code>;</p></li>
+<li><p>describe a table with <code class="docutils literal notranslate"><span class="pre">.shape</span></code>, <code class="docutils literal notranslate"><span class="pre">.columns</span></code>, <code class="docutils literal notranslate"><span class="pre">.dtypes</span></code> and <code class="docutils literal notranslate"><span class="pre">info()</span></code>;</p></li>
+<li><p>read the summary statistics of <code class="docutils literal notranslate"><span class="pre">describe()</span></code>: count, mean, std, min, quartiles and max;</p></li>
+<li><p>list the different values of a text column with <code class="docutils literal notranslate"><span class="pre">unique()</span></code> and <code class="docutils literal notranslate"><span class="pre">nunique()</span></code>;</p></li>
+<li><p>find the columns that have missing values.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">DATA_URL</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/y-rosenthal/yr-pre-ml/main/data/"</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">DATA_URL</span></code> is the web address of the folder that holds the book’s data files (the chapter
+<em>Colab, Thonny and other IDEs</em> explains it).</p>
+<section id="csv-files">
+<h2><span class="section-number">8.1. </span>CSV files<a class="headerlink" href="#csv-files" title="Link to this heading">#</a></h2>
+<p>The most common file format for tables is <strong>CSV</strong>, short for <em>comma-separated values</em>. A CSV file is plain text:
+one line for each row, with the values separated by commas. The first line holds the column names. Here are the
+first lines of the file <code class="docutils literal notranslate"><span class="pre">sales.csv</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span><span class="p">,</span><span class="n">store</span><span class="p">,</span><span class="n">region</span><span class="p">,</span><span class="n">category</span><span class="p">,</span><span class="n">units</span><span class="p">,</span><span class="n">price</span><span class="p">,</span><span class="n">discount</span>
+<span class="mi">2025</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="p">,</span><span class="n">S1</span><span class="p">,</span><span class="n">North</span><span class="p">,</span><span class="n">Clothing</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">46.99</span><span class="p">,</span><span class="mf">0.1</span>
+<span class="mi">2025</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="p">,</span><span class="n">S8</span><span class="p">,</span><span class="n">West</span><span class="p">,</span><span class="n">Grocery</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mf">2.99</span><span class="p">,</span><span class="mf">0.0</span>
+<span class="mi">2025</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="p">,</span><span class="n">S2</span><span class="p">,</span><span class="n">North</span><span class="p">,</span><span class="n">Grocery</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mf">5.99</span><span class="p">,</span><span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>Each line is one sale of a store chain: the day, the store and its region, the product category, the number of
+units, the price of one unit in dollars, and the discount as a fraction of the price (<code class="docutils literal notranslate"><span class="pre">0.1</span></code> is 10%). The appendix
+<em>The datasets</em> describes every file and column.</p>
+</section>
+<section id="reading-a-csv-file">
+<h2><span class="section-number">8.2. </span>Reading a CSV file<a class="headerlink" href="#reading-a-csv-file" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code> reads a CSV file and returns a DataFrame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"sales.csv"</span><span class="p">)</span>
+<span class="n">sales</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>region</th>
+      <th>category</th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>S1</td>
+      <td>North</td>
+      <td>Clothing</td>
+      <td>3</td>
+      <td>46.99</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>2.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>S2</td>
+      <td>North</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>5.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>11.99</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Grocery</td>
+      <td>13</td>
+      <td>3.99</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">DATA_URL</span> <span class="pre">+</span> <span class="pre">&quot;sales.csv&quot;</span></code> joins two strings into the full address of the file. <code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code> reads the file, takes
+the column names from the first line, and makes one row of the DataFrame from each other line. It also chooses a
+dtype for each column, from the values in it.</p>
+<p><code class="docutils literal notranslate"><span class="pre">head()</span></code> shows the first five rows. It is the first thing to look at after reading a file: did the columns come out
+right, and what do the values look like?</p>
+<blockquote>
+<div><p><strong>Note:</strong> to read a file that is saved on your own computer, give its name instead of the address:
+<code class="docutils literal notranslate"><span class="pre">pd.read_csv(&quot;sales.csv&quot;)</span></code> reads the file <code class="docutils literal notranslate"><span class="pre">sales.csv</span></code> in the folder of your Thonny script. The appendix
+<em>The datasets</em> has a link to each file.</p>
+</div></blockquote>
+</section>
+<section id="the-first-and-the-last-rows">
+<h2><span class="section-number">8.3. </span>The first and the last rows<a class="headerlink" href="#the-first-and-the-last-rows" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">head()</span></code> can show more rows. We give it the number:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>region</th>
+      <th>category</th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>S1</td>
+      <td>North</td>
+      <td>Clothing</td>
+      <td>3</td>
+      <td>46.99</td>
+      <td>0.10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>2.99</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>S2</td>
+      <td>North</td>
+      <td>Grocery</td>
+      <td>11</td>
+      <td>5.99</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>9</td>
+      <td>11.99</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Grocery</td>
+      <td>13</td>
+      <td>3.99</td>
+      <td>0.20</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2025-01-02</td>
+      <td>S6</td>
+      <td>East</td>
+      <td>Grocery</td>
+      <td>8</td>
+      <td>2.99</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2025-01-02</td>
+      <td>S2</td>
+      <td>North</td>
+      <td>Electronics</td>
+      <td>2</td>
+      <td>504.99</td>
+      <td>0.10</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2025-01-02</td>
+      <td>S7</td>
+      <td>West</td>
+      <td>Home</td>
+      <td>3</td>
+      <td>56.99</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2025-01-02</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Clothing</td>
+      <td>5</td>
+      <td>72.99</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2025-01-02</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Clothing</td>
+      <td>1</td>
+      <td>17.99</td>
+      <td>0.05</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>These are the first ten sales, from the first days of January: the rows are in date order. <code class="docutils literal notranslate"><span class="pre">tail()</span></code> shows the
+last five rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>region</th>
+      <th>category</th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1995</th>
+      <td>2025-12-30</td>
+      <td>S3</td>
+      <td>South</td>
+      <td>Clothing</td>
+      <td>1</td>
+      <td>66.99</td>
+      <td>0.10</td>
+    </tr>
+    <tr>
+      <th>1996</th>
+      <td>2025-12-30</td>
+      <td>S7</td>
+      <td>West</td>
+      <td>Grocery</td>
+      <td>5</td>
+      <td>2.99</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1997</th>
+      <td>2025-12-30</td>
+      <td>S5</td>
+      <td>East</td>
+      <td>Home</td>
+      <td>2</td>
+      <td>11.99</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1998</th>
+      <td>2025-12-31</td>
+      <td>S2</td>
+      <td>North</td>
+      <td>Clothing</td>
+      <td>3</td>
+      <td>68.99</td>
+      <td>0.05</td>
+    </tr>
+    <tr>
+      <th>1999</th>
+      <td>2025-12-31</td>
+      <td>S7</td>
+      <td>West</td>
+      <td>Clothing</td>
+      <td>2</td>
+      <td>20.99</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The last sales are from the end of December. Look at the index on the left: it ends at 1999. Since the index starts
+at 0, the table has 2,000 rows.</p>
+<blockquote>
+<div><p><strong>Try it:</strong> show the last 3 rows with <code class="docutils literal notranslate"><span class="pre">sales.tail(3)</span></code>, and the first 2 with <code class="docutils literal notranslate"><span class="pre">sales.head(2)</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="the-size-the-columns-and-the-dtypes">
+<h2><span class="section-number">8.4. </span>The size, the columns and the dtypes<a class="headerlink" href="#the-size-the-columns-and-the-dtypes" title="Link to this heading">#</a></h2>
+<p>As in the chapter <em>Series and DataFrames</em>, <code class="docutils literal notranslate"><span class="pre">.shape</span></code> gives the number of rows and of columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2000, 7)
+</pre></div>
+</div>
+</div>
+</div>
+<p>2,000 sales, and 7 columns. <code class="docutils literal notranslate"><span class="pre">.columns</span></code> lists the column names:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index(['date', 'store', 'region', 'category', 'units', 'price', 'discount'], dtype='object')
+</pre></div>
+</div>
+</div>
+</div>
+<p>pandas took these names from the first line of the file. (The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> at the end is <code class="docutils literal notranslate"><span class="pre">'object'</span></code> in pandas 2 and
+<code class="docutils literal notranslate"><span class="pre">'str'</span></code> in pandas 3.) <code class="docutils literal notranslate"><span class="pre">.dtypes</span></code> gives the type of each column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>date         object
+store        object
+region       object
+category     object
+units         int64
+price       float64
+discount    float64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">units</span></code> holds whole numbers (<code class="docutils literal notranslate"><span class="pre">int64</span></code>), and <code class="docutils literal notranslate"><span class="pre">price</span></code> and <code class="docutils literal notranslate"><span class="pre">discount</span></code> hold numbers with decimals (<code class="docutils literal notranslate"><span class="pre">float64</span></code>). The other
+four columns hold text: <code class="docutils literal notranslate"><span class="pre">object</span></code> (or <code class="docutils literal notranslate"><span class="pre">str</span></code> in pandas 3). Note that <code class="docutils literal notranslate"><span class="pre">date</span></code> is text too: pandas does not turn text
+that looks like a date into a date by itself. That is fine for this book. The chapter
+<em>New columns and sorting</em> takes the month out of this text.</p>
+</section>
+<section id="a-report-on-the-table-info">
+<h2><span class="section-number">8.5. </span>A report on the table: <code class="docutils literal notranslate"><span class="pre">info()</span></code><a class="headerlink" href="#a-report-on-the-table-info" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">info()</span></code> gives the facts of the last sections, and a little more, in one report:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 2000 entries, 0 to 1999
+Data columns (total 7 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   date      2000 non-null   object 
+ 1   store     2000 non-null   object 
+ 2   region    2000 non-null   object 
+ 3   category  2000 non-null   object 
+ 4   units     2000 non-null   int64  
+ 5   price     2000 non-null   float64
+ 6   discount  2000 non-null   float64
+dtypes: float64(2), int64(1), object(4)
+memory usage: 109.5+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s read it from the top:</p>
+<ul class="simple">
+<li><p>The first line says that <code class="docutils literal notranslate"><span class="pre">sales</span></code> is a DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RangeIndex:</span> <span class="pre">2000</span> <span class="pre">entries,</span> <span class="pre">0</span> <span class="pre">to</span> <span class="pre">1999</span></code>: there are 2,000 rows, with the index 0 to 1999.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Data</span> <span class="pre">columns</span> <span class="pre">(total</span> <span class="pre">7</span> <span class="pre">columns)</span></code>, then one line for each column: its position (<code class="docutils literal notranslate"><span class="pre">#</span></code>), its name, its <strong>non-null
+count</strong> and its dtype.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> line counts the columns of each dtype.</p></li>
+<li><p>The last line says how much memory the table uses (about 110 KB).</p></li>
+</ul>
+<p>The <strong>non-null count</strong> is the number of values that are not missing (“null” is another word for a missing value).
+Here, every column has 2000 non-null values, as many as there are rows: no value is missing in <code class="docutils literal notranslate"><span class="pre">sales.csv</span></code>. We meet
+missing values at the end of this chapter.</p>
+<blockquote>
+<div><p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">info()</span></code> prints its report itself, so in Thonny, too, you write <code class="docutils literal notranslate"><span class="pre">sales.info()</span></code> without <code class="docutils literal notranslate"><span class="pre">print()</span></code>. With
+<code class="docutils literal notranslate"><span class="pre">print(sales.info())</span></code>, you see the report and then the word <code class="docutils literal notranslate"><span class="pre">None</span></code>: <code class="docutils literal notranslate"><span class="pre">info()</span></code> prints, but it returns no value.</p>
+</div></blockquote>
+</section>
+<section id="summary-statistics-describe">
+<h2><span class="section-number">8.6. </span>Summary statistics: <code class="docutils literal notranslate"><span class="pre">describe()</span></code><a class="headerlink" href="#summary-statistics-describe" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">describe()</span></code> computes summary statistics for every number column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>units</th>
+      <th>price</th>
+      <th>discount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+      <td>2000.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>4.474500</td>
+      <td>72.828000</td>
+      <td>0.055350</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>2.856121</td>
+      <td>122.254803</td>
+      <td>0.071073</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.000000</td>
+      <td>1.990000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2.000000</td>
+      <td>9.990000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>4.000000</td>
+      <td>26.990000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>6.000000</td>
+      <td>71.240000</td>
+      <td>0.100000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>16.000000</td>
+      <td>597.990000</td>
+      <td>0.200000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The text columns are not there: <code class="docutils literal notranslate"><span class="pre">describe()</span></code> uses only the number columns. Each row of the result is one
+statistic:</p>
+<ul class="simple">
+<li><p><strong>count</strong>: the number of values that are not missing; 2000 in each column.</p></li>
+<li><p><strong>mean</strong>: the average. A sale has 4.47 units on average, and the average price is $72.83.</p></li>
+<li><p><strong>std</strong>: the <em>standard deviation</em>, a typical distance of the values from the mean. A small std means that the
+values are close together, and a large one that they are spread out.</p></li>
+<li><p><strong>min</strong> and <strong>max</strong>: the smallest and the largest value. A sale has from 1 to 16 units, and the prices go from
+<span class="math notranslate nohighlight">\(1.99 to \)</span>597.99.</p></li>
+<li><p><strong>25%, 50%, 75%</strong>: the <em>quartiles</em>. Sort the values from the smallest to the largest: the 25% value is a quarter
+of the way through the list, the 50% value halfway, and the 75% value three quarters of the way. The 50% value is
+the <strong>median</strong>, the middle value: half of the values are at or below it.</p></li>
+</ul>
+<p>What do these numbers tell a manager?</p>
+<ul class="simple">
+<li><p><strong>Prices:</strong> the median price is <span class="math notranslate nohighlight">\(26.99, but the mean is \)</span>72.83. So half of the sales have a price of <span class="math notranslate nohighlight">\(26.99 or
+less, and a few expensive items (up to \)</span>597.99) pull the mean up. When the mean and the median are far apart, the
+median is often the better “typical” value. The large std of the prices (about 122) says the same thing: the
+prices are very spread out.</p></li>
+<li><p><strong>Units:</strong> the 75% value is 6, so at least three quarters of the sales have 6 units or fewer. Sales of 16 units
+are rare.</p></li>
+<li><p><strong>Discounts:</strong> the 25% and the 50% values are 0, so at least half of the sales had no discount.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Try it:</strong> the numbers have many decimals. Run <code class="docutils literal notranslate"><span class="pre">sales.describe().round(2)</span></code> to round them to two decimals.</p>
+</div></blockquote>
+</section>
+<section id="text-columns-unique-and-nunique">
+<h2><span class="section-number">8.7. </span>Text columns: <code class="docutils literal notranslate"><span class="pre">unique()</span></code> and <code class="docutils literal notranslate"><span class="pre">nunique()</span></code><a class="headerlink" href="#text-columns-unique-and-nunique" title="Link to this heading">#</a></h2>
+<p>For a text column, a mean or a median makes no sense. Instead, we ask: which different values does the column
+have? <code class="docutils literal notranslate"><span class="pre">unique()</span></code> lists each value once:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(['S1', 'S8', 'S2', 'S5', 'S6', 'S7', 'S3', 'S4'], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The eight stores, S1 to S8, in the order in which they first appear in the file. In pandas 2 (Colab), the result
+is a NumPy array with <code class="docutils literal notranslate"><span class="pre">dtype=object</span></code>; pandas 3 shows a <code class="docutils literal notranslate"><span class="pre">&lt;StringArray&gt;</span></code> with the same values. <code class="docutils literal notranslate"><span class="pre">nunique()</span></code> counts the
+different values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"store"</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are 8 stores. When a column has many different values, this count is easier to read than the list. (The
+chapter <em>Grouping and summarizing</em> counts how many sales each store had.)</p>
+</section>
+<section id="selecting-columns-a-recap">
+<h2><span class="section-number">8.8. </span>Selecting columns: a recap<a class="headerlink" href="#selecting-columns-a-recap" title="Link to this heading">#</a></h2>
+<p>Selecting columns works as in the chapter <em>Series and DataFrames</em>: a list of names gives a DataFrame, and one name
+gives a Series. <code class="docutils literal notranslate"><span class="pre">head()</span></code> works on both:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[[</span><span class="s2">"date"</span><span class="p">,</span> <span class="s2">"store"</span><span class="p">,</span> <span class="s2">"units"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>store</th>
+      <th>units</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>S1</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01</td>
+      <td>S2</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-01</td>
+      <td>S8</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01</td>
+      <td>S5</td>
+      <td>13</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>These are three columns of the first five sales. One column is a Series, and the summaries of arrays work on it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(8949)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The chain sold 8,949 units during the year. (Colab shows <code class="docutils literal notranslate"><span class="pre">np.int64(8949)</span></code>: the NumPy form of the number, as in the
+chapter <em>Indexing, slicing and arithmetic</em>.)</p>
+</section>
+<section id="missing-values-a-first-look">
+<h2><span class="section-number">8.9. </span>Missing values: a first look<a class="headerlink" href="#missing-values-a-first-look" title="Link to this heading">#</a></h2>
+<p>The file <code class="docutils literal notranslate"><span class="pre">customers.csv</span></code>, from the chapter <em>A first machine-learning example</em>, describes 500 customers. Let’s read
+it and look at its <code class="docutils literal notranslate"><span class="pre">info()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"customers.csv"</span><span class="p">)</span>
+<span class="n">customers</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 500 entries, 0 to 499
+Data columns (total 6 columns):
+ #   Column              Non-Null Count  Dtype  
+---  ------              --------------  -----  
+ 0   age                 486 non-null    float64
+ 1   region              500 non-null    object 
+ 2   months_as_customer  500 non-null    int64  
+ 3   visits_per_month    500 non-null    float64
+ 4   avg_basket          489 non-null    float64
+ 5   annual_spend        500 non-null    float64
+dtypes: float64(4), int64(1), object(1)
+memory usage: 23.6+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are 500 rows (<code class="docutils literal notranslate"><span class="pre">RangeIndex:</span> <span class="pre">500</span> <span class="pre">entries</span></code>) and 6 columns. But two columns have <strong>fewer than 500</strong> non-null
+values: <code class="docutils literal notranslate"><span class="pre">age</span></code> has 486, and <code class="docutils literal notranslate"><span class="pre">avg_basket</span></code> (the average amount spent per visit) has 489. So 14 ages and 11 basket
+amounts are missing. pandas shows a missing value as <code class="docutils literal notranslate"><span class="pre">NaN</span></code> (“Not a Number”). <code class="docutils literal notranslate"><span class="pre">info()</span></code> is the quickest way to see
+which columns have missing values, and how many.</p>
+<p>The count row of <code class="docutils literal notranslate"><span class="pre">describe()</span></code> shows the same thing:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customers</span><span class="p">[[</span><span class="s2">"age"</span><span class="p">,</span> <span class="s2">"avg_basket"</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>avg_basket</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>486.000000</td>
+      <td>489.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>46.401235</td>
+      <td>51.539121</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>16.330022</td>
+      <td>14.823895</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>18.000000</td>
+      <td>11.950000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>33.000000</td>
+      <td>41.460000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>46.000000</td>
+      <td>51.560000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>61.000000</td>
+      <td>61.270000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>75.000000</td>
+      <td>96.610000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The count of <code class="docutils literal notranslate"><span class="pre">age</span></code> is 486, not 500: <code class="docutils literal notranslate"><span class="pre">describe()</span></code> skips the missing values, and computes the other statistics from
+the values that are there. The average customer is about 46 years old and spends about $51.54 per visit.</p>
+<p>Missing values are a problem for machine learning: many models, such as <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>, refuse them. That
+is why the chapter <em>A first machine-learning example</em> dropped those rows before <code class="docutils literal notranslate"><span class="pre">fit</span></code>. The chapter <em>Preparing data
+for machine learning</em> shows how to drop them or fill them in.</p>
+</section>
+<section id="summary">
+<h2><span class="section-number">8.10. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.read_csv(DATA_URL</span> <span class="pre">+</span> <span class="pre">&quot;sales.csv&quot;)</span></code> reads a CSV file into a DataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">head()</span></code> and <code class="docutils literal notranslate"><span class="pre">tail()</span></code> show the first and the last five rows; <code class="docutils literal notranslate"><span class="pre">head(10)</span></code> shows the first ten.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.shape</span></code> gives (rows, columns), <code class="docutils literal notranslate"><span class="pre">.columns</span></code> the column names, and <code class="docutils literal notranslate"><span class="pre">.dtypes</span></code> the type of each column (text is
+<code class="docutils literal notranslate"><span class="pre">object</span></code>, or <code class="docutils literal notranslate"><span class="pre">str</span></code> in pandas 3).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">info()</span></code> prints the number of rows, and for each column its non-null count and its dtype. A non-null count below
+the number of rows means that values are missing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">describe()</span></code> gives the count, mean, std, min, quartiles (25%, 50% = the median, 75%) and max of each number
+column.</p></li>
+<li><p>For a text column, <code class="docutils literal notranslate"><span class="pre">unique()</span></code> lists the different values, and <code class="docutils literal notranslate"><span class="pre">nunique()</span></code> counts them.</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2><span class="section-number">8.11. </span>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The pandas tutorial “How do I read and write tabular data?”:
+<a class="reference external" href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/02_read_write.html">https://pandas.pydata.org/docs/getting_started/intro_tutorials/02_read_write.html</a>.</p></li>
+</ul>
+</section>
+<section id="practice-questions">
+<h2><span class="section-number">8.12. </span>Practice questions<a class="headerlink" href="#practice-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-easy">
+<h3><span class="section-number">8.12.1. </span>Question 1 (Easy)<a class="headerlink" href="#question-1-easy" title="Link to this heading">#</a></h3>
+<p>Show the last 3 rows of <code class="docutils literal notranslate"><span class="pre">sales</span></code>. On which day was the last sale, and in which store?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">tail(3)</span></code> shows the last three rows. The last sale was on 2025-12-31, in store S7.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-easy">
+<h3><span class="section-number">8.12.2. </span>Question 2 (Easy)<a class="headerlink" href="#question-2-easy" title="Link to this heading">#</a></h3>
+<p>Look at the output of <code class="docutils literal notranslate"><span class="pre">sales.describe()</span></code>. What is the largest number of units in one sale? What is the average
+discount, in percent?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The <code class="docutils literal notranslate"><span class="pre">max</span></code> of <code class="docutils literal notranslate"><span class="pre">units</span></code> is 16. The <code class="docutils literal notranslate"><span class="pre">mean</span></code> of <code class="docutils literal notranslate"><span class="pre">discount</span></code> is about 0.055, a discount of about 5.5% on average.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-easy">
+<h3><span class="section-number">8.12.3. </span>Question 3 (Easy)<a class="headerlink" href="#question-3-easy" title="Link to this heading">#</a></h3>
+<p>How many different product categories are there in <code class="docutils literal notranslate"><span class="pre">sales</span></code>, and what are they?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>There are 4 categories: Clothing, Grocery, Electronics and Home.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-medium">
+<h3><span class="section-number">8.12.4. </span>Question 4 (Medium)<a class="headerlink" href="#question-4-medium" title="Link to this heading">#</a></h3>
+<p>How many different dates are there in the column <code class="docutils literal notranslate"><span class="pre">date</span></code> of <code class="docutils literal notranslate"><span class="pre">sales</span></code>? The year 2025 had 365 days. What does your
+answer tell you?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>There are 364 different dates, so on one day of the year (2025-11-02) the chain recorded no sale. And
+there are 2,000 rows but only 364 dates, because most days have several sales.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-5-medium">
+<h3><span class="section-number">8.12.5. </span>Question 5 (Medium)<a class="headerlink" href="#question-5-medium" title="Link to this heading">#</a></h3>
+<p>Read the file <code class="docutils literal notranslate"><span class="pre">deliveries.csv</span></code> into a DataFrame <code class="docutils literal notranslate"><span class="pre">deliveries</span></code>. How many deliveries are there? Which columns have
+missing values, and how many values are missing in each?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">info()</span></code> shows 500 rows. <code class="docutils literal notranslate"><span class="pre">weather</span></code> has 482 non-null values, so 18 are missing, and <code class="docutils literal notranslate"><span class="pre">driver_years</span></code> has 470, so 30
+are missing. The other columns have 500 non-null values each.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">deliveries</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"deliveries.csv"</span><span class="p">)</span>
+<span class="n">deliveries</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-6-medium">
+<h3><span class="section-number">8.12.6. </span>Question 6 (Medium)<a class="headerlink" href="#question-6-medium" title="Link to this heading">#</a></h3>
+<p>In <code class="docutils literal notranslate"><span class="pre">deliveries.csv</span></code>, the column <code class="docutils literal notranslate"><span class="pre">minutes</span></code> is how long a delivery took. Use <code class="docutils literal notranslate"><span class="pre">describe()</span></code> on this column only. How
+long does a delivery take on average? What are the median, the shortest and the longest time?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>A delivery takes about 35 minutes on average, and the median is 33.65 minutes. The shortest took 6.1 minutes and
+the longest 74.5 minutes. <code class="docutils literal notranslate"><span class="pre">describe()</span></code> works on one column (a Series) too.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">deliveries</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"deliveries.csv"</span><span class="p">)</span>
+<span class="n">deliveries</span><span class="p">[</span><span class="s2">"minutes"</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-7-hard">
+<h3><span class="section-number">8.12.7. </span>Question 7 (Hard)<a class="headerlink" href="#question-7-hard" title="Link to this heading">#</a></h3>
+<p>In <code class="docutils literal notranslate"><span class="pre">deliveries.csv</span></code>, run <code class="docutils literal notranslate"><span class="pre">unique()</span></code> and <code class="docutils literal notranslate"><span class="pre">nunique()</span></code> on the column <code class="docutils literal notranslate"><span class="pre">weather</span></code>. Why does <code class="docutils literal notranslate"><span class="pre">unique()</span></code> show four values,
+but <code class="docutils literal notranslate"><span class="pre">nunique()</span></code> counts only three?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p><code class="docutils literal notranslate"><span class="pre">unique()</span></code> lists <code class="docutils literal notranslate"><span class="pre">Snow</span></code>, <code class="docutils literal notranslate"><span class="pre">Rain</span></code>, <code class="docutils literal notranslate"><span class="pre">Clear</span></code> and also <code class="docutils literal notranslate"><span class="pre">nan</span></code>, the missing value. <code class="docutils literal notranslate"><span class="pre">nunique()</span></code> does not count missing
+values, so it gives 3. (<code class="docutils literal notranslate"><span class="pre">nan</span></code> appears in the list because 18 weather values are missing, as <code class="docutils literal notranslate"><span class="pre">info()</span></code> showed.)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">deliveries</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_URL</span> <span class="o">+</span> <span class="s2">"deliveries.csv"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">deliveries</span><span class="p">[</span><span class="s2">"weather"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">deliveries</span><span class="p">[</span><span class="s2">"weather"</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-8-challenge">
+<h3><span class="section-number">8.12.8. </span>Question 8 (Challenge)<a class="headerlink" href="#question-8-challenge" title="Link to this heading">#</a></h3>
+<p>The revenue of a sale is <code class="docutils literal notranslate"><span class="pre">units</span> <span class="pre">*</span> <span class="pre">price</span> <span class="pre">*</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">discount)</span></code>. Compute it for every sale as a Series in a variable
+<code class="docutils literal notranslate"><span class="pre">revenue</span></code> (with arithmetic on columns, as in the chapter <em>Series and DataFrames</em>), and describe it. What is the
+median revenue of a sale? What is the total revenue of the year, rounded to cents?</p>
+<details class="yr-answer">
+<summary>Answer</summary>
+<p>The median revenue of a sale is about <span class="math notranslate nohighlight">\(89.09, and the total revenue is \)</span>318,227.41. The mean revenue (about $159)
+is much bigger than the median, as for the prices: a few big sales pull the mean up.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">revenue</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">*</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"price"</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sales</span><span class="p">[</span><span class="s2">"discount"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">revenue</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">revenue</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</details><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your answer here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="07-series-and-dataframes.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>Series and DataFrames</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="09-loc-and-iloc.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>Selecting with loc and iloc</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-files">8.1. CSV files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-a-csv-file">8.2. Reading a CSV file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-first-and-the-last-rows">8.3. The first and the last rows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-size-the-columns-and-the-dtypes">8.4. The size, the columns and the dtypes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-report-on-the-table-info">8.5. A report on the table: <code class="docutils literal notranslate"><span class="pre">info()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-statistics-describe">8.6. Summary statistics: <code class="docutils literal notranslate"><span class="pre">describe()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-columns-unique-and-nunique">8.7. Text columns: <code class="docutils literal notranslate"><span class="pre">unique()</span></code> and <code class="docutils literal notranslate"><span class="pre">nunique()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-columns-a-recap">8.8. Selecting columns: a recap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-values-a-first-look">8.9. Missing values: a first look</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">8.10. Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">8.11. Further reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-questions">8.12. Practice questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-easy">8.12.1. Question 1 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-easy">8.12.2. Question 2 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-easy">8.12.3. Question 3 (Easy)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-medium">8.12.4. Question 4 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-medium">8.12.5. Question 5 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6-medium">8.12.6. Question 6 (Medium)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7-hard">8.12.7. Question 7 (Hard)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-8-challenge">8.12.8. Question 8 (Challenge)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Y. Rosenthal
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="text-align: left;">
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+  </a>
+  <br />
+  This work is licensed under a
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+  </a>.
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
